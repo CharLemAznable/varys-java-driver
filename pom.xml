@@ -16,9 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.raiyee.bone</groupId>
-            <artifactId>common-net</artifactId>
-            <version>0.0.4</version>
+            <groupId>com.github.charlemaznable</groupId>
+            <artifactId>complex-kits</artifactId>
+            <version>0.1.0</version>
         </dependency>
 
         <dependency>
@@ -26,6 +26,13 @@
             <artifactId>lombok</artifactId>
             <version>1.18.4</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.3.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

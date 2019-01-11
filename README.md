@@ -1,4 +1,7 @@
-#### varys-java-driver
+### varys-java-driver
+
+[![Build Status](https://travis-ci.org/CharLemAznable/varys-java-driver.svg?branch=master)](https://travis-ci.org/CharLemAznable/varys-java-driver)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 Java client for [varys](https://github.com/CharLemAznable/varys)
 

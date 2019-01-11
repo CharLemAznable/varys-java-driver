@@ -1,18 +1,30 @@
 package com.raiyee.varys;
 
+import com.github.charlemaznable.lang.pool.PoolProxy;
+import com.github.charlemaznable.lang.pool.PooledObjectCreator;
 import com.raiyee.varys.api.Query;
-import lombok.AllArgsConstructor;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
-@AllArgsConstructor
 public class Varys {
 
-    private final Config config;
+    private Query queryProxy;
 
-    public Query query() {
-        return new Query(config);
+    public Varys(Config config) {
+        GenericObjectPoolConfig<Query> queryPoolConfig
+                = new GenericObjectPoolConfig<>();
+        queryPoolConfig.setMaxTotal(config.getQueryPoolMaxTotal());
+        queryPoolConfig.setMaxIdle(config.getQueryPoolMaxIdle());
+        queryPoolConfig.setMinIdle(config.getQueryPoolMinIdle());
+        this.queryProxy = PoolProxy.create(
+                new PooledObjectCreator<Query>() {
+                    @Override
+                    public Query create() {
+                        return new Query(config);
+                    }
+                }, queryPoolConfig);
     }
 
-    public Query query(String codeName) {
-        return new Query(config, codeName);
+    public Query query() {
+        return queryProxy;
     }
 }

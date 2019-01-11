@@ -1,73 +1,109 @@
 package com.raiyee.varys.api;
 
-import com.raiyee.bone.net.HttpReq;
+import com.github.charlemaznable.net.HttpReq;
+import com.google.common.base.Preconditions;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.raiyee.varys.Config;
 import com.raiyee.varys.resp.AppAuthorizerTokenResp;
 import com.raiyee.varys.resp.AppTokenResp;
 import com.raiyee.varys.resp.CorpAuthorizerTokenResp;
 import com.raiyee.varys.resp.CorpTokenResp;
+import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.tuple.Pair;
 
-import static com.raiyee.bone.codec.Json.unJson;
-import static com.raiyee.bone.lang.Condition.nonBlank;
+import javax.annotation.Nonnull;
+
+import static com.github.charlemaznable.codec.Json.unJson;
+import static com.github.charlemaznable.lang.LoadingCachee.get;
 
 public class Query {
 
-    private final Config config;
-    private final String codeName;
+    private LoadingCache<String, AppTokenResp> appTokenCache;
+    private LoadingCache<Pair<String, String>, AppAuthorizerTokenResp> appAuthorizerTokenCache;
+    private LoadingCache<String, CorpTokenResp> corpTokenCache;
+    private LoadingCache<Pair<String, String>, CorpAuthorizerTokenResp> corpAuthorizerTokenCache;
 
     public Query(Config config) {
-        this.config = config;
-        this.codeName = config.getCodeName();
-    }
+        CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder();
 
-    public Query(Config config, String codeName) {
-        this.config = config;
-        this.codeName = codeName;
+        this.appTokenCache = builder.expireAfterWrite
+                (config.getAppTokenCacheDuration(), config.getAppTokenCacheUnit())
+                .build(new QueryCacheLoader<String, AppTokenResp>(config) {
+                    @Override
+                    public AppTokenResp load(@Nonnull String codeName) {
+                        return unJson(httpGet("/query-wechat-app-token/" +
+                                codeName), AppTokenResp.class);
+                    }
+                });
+
+        this.appAuthorizerTokenCache = builder.expireAfterWrite
+                (config.getAppAuthorizerTokenCacheDuration(), config.getAppAuthorizerTokenCacheUnit())
+                .build(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(config) {
+                    @Override
+                    public AppAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
+                        String codeName = pair.getLeft();
+                        String authorizerAppId = pair.getRight();
+
+                        return unJson(httpGet("/query-wechat-app-authorizer-token/" +
+                                codeName + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
+                    }
+                });
+
+        this.corpTokenCache = builder.expireAfterWrite
+                (config.getCorpTokenCacheDuration(), config.getCorpTokenCacheUnit())
+                .build(new QueryCacheLoader<String, CorpTokenResp>(config) {
+                    @Override
+                    public CorpTokenResp load(@Nonnull String codeName) {
+                        return unJson(httpGet("/query-wechat-corp-token/" +
+                                codeName), CorpTokenResp.class);
+                    }
+                });
+
+        this.corpAuthorizerTokenCache = builder.expireAfterWrite
+                (config.getCorpAuthorizerTokenCacheDuration(), config.getCorpAuthorizerTokenCacheUnit())
+                .build(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(config) {
+                    @Override
+                    public CorpAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
+                        String codeName = pair.getLeft();
+                        String corpId = pair.getRight();
+
+                        return unJson(httpGet("/query-wechat-corp-authorizer-token/" +
+                                codeName + "/" + corpId), CorpAuthorizerTokenResp.class);
+                    }
+                });
     }
 
     public AppTokenResp appToken(String codeName) {
-        String result = new HttpReq(config.getAddress() +
-                "/query-wechat-app-token/" + codeName(codeName)).get();
-        return unJson(result, AppTokenResp.class);
-    }
-
-    public AppTokenResp appToken() {
-        return appToken(null);
+        Preconditions.checkNotNull(codeName);
+        return get(this.appTokenCache, codeName);
     }
 
     public AppAuthorizerTokenResp appAuthorizerToken(String codeName, String authorizerAppId) {
-        String result = new HttpReq(config.getAddress() +
-                "/query-wechat-app-authorizer-token/" + codeName(codeName) + "/" + authorizerAppId).get();
-        return unJson(result, AppAuthorizerTokenResp.class);
-    }
-
-    public AppAuthorizerTokenResp appAuthorizerToken(String authorizerAppId) {
-        return appAuthorizerToken(null, authorizerAppId);
+        Preconditions.checkNotNull(codeName);
+        Preconditions.checkNotNull(authorizerAppId);
+        return get(this.appAuthorizerTokenCache, Pair.of(codeName, authorizerAppId));
     }
 
     public CorpTokenResp corpToken(String codeName) {
-        String result = new HttpReq(config.getAddress() +
-                "/query-wechat-corp-token/" + codeName(codeName)).get();
-        return unJson(result, CorpTokenResp.class);
-    }
-
-    public CorpTokenResp corpToken() {
-        return corpToken(null);
+        Preconditions.checkNotNull(codeName);
+        return get(this.corpTokenCache, codeName);
     }
 
     public CorpAuthorizerTokenResp corpAuthorizerToken(String codeName, String corpId) {
-        String result = new HttpReq(config.getAddress() +
-                "/query-wechat-corp-authorizer-token/" + codeName(codeName) + "/" + corpId).get();
-        return unJson(result, CorpAuthorizerTokenResp.class);
+        Preconditions.checkNotNull(codeName);
+        Preconditions.checkNotNull(corpId);
+        return get(this.corpAuthorizerTokenCache, Pair.of(codeName, corpId));
     }
 
-    public CorpAuthorizerTokenResp corpAuthorizerToken(String corpId) {
-        return corpAuthorizerToken(null, corpId);
-    }
+    @AllArgsConstructor
+    private static abstract
+    class QueryCacheLoader<K, V> extends CacheLoader<K, V> {
+        protected final Config config;
 
-    private String codeName(String codeName) {
-        String nonBlankCodeName = nonBlank(codeName, this.codeName);
-        if (null == nonBlankCodeName) throw new RuntimeException("Missing parameter: CodeName");
-        return nonBlankCodeName;
+        protected String httpGet(String subpath) {
+            return new HttpReq(config.getAddress() + subpath).get();
+        }
     }
 }
