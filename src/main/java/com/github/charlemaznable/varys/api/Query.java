@@ -11,6 +11,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -18,6 +19,7 @@ import javax.annotation.Nonnull;
 import static com.github.charlemaznable.codec.Json.unJson;
 import static com.github.charlemaznable.lang.LoadingCachee.get;
 
+@NoArgsConstructor
 public class Query {
 
     private LoadingCache<String, AppTokenResp> appTokenCache;
@@ -25,10 +27,8 @@ public class Query {
     private LoadingCache<String, CorpTokenResp> corpTokenCache;
     private LoadingCache<Pair<String, String>, CorpAuthorizerTokenResp> corpAuthorizerTokenCache;
 
-    public Query(Config config) {
-        CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder();
-
-        this.appTokenCache = builder.expireAfterWrite
+    public Query init(Config config) {
+        appTokenCache = CacheBuilder.newBuilder().expireAfterWrite
                 (config.getAppTokenCacheDuration(), config.getAppTokenCacheUnit())
                 .build(new QueryCacheLoader<String, AppTokenResp>(config) {
                     @Override
@@ -38,7 +38,7 @@ public class Query {
                     }
                 });
 
-        this.appAuthorizerTokenCache = builder.expireAfterWrite
+        appAuthorizerTokenCache = CacheBuilder.newBuilder().expireAfterWrite
                 (config.getAppAuthorizerTokenCacheDuration(), config.getAppAuthorizerTokenCacheUnit())
                 .build(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(config) {
                     @Override
@@ -51,7 +51,7 @@ public class Query {
                     }
                 });
 
-        this.corpTokenCache = builder.expireAfterWrite
+        corpTokenCache = CacheBuilder.newBuilder().expireAfterWrite
                 (config.getCorpTokenCacheDuration(), config.getCorpTokenCacheUnit())
                 .build(new QueryCacheLoader<String, CorpTokenResp>(config) {
                     @Override
@@ -61,7 +61,7 @@ public class Query {
                     }
                 });
 
-        this.corpAuthorizerTokenCache = builder.expireAfterWrite
+        corpAuthorizerTokenCache = CacheBuilder.newBuilder().expireAfterWrite
                 (config.getCorpAuthorizerTokenCacheDuration(), config.getCorpAuthorizerTokenCacheUnit())
                 .build(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(config) {
                     @Override
@@ -73,28 +73,34 @@ public class Query {
                                 codeName + "/" + corpId), CorpAuthorizerTokenResp.class);
                     }
                 });
+
+        return this;
     }
 
     public AppTokenResp appToken(String codeName) {
+        Preconditions.checkNotNull(appTokenCache);
         Preconditions.checkNotNull(codeName);
-        return get(this.appTokenCache, codeName);
+        return get(appTokenCache, codeName);
     }
 
     public AppAuthorizerTokenResp appAuthorizerToken(String codeName, String authorizerAppId) {
+        Preconditions.checkNotNull(appAuthorizerTokenCache);
         Preconditions.checkNotNull(codeName);
         Preconditions.checkNotNull(authorizerAppId);
-        return get(this.appAuthorizerTokenCache, Pair.of(codeName, authorizerAppId));
+        return get(appAuthorizerTokenCache, Pair.of(codeName, authorizerAppId));
     }
 
     public CorpTokenResp corpToken(String codeName) {
+        Preconditions.checkNotNull(corpTokenCache);
         Preconditions.checkNotNull(codeName);
-        return get(this.corpTokenCache, codeName);
+        return get(corpTokenCache, codeName);
     }
 
     public CorpAuthorizerTokenResp corpAuthorizerToken(String codeName, String corpId) {
+        Preconditions.checkNotNull(corpAuthorizerTokenCache);
         Preconditions.checkNotNull(codeName);
         Preconditions.checkNotNull(corpId);
-        return get(this.corpAuthorizerTokenCache, Pair.of(codeName, corpId));
+        return get(corpAuthorizerTokenCache, Pair.of(codeName, corpId));
     }
 
     @AllArgsConstructor
@@ -102,7 +108,7 @@ public class Query {
         protected final Config config;
 
         protected String httpGet(String subpath) {
-            return new HttpReq(config.getAddress() + subpath).get();
+            return Preconditions.checkNotNull(new HttpReq(config.getAddress() + subpath).get());
         }
     }
 }
