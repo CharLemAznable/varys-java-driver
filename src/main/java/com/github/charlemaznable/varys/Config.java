@@ -1,4 +1,4 @@
-package com.raiyee.varys;
+package com.github.charlemaznable.varys;
 
 import lombok.Builder;
 import lombok.Builder.Default;

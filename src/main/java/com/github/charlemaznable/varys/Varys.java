@@ -1,8 +1,8 @@
-package com.raiyee.varys;
+package com.github.charlemaznable.varys;
 
 import com.github.charlemaznable.lang.pool.PoolProxy;
 import com.github.charlemaznable.lang.pool.PooledObjectCreator;
-import com.raiyee.varys.api.Query;
+import com.github.charlemaznable.varys.api.Query;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 public class Varys {

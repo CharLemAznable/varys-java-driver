@@ -1,4 +1,4 @@
-package com.raiyee.varys.resp;
+package com.github.charlemaznable.varys.resp;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class CorpTokenResp extends TokenResp {
+public class AppTokenResp extends TokenResp {
 
-    private String corpId;
+    private String appId;
 }

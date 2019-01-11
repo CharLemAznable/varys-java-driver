@@ -1,4 +1,4 @@
-package com.raiyee.varys.resp;
+package com.github.charlemaznable.varys.resp;
 
 import lombok.Data;
 

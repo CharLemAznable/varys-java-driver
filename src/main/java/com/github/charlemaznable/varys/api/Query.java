@@ -1,15 +1,15 @@
-package com.raiyee.varys.api;
+package com.github.charlemaznable.varys.api;
 
 import com.github.charlemaznable.net.HttpReq;
+import com.github.charlemaznable.varys.Config;
+import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
+import com.github.charlemaznable.varys.resp.AppTokenResp;
+import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
+import com.github.charlemaznable.varys.resp.CorpTokenResp;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.raiyee.varys.Config;
-import com.raiyee.varys.resp.AppAuthorizerTokenResp;
-import com.raiyee.varys.resp.AppTokenResp;
-import com.raiyee.varys.resp.CorpAuthorizerTokenResp;
-import com.raiyee.varys.resp.CorpTokenResp;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -98,8 +98,7 @@ public class Query {
     }
 
     @AllArgsConstructor
-    private static abstract
-    class QueryCacheLoader<K, V> extends CacheLoader<K, V> {
+    private static abstract class QueryCacheLoader<K, V> extends CacheLoader<K, V> {
         protected final Config config;
 
         protected String httpGet(String subpath) {
