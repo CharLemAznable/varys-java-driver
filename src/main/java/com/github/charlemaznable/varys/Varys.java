@@ -3,7 +3,6 @@ package com.github.charlemaznable.varys;
 import com.github.charlemaznable.lang.pool.PoolProxy;
 import com.github.charlemaznable.lang.pool.PooledObjectCreator;
 import com.github.charlemaznable.varys.api.Query;
-import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.Synchronized;
@@ -12,11 +11,12 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import javax.annotation.Nonnull;
 
 import static com.github.charlemaznable.lang.LoadingCachee.get;
+import static com.github.charlemaznable.lang.LoadingCachee.simpleCache;
 
 public class Varys {
 
     private static LoadingCache<Config, Varys> cache =
-            CacheBuilder.newBuilder().build(new CacheLoader<Config, Varys>() {
+            simpleCache(new CacheLoader<Config, Varys>() {
                 @Override
                 public Varys load(@Nonnull Config config) {
                     return new Varys(config);

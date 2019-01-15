@@ -7,7 +7,6 @@ import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.CorpTokenResp;
 import com.google.common.base.Preconditions;
-import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.AllArgsConstructor;
@@ -18,6 +17,7 @@ import javax.annotation.Nonnull;
 
 import static com.github.charlemaznable.codec.Json.unJson;
 import static com.github.charlemaznable.lang.LoadingCachee.get;
+import static com.github.charlemaznable.lang.LoadingCachee.writeCache;
 
 @NoArgsConstructor
 public class Query {
@@ -28,51 +28,43 @@ public class Query {
     private LoadingCache<Pair<String, String>, CorpAuthorizerTokenResp> corpAuthorizerTokenCache;
 
     public Query init(Config config) {
-        appTokenCache = CacheBuilder.newBuilder().expireAfterWrite
-                (config.getAppTokenCacheDuration(), config.getAppTokenCacheUnit())
-                .build(new QueryCacheLoader<String, AppTokenResp>(config) {
-                    @Override
-                    public AppTokenResp load(@Nonnull String codeName) {
-                        return unJson(httpGet("/query-wechat-app-token/" +
-                                codeName), AppTokenResp.class);
-                    }
-                });
+        appTokenCache = writeCache(new QueryCacheLoader<String, AppTokenResp>(config) {
+            @Override
+            public AppTokenResp load(@Nonnull String codeName) {
+                return unJson(httpGet("/query-wechat-app-token/" +
+                        codeName), AppTokenResp.class);
+            }
+        }, config.getAppTokenCacheDuration(), config.getAppTokenCacheUnit());
 
-        appAuthorizerTokenCache = CacheBuilder.newBuilder().expireAfterWrite
-                (config.getAppAuthorizerTokenCacheDuration(), config.getAppAuthorizerTokenCacheUnit())
-                .build(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(config) {
-                    @Override
-                    public AppAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
-                        String codeName = pair.getLeft();
-                        String authorizerAppId = pair.getRight();
+        appAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(config) {
+            @Override
+            public AppAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
+                String codeName = pair.getLeft();
+                String authorizerAppId = pair.getRight();
 
-                        return unJson(httpGet("/query-wechat-app-authorizer-token/" +
-                                codeName + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
-                    }
-                });
+                return unJson(httpGet("/query-wechat-app-authorizer-token/" +
+                        codeName + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
+            }
+        }, config.getAppAuthorizerTokenCacheDuration(), config.getAppAuthorizerTokenCacheUnit());
 
-        corpTokenCache = CacheBuilder.newBuilder().expireAfterWrite
-                (config.getCorpTokenCacheDuration(), config.getCorpTokenCacheUnit())
-                .build(new QueryCacheLoader<String, CorpTokenResp>(config) {
-                    @Override
-                    public CorpTokenResp load(@Nonnull String codeName) {
-                        return unJson(httpGet("/query-wechat-corp-token/" +
-                                codeName), CorpTokenResp.class);
-                    }
-                });
+        corpTokenCache = writeCache(new QueryCacheLoader<String, CorpTokenResp>(config) {
+            @Override
+            public CorpTokenResp load(@Nonnull String codeName) {
+                return unJson(httpGet("/query-wechat-corp-token/" +
+                        codeName), CorpTokenResp.class);
+            }
+        }, config.getCorpTokenCacheDuration(), config.getCorpTokenCacheUnit());
 
-        corpAuthorizerTokenCache = CacheBuilder.newBuilder().expireAfterWrite
-                (config.getCorpAuthorizerTokenCacheDuration(), config.getCorpAuthorizerTokenCacheUnit())
-                .build(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(config) {
-                    @Override
-                    public CorpAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
-                        String codeName = pair.getLeft();
-                        String corpId = pair.getRight();
+        corpAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(config) {
+            @Override
+            public CorpAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
+                String codeName = pair.getLeft();
+                String corpId = pair.getRight();
 
-                        return unJson(httpGet("/query-wechat-corp-authorizer-token/" +
-                                codeName + "/" + corpId), CorpAuthorizerTokenResp.class);
-                    }
-                });
+                return unJson(httpGet("/query-wechat-corp-authorizer-token/" +
+                        codeName + "/" + corpId), CorpAuthorizerTokenResp.class);
+            }
+        }, config.getCorpAuthorizerTokenCacheDuration(), config.getCorpAuthorizerTokenCacheUnit());
 
         return this;
     }
