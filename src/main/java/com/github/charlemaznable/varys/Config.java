@@ -2,6 +2,7 @@ package com.github.charlemaznable.varys;
 
 import lombok.Builder;
 import lombok.Builder.Default;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.concurrent.TimeUnit;
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("UnusedAssignment")
 @Builder
 @Getter
+@EqualsAndHashCode
 public class Config {
 
     private String address;

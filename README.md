@@ -19,29 +19,35 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 ##### Initialize:
 
 ```java
-Varys varys = new Varys(Config.builder().address("http://127.0.0.1:4236/varys").build());
+// LoadingCache<Config, Varys>
+Varys varys = Varys.instance(Config.builder().address("http://127.0.0.1:4236/varys").build());
 ```
 
 ##### Query API
 
 ```java
+// PoolProxy
 Query query = varys.query();
 ```
 
 ##### Do Query
 
 ```java
+// LoadingCache<String, AppTokenResp>
 AppTokenResp appTokenResp = query.appToken("your_code_name");
 ```
 
 ```java
+// LoadingCache<Pair<String, String>, AppAuthorizerTokenResp>
 AppAuthorizerTokenResp appAuthorizerTokenResp = query.appAuthorizerToken("your_code_name", "authorizerAppId");
 ```
 
 ```java
+// LoadingCache<String, CorpTokenResp>
 CorpTokenResp corpTokenResp = query.corpToken("your_code_name");
 ```
 
 ```java
+// LoadingCache<Pair<String, String>, CorpAuthorizerTokenResp>
 CorpAuthorizerTokenResp corpAuthorizerTokenResp = query.corpAuthorizerToken("your_code_name", "corpId");
 ```
