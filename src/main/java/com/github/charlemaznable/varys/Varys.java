@@ -6,6 +6,7 @@ import com.github.charlemaznable.varys.api.Query;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.Synchronized;
+import lombok.val;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import javax.annotation.Nonnull;
@@ -36,7 +37,7 @@ public class Varys {
     @Synchronized
     public Query query() {
         if (null == queryProxy) {
-            GenericObjectPoolConfig<Query> queryPoolConfig = new GenericObjectPoolConfig<>();
+            val queryPoolConfig = new GenericObjectPoolConfig<Query>();
             queryPoolConfig.setMaxTotal(config.getQueryPoolMaxTotal());
             queryPoolConfig.setMaxIdle(config.getQueryPoolMaxIdle());
             queryPoolConfig.setMinIdle(config.getQueryPoolMinIdle());

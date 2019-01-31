@@ -11,6 +11,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.val;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -39,8 +40,8 @@ public class Query {
         appAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(config) {
             @Override
             public AppAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
-                String codeName = pair.getLeft();
-                String authorizerAppId = pair.getRight();
+                val codeName = pair.getLeft();
+                val authorizerAppId = pair.getRight();
 
                 return unJson(httpGet("/query-wechat-app-authorizer-token/" +
                         codeName + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
@@ -58,8 +59,8 @@ public class Query {
         corpAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(config) {
             @Override
             public CorpAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
-                String codeName = pair.getLeft();
-                String corpId = pair.getRight();
+                val codeName = pair.getLeft();
+                val corpId = pair.getRight();
 
                 return unJson(httpGet("/query-wechat-corp-authorizer-token/" +
                         codeName + "/" + corpId), CorpAuthorizerTokenResp.class);
