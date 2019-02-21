@@ -10,7 +10,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.val;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -20,7 +19,6 @@ import static com.github.charlemaznable.codec.Json.unJson;
 import static com.github.charlemaznable.lang.LoadingCachee.get;
 import static com.github.charlemaznable.lang.LoadingCachee.writeCache;
 
-@NoArgsConstructor
 public class Query {
 
     private LoadingCache<String, AppTokenResp> appTokenCache;
@@ -28,7 +26,7 @@ public class Query {
     private LoadingCache<String, CorpTokenResp> corpTokenCache;
     private LoadingCache<Pair<String, String>, CorpAuthorizerTokenResp> corpAuthorizerTokenCache;
 
-    public Query init(Config config) {
+    public Query(Config config) {
         appTokenCache = writeCache(new QueryCacheLoader<String, AppTokenResp>(config) {
             @Override
             public AppTokenResp load(@Nonnull String codeName) {
@@ -66,8 +64,6 @@ public class Query {
                         codeName + "/" + corpId), CorpAuthorizerTokenResp.class);
             }
         }, config.getCorpAuthorizerTokenCacheDuration(), config.getCorpAuthorizerTokenCacheUnit());
-
-        return this;
     }
 
     public AppTokenResp appToken(String codeName) {
