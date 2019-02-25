@@ -13,7 +13,6 @@ import javax.annotation.Nonnull;
 
 import static com.github.charlemaznable.lang.LoadingCachee.get;
 import static com.github.charlemaznable.lang.LoadingCachee.simpleCache;
-import static org.joor.Reflect.on;
 
 public class Varys {
 
@@ -42,12 +41,8 @@ public class Varys {
             queryPoolConfig.setMaxTotal(config.getQueryPoolMaxTotal());
             queryPoolConfig.setMaxIdle(config.getQueryPoolMaxIdle());
             queryPoolConfig.setMinIdle(config.getQueryPoolMinIdle());
-            queryProxy = PoolProxy.builder(new PooledObjectCreator<Query>() {
-                @Override
-                public Query create(Object... args) {
-                    return on(Query.class).create(args).get();
-                }
-            }).config(queryPoolConfig).args(config).build();
+            queryProxy = PoolProxy.builder(new PooledObjectCreator<Query>() {})
+                    .config(queryPoolConfig).args(config).build();
         }
         return queryProxy;
     }
