@@ -2,6 +2,7 @@ package com.github.charlemaznable.varys;
 
 import com.github.charlemaznable.lang.pool.PoolProxy;
 import com.github.charlemaznable.lang.pool.PooledObjectCreator;
+import com.github.charlemaznable.varys.api.Proxy;
 import com.github.charlemaznable.varys.api.Query;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -25,6 +26,7 @@ public class Varys {
             });
     private final Config config;
     private Query queryProxy;
+    private Proxy proxyProxy;
 
     private Varys(Config config) {
         this.config = config;
@@ -45,5 +47,18 @@ public class Varys {
                     .config(queryPoolConfig).args(config).build();
         }
         return queryProxy;
+    }
+
+    @Synchronized
+    public Proxy proxy() {
+        if (null == proxyProxy) {
+            val proxyPoolConfig = new GenericObjectPoolConfig<Proxy>();
+            proxyPoolConfig.setMaxTotal(config.getProxyPoolMaxTotal());
+            proxyPoolConfig.setMaxIdle(config.getProxyPoolMaxIdle());
+            proxyPoolConfig.setMinIdle(config.getProxyPoolMinIdle());
+            proxyProxy = PoolProxy.builder(new PooledObjectCreator<Proxy>() {})
+                    .config(proxyPoolConfig).args(config).build();
+        }
+        return proxyProxy;
     }
 }

@@ -21,6 +21,11 @@ import static com.github.charlemaznable.lang.LoadingCachee.writeCache;
 
 public class Query {
 
+    private final static String appTokenCachePath = "/query-wechat-app-token/";
+    private final static String appAuthorizerTokenCachePath = "/query-wechat-app-authorizer-token/";
+    private final static String corpTokenCachePath = "/query-wechat-corp-token/";
+    private final static String corpAuthorizerTokenCachePath = "/query-wechat-corp-authorizer-token/";
+
     private LoadingCache<String, AppTokenResp> appTokenCache;
     private LoadingCache<Pair<String, String>, AppAuthorizerTokenResp> appAuthorizerTokenCache;
     private LoadingCache<String, CorpTokenResp> corpTokenCache;
@@ -30,8 +35,7 @@ public class Query {
         appTokenCache = writeCache(new QueryCacheLoader<String, AppTokenResp>(config) {
             @Override
             public AppTokenResp load(@Nonnull String codeName) {
-                return unJson(httpGet("/query-wechat-app-token/" +
-                        codeName), AppTokenResp.class);
+                return unJson(httpGet(appTokenCachePath + codeName), AppTokenResp.class);
             }
         }, config.getAppTokenCacheDuration(), config.getAppTokenCacheUnit());
 
@@ -41,16 +45,15 @@ public class Query {
                 val codeName = pair.getLeft();
                 val authorizerAppId = pair.getRight();
 
-                return unJson(httpGet("/query-wechat-app-authorizer-token/" +
-                        codeName + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
+                return unJson(httpGet(appAuthorizerTokenCachePath + codeName
+                        + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
             }
         }, config.getAppAuthorizerTokenCacheDuration(), config.getAppAuthorizerTokenCacheUnit());
 
         corpTokenCache = writeCache(new QueryCacheLoader<String, CorpTokenResp>(config) {
             @Override
             public CorpTokenResp load(@Nonnull String codeName) {
-                return unJson(httpGet("/query-wechat-corp-token/" +
-                        codeName), CorpTokenResp.class);
+                return unJson(httpGet(corpTokenCachePath + codeName), CorpTokenResp.class);
             }
         }, config.getCorpTokenCacheDuration(), config.getCorpTokenCacheUnit());
 
@@ -60,8 +63,8 @@ public class Query {
                 val codeName = pair.getLeft();
                 val corpId = pair.getRight();
 
-                return unJson(httpGet("/query-wechat-corp-authorizer-token/" +
-                        codeName + "/" + corpId), CorpAuthorizerTokenResp.class);
+                return unJson(httpGet(corpAuthorizerTokenCachePath + codeName
+                        + "/" + corpId), CorpAuthorizerTokenResp.class);
             }
         }, config.getCorpAuthorizerTokenCacheDuration(), config.getCorpAuthorizerTokenCacheUnit());
     }

@@ -12,7 +12,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
 </dependency>
 ```
 
@@ -50,4 +50,31 @@ CorpTokenResp corpTokenResp = query.corpToken("your_code_name");
 ```java
 // LoadingCache<Pair<String, String>, CorpAuthorizerTokenResp>
 CorpAuthorizerTokenResp corpAuthorizerTokenResp = query.corpAuthorizerToken("your_code_name", "corpId");
+```
+
+##### Proxy API
+
+```java
+// PoolProxy
+Proxy proxy = varys.proxy();
+```
+
+##### Using Proxy
+
+```java
+String getResult = proxy.wechatApp("your_code_name", "proxy path").prop("xxx", "XXX").param("yyy", "YYY").get();
+String postResult = proxy.wechatApp("your_code_name", "proxy path").prop("xxx", "XXX").param("yyy", "YYY").post();
+```
+
+```java
+String getResult = proxy.wechatCorp("your_code_name", "proxy path").prop("xxx", "XXX").param("yyy", "YYY").get();
+String postResult = proxy.wechatCorp("your_code_name", "proxy path").prop("xxx", "XXX").param("yyy", "YYY").post();
+```
+
+```http
+公众号微信接口代理路径:
+https://api.weixin.qq.com/cgi-bin/{proxy path}
+
+企业微信接口代理路径
+https://qyapi.weixin.qq.com/cgi-bin/{proxy path}
 ```

@@ -38,4 +38,11 @@ public class Config {
     private long corpAuthorizerTokenCacheDuration = 10;
     @Default
     private TimeUnit corpAuthorizerTokenCacheUnit = TimeUnit.MINUTES;
+
+    @Default
+    private int proxyPoolMaxTotal = 8;
+    @Default
+    private int proxyPoolMaxIdle = 8;
+    @Default
+    private int proxyPoolMinIdle = 0;
 }
