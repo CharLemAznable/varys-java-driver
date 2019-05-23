@@ -16,11 +16,18 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 </dependency>
 ```
 
+##### Configuration
+
+1. 在`{USER_HOME}/.diamond-client/config-data`下新建目录`VARYS`
+2. 在`VARYS`目录下建立文件`default.diamond`
+```properties
+address=http://127.0.0.1:4236/varys
+```
+
 ##### Initialize:
 
 ```java
-// LoadingCache<Config, Varys>
-Varys varys = Varys.instance(Config.builder().address("http://127.0.0.1:4236/varys").build());
+Varys varys = new Varys(MinerFactory.getMiner(Config.class));
 ```
 
 ##### Query API
