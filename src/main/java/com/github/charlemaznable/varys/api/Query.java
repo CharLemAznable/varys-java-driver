@@ -37,7 +37,7 @@ public class Query {
             public AppTokenResp load(@Nonnull String codeName) {
                 return unJson(httpGet(appTokenCachePath + codeName), AppTokenResp.class);
             }
-        }, config.getAppTokenCacheDuration(), config.getAppTokenCacheUnit());
+        }, config.appTokenCacheDuration(), config.appTokenCacheTimeUnit());
 
         appAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(config) {
             @Override
@@ -48,14 +48,14 @@ public class Query {
                 return unJson(httpGet(appAuthorizerTokenCachePath + codeName
                         + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
             }
-        }, config.getAppAuthorizerTokenCacheDuration(), config.getAppAuthorizerTokenCacheUnit());
+        }, config.appAuthorizerTokenCacheDuration(), config.appAuthorizerTokenCacheTimeUnit());
 
         corpTokenCache = writeCache(new QueryCacheLoader<String, CorpTokenResp>(config) {
             @Override
             public CorpTokenResp load(@Nonnull String codeName) {
                 return unJson(httpGet(corpTokenCachePath + codeName), CorpTokenResp.class);
             }
-        }, config.getCorpTokenCacheDuration(), config.getCorpTokenCacheUnit());
+        }, config.corpTokenCacheDuration(), config.corpTokenCacheTimeUnit());
 
         corpAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(config) {
             @Override
@@ -66,7 +66,7 @@ public class Query {
                 return unJson(httpGet(corpAuthorizerTokenCachePath + codeName
                         + "/" + corpId), CorpAuthorizerTokenResp.class);
             }
-        }, config.getCorpAuthorizerTokenCacheDuration(), config.getCorpAuthorizerTokenCacheUnit());
+        }, config.corpAuthorizerTokenCacheDuration(), config.corpAuthorizerTokenCacheTimeUnit());
     }
 
     public AppTokenResp appToken(String codeName) {
@@ -100,7 +100,7 @@ public class Query {
         protected final Config config;
 
         protected String httpGet(String subpath) {
-            return Preconditions.checkNotNull(new HttpReq(config.getAddress() + subpath).get());
+            return Preconditions.checkNotNull(new HttpReq(config.address() + subpath).get());
         }
     }
 }

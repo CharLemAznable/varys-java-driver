@@ -1,48 +1,69 @@
 package com.github.charlemaznable.varys;
 
-import lombok.Builder;
-import lombok.Builder.Default;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import com.github.charlemaznable.miner.MinerConfig;
 
 import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings("UnusedAssignment")
-@Builder
-@Getter
-@EqualsAndHashCode
-public class Config {
+@MinerConfig(group = "VARYS", dataId = "default")
+public interface Config {
 
-    private String address;
+    String address();
 
-    @Default
-    private int queryPoolMaxTotal = 8;
-    @Default
-    private int queryPoolMaxIdle = 8;
-    @Default
-    private int queryPoolMinIdle = 0;
+    @MinerConfig(defaultValue = "8")
+    int queryPoolMaxTotal();
 
-    @Default
-    private long appTokenCacheDuration = 10;
-    @Default
-    private TimeUnit appTokenCacheUnit = TimeUnit.MINUTES;
-    @Default
-    private long appAuthorizerTokenCacheDuration = 10;
-    @Default
-    private TimeUnit appAuthorizerTokenCacheUnit = TimeUnit.MINUTES;
-    @Default
-    private long corpTokenCacheDuration = 10;
-    @Default
-    private TimeUnit corpTokenCacheUnit = TimeUnit.MINUTES;
-    @Default
-    private long corpAuthorizerTokenCacheDuration = 10;
-    @Default
-    private TimeUnit corpAuthorizerTokenCacheUnit = TimeUnit.MINUTES;
+    @MinerConfig(defaultValue = "8")
+    int queryPoolMaxIdle();
 
-    @Default
-    private int proxyPoolMaxTotal = 8;
-    @Default
-    private int proxyPoolMaxIdle = 8;
-    @Default
-    private int proxyPoolMinIdle = 0;
+    @MinerConfig(defaultValue = "0")
+    int queryPoolMinIdle();
+
+    @MinerConfig(defaultValue = "10")
+    long appTokenCacheDuration();
+
+    @MinerConfig(defaultValue = "MINUTES")
+    String appTokenCacheUnit();
+
+    default TimeUnit appTokenCacheTimeUnit() {
+        return TimeUnit.valueOf(appTokenCacheUnit());
+    }
+
+    @MinerConfig(defaultValue = "10")
+    long appAuthorizerTokenCacheDuration();
+
+    @MinerConfig(defaultValue = "MINUTES")
+    String appAuthorizerTokenCacheUnit();
+
+    default TimeUnit appAuthorizerTokenCacheTimeUnit() {
+        return TimeUnit.valueOf(appAuthorizerTokenCacheUnit());
+    }
+
+    @MinerConfig(defaultValue = "10")
+    long corpTokenCacheDuration();
+
+    @MinerConfig(defaultValue = "MINUTES")
+    String corpTokenCacheUnit();
+
+    default TimeUnit corpTokenCacheTimeUnit() {
+        return TimeUnit.valueOf(corpTokenCacheUnit());
+    }
+
+    @MinerConfig(defaultValue = "10")
+    long corpAuthorizerTokenCacheDuration();
+
+    @MinerConfig(defaultValue = "MINUTES")
+    String corpAuthorizerTokenCacheUnit();
+
+    default TimeUnit corpAuthorizerTokenCacheTimeUnit() {
+        return TimeUnit.valueOf(corpAuthorizerTokenCacheUnit());
+    }
+
+    @MinerConfig(defaultValue = "8")
+    int proxyPoolMaxTotal();
+
+    @MinerConfig(defaultValue = "8")
+    int proxyPoolMaxIdle();
+
+    @MinerConfig(defaultValue = "8")
+    int proxyPoolMinIdle();
 }

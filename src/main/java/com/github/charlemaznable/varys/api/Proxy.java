@@ -17,22 +17,22 @@ public class Proxy {
     private final Config config;
 
     public ProxyReq wechatApp(String codeName, String proxyPath) {
-        return new ProxyReq(config.getAddress() + proxyWechatAppPath
+        return new ProxyReq(config.address() + proxyWechatAppPath
                 + codeName + fixProxyPath(proxyPath));
     }
 
     public ProxyReq wechatApp(String codeName, String proxyPathTemplate, Object... proxyPathArgs) {
-        return new ProxyReq(config.getAddress() + proxyWechatAppPath
+        return new ProxyReq(config.address() + proxyWechatAppPath
                 + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
     }
 
     public ProxyReq wechatCorp(String codeName, String proxyPath) {
-        return new ProxyReq(config.getAddress() + proxyWechatCorpPath
+        return new ProxyReq(config.address() + proxyWechatCorpPath
                 + codeName + fixProxyPath(proxyPath));
     }
 
     public ProxyReq wechatCorp(String codeName, String proxyPathTemplate, Object... proxyPathArgs) {
-        return new ProxyReq(config.getAddress() + proxyWechatCorpPath
+        return new ProxyReq(config.address() + proxyWechatCorpPath
                 + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
     }
 
