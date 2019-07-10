@@ -6,7 +6,7 @@
 
     <groupId>com.github.charlemaznable</groupId>
     <artifactId>varys-java-driver</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.2</version>
     <packaging>jar</packaging>
 
     <name>varys-java-driver</name>
@@ -51,7 +51,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
-        <complex-kits.version>0.4.1</complex-kits.version>
+        <complex-kits.version>0.4.2</complex-kits.version>
 
         <lombok.version>1.18.8</lombok.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
