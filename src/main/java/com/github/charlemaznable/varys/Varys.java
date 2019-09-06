@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varys;
 
-import com.github.charlemaznable.lang.pool.PoolProxy;
-import com.github.charlemaznable.lang.pool.PooledObjectCreator;
+import com.github.charlemaznable.core.lang.pool.PoolProxy;
+import com.github.charlemaznable.core.lang.pool.PooledObjectCreator;
 import com.github.charlemaznable.varys.api.Proxy;
 import com.github.charlemaznable.varys.api.Query;
 import lombok.Synchronized;

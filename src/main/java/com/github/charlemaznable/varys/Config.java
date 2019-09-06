@@ -1,6 +1,6 @@
 package com.github.charlemaznable.varys;
 
-import com.github.charlemaznable.miner.MinerConfig;
+import com.github.charlemaznable.core.miner.MinerConfig;
 
 import java.util.concurrent.TimeUnit;
 

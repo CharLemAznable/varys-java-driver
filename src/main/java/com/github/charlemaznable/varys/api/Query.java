@@ -1,6 +1,6 @@
 package com.github.charlemaznable.varys.api;
 
-import com.github.charlemaznable.net.HttpReq;
+import com.github.charlemaznable.core.net.HttpReq;
 import com.github.charlemaznable.varys.Config;
 import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
@@ -15,9 +15,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 
-import static com.github.charlemaznable.codec.Json.unJson;
-import static com.github.charlemaznable.lang.LoadingCachee.get;
-import static com.github.charlemaznable.lang.LoadingCachee.writeCache;
+import static com.github.charlemaznable.core.codec.Json.unJson;
+import static com.github.charlemaznable.core.lang.LoadingCachee.get;
+import static com.github.charlemaznable.core.lang.LoadingCachee.writeCache;
 
 public class Query {
 

@@ -1,6 +1,6 @@
 package com.github.charlemaznable.varys.api;
 
-import com.github.charlemaznable.net.HttpReq;
+import com.github.charlemaznable.core.net.HttpReq;
 import com.github.charlemaznable.varys.Config;
 import lombok.AllArgsConstructor;
 
