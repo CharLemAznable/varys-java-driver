@@ -28,6 +28,7 @@ public class DefaultConfiguration {
         MockDiamondServer.setConfigInfo("VARYS", "default",
                 "address=http://127.0.0.1:4236/varys\n");
 
+        new MockVarysServer();
         MockVarysServer.setUpMockServer();
         val defaultAppTokenResp = new AppTokenResp();
         defaultAppTokenResp.setAppId("1000");
