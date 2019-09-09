@@ -1,4 +1,4 @@
-package com.github.charlemaznable.varys;
+package com.github.charlemaznable.varys.config;
 
 import com.github.charlemaznable.core.miner.MinerConfig;
 

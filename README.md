@@ -1,6 +1,7 @@
 ### varys-java-driver
 
 [![Build Status](https://travis-ci.org/CharLemAznable/varys-java-driver.svg?branch=master)](https://travis-ci.org/CharLemAznable/varys-java-driver)
+[![codecov](https://codecov.io/gh/CharLemAznable/varys-java-driver/branch/master/graph/badge.svg)](https://codecov.io/gh/CharLemAznable/varys-java-driver)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.charlemaznable/varys-java-driver/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.charlemaznable/varys-java-driver/)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 ![GitHub code size](https://img.shields.io/github/languages/code-size/CharLemAznable/varys-java-driver)
@@ -13,7 +14,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.5.0</version>
+  <version>0.5.1</version>
 </dependency>
 ```
 
@@ -28,7 +29,7 @@ address=http://127.0.0.1:4236/varys
 ##### Initialize:
 
 ```java
-Varys varys = new Varys(MinerFactory.getMiner(Config.class));
+Varys varys = new Varys();
 ```
 
 ##### Query API

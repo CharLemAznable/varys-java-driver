@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varys.api;
 
 import com.github.charlemaznable.core.net.HttpReq;
-import com.github.charlemaznable.varys.Config;
+import com.github.charlemaznable.varys.config.Config;
 import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
@@ -18,6 +18,8 @@ import javax.annotation.Nonnull;
 import static com.github.charlemaznable.core.codec.Json.unJson;
 import static com.github.charlemaznable.core.lang.LoadingCachee.get;
 import static com.github.charlemaznable.core.lang.LoadingCachee.writeCache;
+import static com.github.charlemaznable.varys.mock.MockVarysServer.getVarysResponse;
+import static com.github.charlemaznable.varys.mock.MockVarysServer.isTestMode;
 
 public class Query {
 
@@ -100,7 +102,11 @@ public class Query {
         protected final Config config;
 
         protected String httpGet(String subpath) {
-            return Preconditions.checkNotNull(new HttpReq(config.address() + subpath).get());
+            String path = config.address() + subpath;
+            if (isTestMode()) {
+                return Preconditions.checkNotNull(getVarysResponse(path));
+            }
+            return Preconditions.checkNotNull(new HttpReq(path).get());
         }
     }
 }

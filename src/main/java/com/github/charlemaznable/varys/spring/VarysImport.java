@@ -1,4 +1,4 @@
-package com.github.charlemaznable.varys;
+package com.github.charlemaznable.varys.spring;
 
 import org.springframework.context.annotation.Import;
 

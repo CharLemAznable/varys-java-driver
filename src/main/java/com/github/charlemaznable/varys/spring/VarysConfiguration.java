@@ -1,4 +1,4 @@
-package com.github.charlemaznable.varys;
+package com.github.charlemaznable.varys.spring;
 
 import com.github.charlemaznable.core.spring.ComplexBeanNameGenerator;
 import com.github.charlemaznable.core.spring.ComplexImport;

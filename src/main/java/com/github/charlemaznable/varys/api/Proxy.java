@@ -1,12 +1,15 @@
 package com.github.charlemaznable.varys.api;
 
 import com.github.charlemaznable.core.net.HttpReq;
-import com.github.charlemaznable.varys.Config;
+import com.github.charlemaznable.varys.config.Config;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
 
+import static com.github.charlemaznable.varys.mock.MockVarysServer.getVarysResponse;
+import static com.github.charlemaznable.varys.mock.MockVarysServer.isTestMode;
 import static java.lang.String.format;
+import static org.joor.Reflect.on;
 
 @AllArgsConstructor
 public class Proxy {
@@ -60,10 +63,18 @@ public class Proxy {
         }
 
         public String get() {
+            if (isTestMode()) {
+                return getVarysResponse(on(httpReq)
+                        .field("baseUrl").get());
+            }
             return httpReq.get();
         }
 
         public String post() {
+            if (isTestMode()) {
+                return getVarysResponse(on(httpReq)
+                        .field("baseUrl").get());
+            }
             return httpReq.post();
         }
     }
