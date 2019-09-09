@@ -64,6 +64,6 @@ public interface Config {
     @MinerConfig(defaultValue = "8")
     int proxyPoolMaxIdle();
 
-    @MinerConfig(defaultValue = "8")
+    @MinerConfig(defaultValue = "0")
     int proxyPoolMinIdle();
 }

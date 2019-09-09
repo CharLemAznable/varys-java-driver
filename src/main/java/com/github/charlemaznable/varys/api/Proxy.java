@@ -2,6 +2,7 @@ package com.github.charlemaznable.varys.api;
 
 import com.github.charlemaznable.core.net.HttpReq;
 import com.github.charlemaznable.varys.config.Config;
+import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
@@ -20,23 +21,23 @@ public class Proxy {
     private final Config config;
 
     public ProxyReq wechatApp(String codeName, String proxyPath) {
-        return new ProxyReq(config.address() + proxyWechatAppPath
-                + codeName + fixProxyPath(proxyPath));
+        return new ProxyReq(Preconditions.checkNotNull(config.address())
+                + proxyWechatAppPath + codeName + fixProxyPath(proxyPath));
     }
 
     public ProxyReq wechatApp(String codeName, String proxyPathTemplate, Object... proxyPathArgs) {
-        return new ProxyReq(config.address() + proxyWechatAppPath
-                + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
+        return new ProxyReq(Preconditions.checkNotNull(config.address())
+                + proxyWechatAppPath + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
     }
 
     public ProxyReq wechatCorp(String codeName, String proxyPath) {
-        return new ProxyReq(config.address() + proxyWechatCorpPath
-                + codeName + fixProxyPath(proxyPath));
+        return new ProxyReq(Preconditions.checkNotNull(config.address())
+                + proxyWechatCorpPath + codeName + fixProxyPath(proxyPath));
     }
 
     public ProxyReq wechatCorp(String codeName, String proxyPathTemplate, Object... proxyPathArgs) {
-        return new ProxyReq(config.address() + proxyWechatCorpPath
-                + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
+        return new ProxyReq(Preconditions.checkNotNull(config.address())
+                + proxyWechatCorpPath + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
     }
 
     public class ProxyReq {

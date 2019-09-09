@@ -102,7 +102,7 @@ public class Query {
         protected final Config config;
 
         protected String httpGet(String subpath) {
-            String path = config.address() + subpath;
+            String path = Preconditions.checkNotNull(config.address()) + subpath;
             if (isTestMode()) {
                 return Preconditions.checkNotNull(getVarysResponse(path));
             }
