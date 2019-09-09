@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varys.api;
 
 import com.github.charlemaznable.core.net.HttpReq;
-import com.github.charlemaznable.varys.config.Config;
+import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
@@ -33,15 +33,15 @@ public class Query {
     private LoadingCache<String, CorpTokenResp> corpTokenCache;
     private LoadingCache<Pair<String, String>, CorpAuthorizerTokenResp> corpAuthorizerTokenCache;
 
-    public Query(Config config) {
-        appTokenCache = writeCache(new QueryCacheLoader<String, AppTokenResp>(config) {
+    public Query(VarysConfig varysConfig) {
+        appTokenCache = writeCache(new QueryCacheLoader<String, AppTokenResp>(varysConfig) {
             @Override
             public AppTokenResp load(@Nonnull String codeName) {
                 return unJson(httpGet(appTokenCachePath + codeName), AppTokenResp.class);
             }
-        }, config.appTokenCacheDuration(), config.appTokenCacheTimeUnit());
+        }, varysConfig.appTokenCacheDuration(), varysConfig.appTokenCacheTimeUnit());
 
-        appAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(config) {
+        appAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, AppAuthorizerTokenResp>(varysConfig) {
             @Override
             public AppAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
                 val codeName = pair.getLeft();
@@ -50,16 +50,16 @@ public class Query {
                 return unJson(httpGet(appAuthorizerTokenCachePath + codeName
                         + "/" + authorizerAppId), AppAuthorizerTokenResp.class);
             }
-        }, config.appAuthorizerTokenCacheDuration(), config.appAuthorizerTokenCacheTimeUnit());
+        }, varysConfig.appAuthorizerTokenCacheDuration(), varysConfig.appAuthorizerTokenCacheTimeUnit());
 
-        corpTokenCache = writeCache(new QueryCacheLoader<String, CorpTokenResp>(config) {
+        corpTokenCache = writeCache(new QueryCacheLoader<String, CorpTokenResp>(varysConfig) {
             @Override
             public CorpTokenResp load(@Nonnull String codeName) {
                 return unJson(httpGet(corpTokenCachePath + codeName), CorpTokenResp.class);
             }
-        }, config.corpTokenCacheDuration(), config.corpTokenCacheTimeUnit());
+        }, varysConfig.corpTokenCacheDuration(), varysConfig.corpTokenCacheTimeUnit());
 
-        corpAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(config) {
+        corpAuthorizerTokenCache = writeCache(new QueryCacheLoader<Pair<String, String>, CorpAuthorizerTokenResp>(varysConfig) {
             @Override
             public CorpAuthorizerTokenResp load(@Nonnull Pair<String, String> pair) {
                 val codeName = pair.getLeft();
@@ -68,7 +68,7 @@ public class Query {
                 return unJson(httpGet(corpAuthorizerTokenCachePath + codeName
                         + "/" + corpId), CorpAuthorizerTokenResp.class);
             }
-        }, config.corpAuthorizerTokenCacheDuration(), config.corpAuthorizerTokenCacheTimeUnit());
+        }, varysConfig.corpAuthorizerTokenCacheDuration(), varysConfig.corpAuthorizerTokenCacheTimeUnit());
     }
 
     public AppTokenResp appToken(String codeName) {
@@ -99,10 +99,10 @@ public class Query {
 
     @AllArgsConstructor
     private static abstract class QueryCacheLoader<K, V> extends CacheLoader<K, V> {
-        protected final Config config;
+        protected final VarysConfig varysConfig;
 
         protected String httpGet(String subpath) {
-            String path = Preconditions.checkNotNull(config.address()) + subpath;
+            val path = Preconditions.checkNotNull(varysConfig.address()) + subpath;
             if (isTestMode()) {
                 return Preconditions.checkNotNull(getVarysResponse(path));
             }

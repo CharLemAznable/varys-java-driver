@@ -1,10 +1,10 @@
 package com.github.charlemaznable.varys.instanceConfig;
 
-import com.github.charlemaznable.varys.config.Config;
+import com.github.charlemaznable.varys.config.VarysConfig;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InstanceConfig implements Config {
+public class InstanceConfig implements VarysConfig {
 
     @Override
     public String address() {

@@ -5,7 +5,7 @@ import com.github.charlemaznable.core.lang.pool.PooledObjectCreator;
 import com.github.charlemaznable.core.miner.MinerFactory;
 import com.github.charlemaznable.varys.api.Proxy;
 import com.github.charlemaznable.varys.api.Query;
-import com.github.charlemaznable.varys.config.Config;
+import com.github.charlemaznable.varys.config.VarysConfig;
 import lombok.Synchronized;
 import lombok.val;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -18,14 +18,14 @@ import javax.annotation.PostConstruct;
 public class Varys {
 
     @Autowired(required = false)
-    private Config config;
+    private VarysConfig varysConfig;
     private Query queryProxy;
     private Proxy proxyProxy;
 
     @PostConstruct
     public void postConstruct() {
-        if (null == config) {
-            config = MinerFactory.getMiner(Config.class);
+        if (null == varysConfig) {
+            varysConfig = MinerFactory.getMiner(VarysConfig.class);
         }
     }
 
@@ -33,11 +33,11 @@ public class Varys {
     public Query query() {
         if (null == queryProxy) {
             val queryPoolConfig = new GenericObjectPoolConfig<Query>();
-            queryPoolConfig.setMaxTotal(config.queryPoolMaxTotal());
-            queryPoolConfig.setMaxIdle(config.queryPoolMaxIdle());
-            queryPoolConfig.setMinIdle(config.queryPoolMinIdle());
+            queryPoolConfig.setMaxTotal(varysConfig.queryPoolMaxTotal());
+            queryPoolConfig.setMaxIdle(varysConfig.queryPoolMaxIdle());
+            queryPoolConfig.setMinIdle(varysConfig.queryPoolMinIdle());
             queryProxy = PoolProxy.builder(new PooledObjectCreator<Query>() {})
-                    .config(queryPoolConfig).args(config).build();
+                    .config(queryPoolConfig).args(varysConfig).build();
         }
         return queryProxy;
     }
@@ -46,11 +46,11 @@ public class Varys {
     public Proxy proxy() {
         if (null == proxyProxy) {
             val proxyPoolConfig = new GenericObjectPoolConfig<Proxy>();
-            proxyPoolConfig.setMaxTotal(config.proxyPoolMaxTotal());
-            proxyPoolConfig.setMaxIdle(config.proxyPoolMaxIdle());
-            proxyPoolConfig.setMinIdle(config.proxyPoolMinIdle());
+            proxyPoolConfig.setMaxTotal(varysConfig.proxyPoolMaxTotal());
+            proxyPoolConfig.setMaxIdle(varysConfig.proxyPoolMaxIdle());
+            proxyPoolConfig.setMinIdle(varysConfig.proxyPoolMinIdle());
             proxyProxy = PoolProxy.builder(new PooledObjectCreator<Proxy>() {})
-                    .config(proxyPoolConfig).args(config).build();
+                    .config(proxyPoolConfig).args(varysConfig).build();
         }
         return proxyProxy;
     }
