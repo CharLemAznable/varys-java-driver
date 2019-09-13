@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.github.charlemaznable.core.codec.Json.json;
+import static com.github.charlemaznable.core.lang.Mapp.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({SpringExtension.class})
@@ -92,7 +93,7 @@ public class DefaultConfigTest {
                 return "defaultWechatAppResp";
             }
         };
-        val wechatAppResp = varys.proxy().wechatApp("default", "/wechatApp").get();
+        val wechatAppResp = varys.proxy().wechatApp("default", "/wechatApp").prop("a", "b").get();
         assertEquals("defaultWechatAppResp", wechatAppResp);
 
         new MockUp<HttpReq>(HttpReq.class) {
@@ -101,7 +102,7 @@ public class DefaultConfigTest {
                 return "defaultWechatAppParamResp";
             }
         };
-        val wechatAppParamResp = varys.proxy().wechatApp("default", "wechatAppParam/%s", "testParam").post();
+        val wechatAppParamResp = varys.proxy().wechatApp("default", "wechatAppParam/%s", "testParam").prop("a", "b").post();
         assertEquals("defaultWechatAppParamResp", wechatAppParamResp);
 
         new MockUp<HttpReq>(HttpReq.class) {
@@ -110,7 +111,7 @@ public class DefaultConfigTest {
                 return "defaultWechatCorpResp";
             }
         };
-        val wechatCorpResp = varys.proxy().wechatCorp("default", "/wechatCorp").get();
+        val wechatCorpResp = varys.proxy().wechatCorp("default", "/wechatCorp").param("a", "b").get();
         assertEquals("defaultWechatCorpResp", wechatCorpResp);
 
         new MockUp<HttpReq>(HttpReq.class) {
@@ -119,7 +120,7 @@ public class DefaultConfigTest {
                 return "defaultWechatCorpParamResp";
             }
         };
-        val wechatCorpParamResp = varys.proxy().wechatCorp("default", "wechatCorpParam/%s", "testParam").post();
+        val wechatCorpParamResp = varys.proxy().wechatCorp("default", "wechatCorpParam/%s", "testParam").params(of("a", "b")).post();
         assertEquals("defaultWechatCorpParamResp", wechatCorpParamResp);
     }
 }
