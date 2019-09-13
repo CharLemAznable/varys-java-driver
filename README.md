@@ -14,7 +14,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1</version>
 </dependency>
 ```
 
@@ -86,4 +86,11 @@ https://api.weixin.qq.com/cgi-bin/{proxy path}
 
 企业微信接口代理路径
 https://qyapi.weixin.qq.com/cgi-bin/{proxy path}
+```
+
+#### Run Test In IntelliJ IDEA
+
+```
+// 添加 VM options
+-javaagent:$MAVEN_REPOSITORY$/org/jmockit/jmockit/1.48/jmockit-1.48.jar
 ```

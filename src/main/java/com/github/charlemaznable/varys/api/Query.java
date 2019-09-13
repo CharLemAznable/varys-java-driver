@@ -18,8 +18,6 @@ import javax.annotation.Nonnull;
 import static com.github.charlemaznable.core.codec.Json.unJson;
 import static com.github.charlemaznable.core.lang.LoadingCachee.get;
 import static com.github.charlemaznable.core.lang.LoadingCachee.writeCache;
-import static com.github.charlemaznable.varys.mock.MockVarysServer.getVarysResponse;
-import static com.github.charlemaznable.varys.mock.MockVarysServer.isTestMode;
 
 public class Query {
 
@@ -103,9 +101,6 @@ public class Query {
 
         protected String httpGet(String subpath) {
             val path = Preconditions.checkNotNull(varysConfig.address()) + subpath;
-            if (isTestMode()) {
-                return Preconditions.checkNotNull(getVarysResponse(path));
-            }
             return Preconditions.checkNotNull(new HttpReq(path).get());
         }
     }
