@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import(VarysConfiguration.class)
+@Import(VarysComponents.class)
 public @interface VarysImport {
 }
