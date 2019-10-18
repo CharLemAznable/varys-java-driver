@@ -12,29 +12,26 @@ import static java.lang.String.format;
 @AllArgsConstructor
 public class Proxy {
 
-    private final static String proxyWechatAppPath = "/proxy-wechat-app/";
-    private final static String proxyWechatCorpPath = "/proxy-wechat-corp/";
-
     private final VarysConfig varysConfig;
 
     public ProxyReq wechatApp(String codeName, String proxyPath) {
         return new ProxyReq(Preconditions.checkNotNull(varysConfig.address())
-                + proxyWechatAppPath + codeName + fixProxyPath(proxyPath));
+                + varysConfig.proxyWechatAppPath() + codeName + fixProxyPath(proxyPath));
     }
 
     public ProxyReq wechatApp(String codeName, String proxyPathTemplate, Object... proxyPathArgs) {
         return new ProxyReq(Preconditions.checkNotNull(varysConfig.address())
-                + proxyWechatAppPath + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
+                + varysConfig.proxyWechatAppPath() + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
     }
 
     public ProxyReq wechatCorp(String codeName, String proxyPath) {
         return new ProxyReq(Preconditions.checkNotNull(varysConfig.address())
-                + proxyWechatCorpPath + codeName + fixProxyPath(proxyPath));
+                + varysConfig.proxyWechatCorpPath() + codeName + fixProxyPath(proxyPath));
     }
 
     public ProxyReq wechatCorp(String codeName, String proxyPathTemplate, Object... proxyPathArgs) {
         return new ProxyReq(Preconditions.checkNotNull(varysConfig.address())
-                + proxyWechatCorpPath + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
+                + varysConfig.proxyWechatCorpPath() + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
     }
 
     public class ProxyReq {
