@@ -6,6 +6,22 @@
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 ![GitHub code size](https://img.shields.io/github/languages/code-size/CharLemAznable/varys-java-driver)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=alert_status)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=bugs)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=security_rating)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=sqale_index)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=code_smells)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=ncloc)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=coverage)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=CharLemAznable_varys-java-driver&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=CharLemAznable_varys-java-driver)
+
 Java client for [varys](https://github.com/CharLemAznable/varys)
 
 ##### Maven Dependency
@@ -14,7 +30,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.7.2</version>
+  <version>0.7.3</version>
 </dependency>
 ```
 
