@@ -1,16 +1,14 @@
 package com.github.charlemaznable.varys.resp;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class AppAuthorizerTokenResp extends TokenResp {
+public class AppAuthorizerTokenResp {
 
+    private String token;
+    private String error;
     private String appId;
     private String authorizerAppId;
 }

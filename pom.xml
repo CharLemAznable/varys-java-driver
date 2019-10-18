@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>varys-java-driver</artifactId>
-    <version>0.7.3</version>
+    <version>0.7.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Varys Java Driver</name>
