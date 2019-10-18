@@ -16,8 +16,7 @@ public class AppTokenRespTest {
         resp2.setAppId("1000");
         resp2.setToken("defaultToken");
 
-        assertEquals(resp1.toString(), resp2.toString());
-        assertEquals(resp1, resp2);
-        assertEquals(resp1.hashCode(), resp2.hashCode());
+        assertEquals(resp1.getAppId(), resp2.getAppId());
+        assertEquals(resp1.getToken(), resp2.getToken());
     }
 }

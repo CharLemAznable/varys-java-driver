@@ -16,8 +16,7 @@ public class CorpTokenRespTest {
         resp2.setCorpId("10000");
         resp2.setToken("defaultToken");
 
-        assertEquals(resp1.toString(), resp2.toString());
-        assertEquals(resp1, resp2);
-        assertEquals(resp1.hashCode(), resp2.hashCode());
+        assertEquals(resp1.getCorpId(), resp2.getCorpId());
+        assertEquals(resp1.getToken(), resp2.getToken());
     }
 }
