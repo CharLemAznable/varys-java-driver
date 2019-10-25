@@ -34,6 +34,16 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 </dependency>
 ```
 
+##### Maven Dependency SNAPSHOT
+
+```xml
+<dependency>
+  <groupId>com.github.charlemaznable</groupId>
+  <artifactId>varys-java-driver</artifactId>
+  <version>0.8.0-SNAPSHOT</version>
+</dependency>
+```
+
 ##### Configuration
 
 1. 在`{USER_HOME}/.diamond-client/config-data`下新建目录`VARYS`
