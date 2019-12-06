@@ -5,4 +5,7 @@ import com.github.charlemaznable.varys.config.VarysConfig;
 
 @MinerConfig(group = "VARYS", dataId = "test")
 public interface InterfaceConfig extends VarysConfig {
+
+    @MinerConfig(dataId = "InterfaceAddress")
+    String address();
 }
