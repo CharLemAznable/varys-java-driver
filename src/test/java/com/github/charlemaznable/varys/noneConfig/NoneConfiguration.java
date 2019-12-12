@@ -18,7 +18,7 @@ public class NoneConfiguration {
     public void postConstruct() {
         onClass(MinerFactory.class).field("minerCache").call("invalidateAll");
         MockDiamondServer.setUpMockServer();
-        MockDiamondServer.setConfigInfo("VARYS", "default", "");
+        MockDiamondServer.setConfigInfo("Varys", "default", "");
     }
 
     @PreDestroy

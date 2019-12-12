@@ -18,7 +18,7 @@ public class DefaultConfiguration {
     public void postConstruct() {
         onClass(MinerFactory.class).field("minerCache").call("invalidateAll");
         MockDiamondServer.setUpMockServer();
-        MockDiamondServer.setConfigInfo("VARYS", "default",
+        MockDiamondServer.setConfigInfo("Varys", "default",
                 "address=http://127.0.0.1:4236/varys\n");
     }
 

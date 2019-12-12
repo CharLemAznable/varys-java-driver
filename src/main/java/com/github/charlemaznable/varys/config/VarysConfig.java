@@ -4,7 +4,7 @@ import com.github.charlemaznable.core.miner.MinerConfig;
 
 import java.util.concurrent.TimeUnit;
 
-@MinerConfig(group = "VARYS", dataId = "default")
+@MinerConfig(group = "Varys", dataId = "default")
 public interface VarysConfig {
 
     String address();

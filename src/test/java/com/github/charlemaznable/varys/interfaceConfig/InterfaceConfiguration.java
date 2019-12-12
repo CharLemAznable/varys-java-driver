@@ -16,7 +16,7 @@ public class InterfaceConfiguration {
     @PostConstruct
     public void postConstruct() {
         MockDiamondServer.setUpMockServer();
-        MockDiamondServer.setConfigInfo("VARYS", "test",
+        MockDiamondServer.setConfigInfo("Varys", "test",
                 "InterfaceAddress=http://127.0.0.1:4236/varys\n");
     }
 
