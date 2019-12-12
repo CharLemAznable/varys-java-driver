@@ -23,7 +23,7 @@ public class Varys {
 
     @Autowired(required = false)
     public Varys() {
-        this.varysConfig = getMiner(VarysConfig.class);
+        this(getMiner(VarysConfig.class));
     }
 
     @Autowired(required = false)
