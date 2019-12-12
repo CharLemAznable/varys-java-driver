@@ -2,7 +2,6 @@ package com.github.charlemaznable.varys.spring;
 
 import com.github.charlemaznable.core.lang.pool.PoolProxy;
 import com.github.charlemaznable.core.lang.pool.PooledObjectCreator;
-import com.github.charlemaznable.core.miner.MinerFactory;
 import com.github.charlemaznable.varys.api.Proxy;
 import com.github.charlemaznable.varys.api.Query;
 import com.github.charlemaznable.varys.config.VarysConfig;
@@ -12,21 +11,25 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
+import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 
 @Component
 public class Varys {
 
-    @Autowired(required = false)
-    private VarysConfig varysConfig;
+    private final VarysConfig varysConfig;
     private Query queryProxy;
     private Proxy proxyProxy;
 
-    @PostConstruct
-    public void postConstruct() {
-        if (null == varysConfig) {
-            varysConfig = MinerFactory.getMiner(VarysConfig.class);
-        }
+    @Autowired(required = false)
+    public Varys() {
+        this.varysConfig = getMiner(VarysConfig.class);
+    }
+
+    @Autowired(required = false)
+    public Varys(VarysConfig varysConfig) {
+        checkNotNull(varysConfig);
+        this.varysConfig = varysConfig;
     }
 
     @Synchronized
