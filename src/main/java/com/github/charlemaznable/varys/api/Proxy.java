@@ -57,6 +57,11 @@ public class Proxy {
             return this;
         }
 
+        public ProxyReq requestBody(String requestBody) {
+            httpReq.requestBody(requestBody);
+            return this;
+        }
+
         public String get() {
             return httpReq.get();
         }

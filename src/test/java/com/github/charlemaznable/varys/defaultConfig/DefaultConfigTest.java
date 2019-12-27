@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.github.charlemaznable.core.codec.Json.json;
+import static com.github.charlemaznable.core.codec.Json.jsonOf;
 import static com.github.charlemaznable.core.lang.Mapp.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -102,7 +103,7 @@ public class DefaultConfigTest {
                 return "defaultWechatAppParamResp";
             }
         };
-        val wechatAppParamResp = varys.proxy().wechatApp("default", "wechatAppParam/%s", "testParam").prop("a", "b").post();
+        val wechatAppParamResp = varys.proxy().wechatApp("default", "wechatAppParam/%s", "testParam").requestBody(jsonOf("a", "b")).post();
         assertEquals("defaultWechatAppParamResp", wechatAppParamResp);
 
         new MockUp<HttpReq>(HttpReq.class) {
