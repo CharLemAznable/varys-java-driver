@@ -30,7 +30,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.8.0</version>
+  <version>0.8.1</version>
 </dependency>
 ```
 
