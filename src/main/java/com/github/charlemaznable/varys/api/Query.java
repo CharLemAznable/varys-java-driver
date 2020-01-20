@@ -19,7 +19,7 @@ import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static com.github.charlemaznable.core.lang.LoadingCachee.get;
 import static com.github.charlemaznable.core.lang.LoadingCachee.writeCache;
 
-public final class Query {
+public class Query {
 
     private LoadingCache<String, AppTokenResp> appTokenCache;
     private LoadingCache<Pair<String, String>, AppAuthorizerTokenResp> appAuthorizerTokenCache;
@@ -64,26 +64,26 @@ public final class Query {
         }, varysConfig.corpAuthorizerTokenCacheDuration(), varysConfig.corpAuthorizerTokenCacheTimeUnit());
     }
 
-    public AppTokenResp appToken(String codeName) {
+    public final AppTokenResp appToken(String codeName) {
         checkNotNull(appTokenCache);
         checkNotNull(codeName);
         return get(appTokenCache, codeName);
     }
 
-    public AppAuthorizerTokenResp appAuthorizerToken(String codeName, String authorizerAppId) {
+    public final AppAuthorizerTokenResp appAuthorizerToken(String codeName, String authorizerAppId) {
         checkNotNull(appAuthorizerTokenCache);
         checkNotNull(codeName);
         checkNotNull(authorizerAppId);
         return get(appAuthorizerTokenCache, Pair.of(codeName, authorizerAppId));
     }
 
-    public CorpTokenResp corpToken(String codeName) {
+    public final CorpTokenResp corpToken(String codeName) {
         checkNotNull(corpTokenCache);
         checkNotNull(codeName);
         return get(corpTokenCache, codeName);
     }
 
-    public CorpAuthorizerTokenResp corpAuthorizerToken(String codeName, String corpId) {
+    public final CorpAuthorizerTokenResp corpAuthorizerToken(String codeName, String corpId) {
         checkNotNull(corpAuthorizerTokenCache);
         checkNotNull(codeName);
         checkNotNull(corpId);
