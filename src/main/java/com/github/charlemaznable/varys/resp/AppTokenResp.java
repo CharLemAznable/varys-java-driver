@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AppTokenResp {
+public final class AppTokenResp {
 
     private String token;
     private String error;

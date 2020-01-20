@@ -15,7 +15,7 @@ import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 
 @Component
-public class Varys {
+public final class Varys {
 
     private final VarysConfig varysConfig;
     private Query queryProxy;

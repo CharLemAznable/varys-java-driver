@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CorpTokenResp {
+public final class CorpTokenResp {
 
     private String token;
     private String error;

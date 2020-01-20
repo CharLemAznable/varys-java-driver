@@ -10,7 +10,7 @@ import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static java.lang.String.format;
 
 @AllArgsConstructor
-public class Proxy {
+public final class Proxy {
 
     private final VarysConfig varysConfig;
 
@@ -34,7 +34,7 @@ public class Proxy {
                 + varysConfig.proxyWechatCorpPath() + codeName + fixProxyPath(format(proxyPathTemplate, proxyPathArgs)));
     }
 
-    public class ProxyReq {
+    public final class ProxyReq {
 
         private HttpReq httpReq;
 

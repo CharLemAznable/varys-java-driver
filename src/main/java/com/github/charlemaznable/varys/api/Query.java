@@ -19,7 +19,7 @@ import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static com.github.charlemaznable.core.lang.LoadingCachee.get;
 import static com.github.charlemaznable.core.lang.LoadingCachee.writeCache;
 
-public class Query {
+public final class Query {
 
     private LoadingCache<String, AppTokenResp> appTokenCache;
     private LoadingCache<Pair<String, String>, AppAuthorizerTokenResp> appAuthorizerTokenCache;

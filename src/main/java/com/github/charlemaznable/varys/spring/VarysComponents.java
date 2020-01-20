@@ -5,5 +5,5 @@ import com.github.charlemaznable.core.spring.ComplexImport;
 
 @ComplexImport
 @ComplexComponentScan
-public class VarysComponents {
+public final class VarysComponents {
 }

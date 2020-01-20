@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AppAuthorizerTokenResp {
+public final class AppAuthorizerTokenResp {
 
     private String token;
     private String error;
