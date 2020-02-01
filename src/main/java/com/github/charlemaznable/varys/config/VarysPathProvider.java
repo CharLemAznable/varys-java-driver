@@ -8,7 +8,7 @@ import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 
 @Component
-public class VarysPathProvider implements OhFixedValueProvider {
+public final class VarysPathProvider implements OhFixedValueProvider {
 
     private final VarysConfig varysConfig;
 

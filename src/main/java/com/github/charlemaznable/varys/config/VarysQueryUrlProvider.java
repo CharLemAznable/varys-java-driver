@@ -8,7 +8,7 @@ import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 
 @Component
-public class VarysQueryUrlProvider implements UrlProvider {
+public final class VarysQueryUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
 

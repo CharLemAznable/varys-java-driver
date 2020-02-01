@@ -11,7 +11,7 @@ import static org.apache.commons.lang3.StringUtils.prependIfMissing;
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 
 @Component
-public class VarysProxyAppUrlProvider implements UrlProvider {
+public final class VarysProxyAppUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
 
