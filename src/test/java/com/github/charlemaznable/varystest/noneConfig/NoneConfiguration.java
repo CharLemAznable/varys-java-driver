@@ -1,7 +1,9 @@
-package com.github.charlemaznable.varys.noneConfig;
+package com.github.charlemaznable.varystest.noneConfig;
 
 import com.github.charlemaznable.core.miner.MinerFactory;
-import com.github.charlemaznable.varys.spring.VarysImport;
+import com.github.charlemaznable.core.net.ohclient.OhFactory;
+import com.github.charlemaznable.core.net.ohclient.OhScan;
+import com.github.charlemaznable.varys.VarysImport;
 import org.n3r.diamond.client.impl.MockDiamondServer;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -12,10 +14,12 @@ import static org.joor.Reflect.onClass;
 
 @ComponentScan
 @VarysImport
+@OhScan("com.github.charlemaznable.varystest.proxy")
 public class NoneConfiguration {
 
     @PostConstruct
     public void postConstruct() {
+        onClass(OhFactory.class).field("ohCache").call("invalidateAll");
         onClass(MinerFactory.class).field("minerCache").call("invalidateAll");
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "default", "");

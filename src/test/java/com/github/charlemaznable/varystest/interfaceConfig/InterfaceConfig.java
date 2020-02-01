@@ -1,4 +1,4 @@
-package com.github.charlemaznable.varys.interfaceConfig;
+package com.github.charlemaznable.varystest.interfaceConfig;
 
 import com.github.charlemaznable.core.miner.MinerConfig;
 import com.github.charlemaznable.varys.config.VarysConfig;
