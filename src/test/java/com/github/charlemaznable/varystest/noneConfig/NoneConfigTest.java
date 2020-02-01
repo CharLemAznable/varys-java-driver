@@ -1,7 +1,8 @@
 package com.github.charlemaznable.varystest.noneConfig;
 
 import com.github.charlemaznable.varys.Query;
-import com.github.charlemaznable.varystest.proxy.ProxyDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +25,8 @@ public class NoneConfigTest {
     @Test
     public void testNoneConfigProxy() {
         assertThrows(NullPointerException.class, () ->
-                getClient(ProxyDemo.class).wechatApp("none", "b"));
+                getClient(ProxyAppDemo.class).wechatApp("none", "b"));
+        assertThrows(NullPointerException.class, () ->
+                getClient(ProxyCorpDemo.class).wechatCorp("none", "b"));
     }
 }

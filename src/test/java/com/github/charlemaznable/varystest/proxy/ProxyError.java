@@ -1,15 +1,13 @@
 package com.github.charlemaznable.varystest.proxy;
 
-import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.core.net.ohclient.OhMapping;
 import com.github.charlemaznable.core.net.ohclient.param.OhFixedPathVar;
 import com.github.charlemaznable.core.net.ohclient.param.OhPathVar;
-import com.github.charlemaznable.varys.VarysConfigProvider;
-import com.github.charlemaznable.varys.VarysMapping;
+import com.github.charlemaznable.varys.ProxyApp;
+import com.github.charlemaznable.varys.config.VarysPathProvider;
 
-@OhClient
-@VarysMapping
-@OhFixedPathVar(name = "proxyWechatError", valueProvider = VarysConfigProvider.class)
+@ProxyApp
+@OhFixedPathVar(name = "proxyWechatError", valueProvider = VarysPathProvider.class)
 public interface ProxyError {
 
     @OhMapping("/{proxyWechatError}/{codeName}/wechatApp")

@@ -5,7 +5,8 @@ import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.CorpTokenResp;
-import com.github.charlemaznable.varystest.proxy.ProxyDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import lombok.SneakyThrows;
 import lombok.val;
 import okhttp3.mockwebserver.Dispatcher;
@@ -31,7 +32,9 @@ public class InstanceConfigTest {
     @Autowired
     private Query query;
     @Autowired
-    private ProxyDemo proxy;
+    private ProxyAppDemo proxyApp;
+    @Autowired
+    private ProxyCorpDemo proxyCorp;
 
     @SneakyThrows
     @Test
@@ -125,16 +128,16 @@ public class InstanceConfigTest {
         });
         mockWebServer.start(4236);
 
-        val wechatAppResp = proxy.wechatApp("instance", "b");
+        val wechatAppResp = proxyApp.wechatApp("instance", "b");
         assertEquals("instanceWechatAppResp", wechatAppResp);
 
-        val wechatAppParamResp = proxy.wechatAppParam("instance", "testParam", jsonOf("a", "b"));
+        val wechatAppParamResp = proxyApp.wechatAppParam("instance", "testParam", jsonOf("a", "b"));
         assertEquals("instanceWechatAppParamResp", wechatAppParamResp);
 
-        val wechatCorpResp = proxy.wechatCorp("instance", "b");
+        val wechatCorpResp = proxyCorp.wechatCorp("instance", "b");
         assertEquals("instanceWechatCorpResp", wechatCorpResp);
 
-        val wechatCorpParamResp = proxy.wechatCorpParam("instance", "testParam", "b");
+        val wechatCorpParamResp = proxyCorp.wechatCorpParam("instance", "testParam", "b");
         assertEquals("instanceWechatCorpParamResp", wechatCorpParamResp);
 
         mockWebServer.shutdown();

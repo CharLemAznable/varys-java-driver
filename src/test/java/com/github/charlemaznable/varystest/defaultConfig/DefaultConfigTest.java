@@ -5,7 +5,9 @@ import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.CorpTokenResp;
-import com.github.charlemaznable.varystest.proxy.ProxyDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyError;
 import lombok.SneakyThrows;
 import lombok.val;
 import okhttp3.mockwebserver.Dispatcher;
@@ -21,7 +23,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.github.charlemaznable.core.codec.Json.json;
 import static com.github.charlemaznable.core.codec.Json.jsonOf;
+import static com.github.charlemaznable.core.net.ohclient.OhFactory.getClient;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @ExtendWith({SpringExtension.class})
@@ -31,7 +35,9 @@ public class DefaultConfigTest {
     @Autowired
     private Query query;
     @Autowired
-    private ProxyDemo proxy;
+    private ProxyAppDemo proxyApp;
+    @Autowired
+    private ProxyCorpDemo proxyCorp;
 
     @SneakyThrows
     @Test
@@ -125,18 +131,24 @@ public class DefaultConfigTest {
         });
         mockWebServer.start(4236);
 
-        val wechatAppResp = proxy.wechatApp("default", "b");
+        val wechatAppResp = proxyApp.wechatApp("default", "b");
         assertEquals("defaultWechatAppResp", wechatAppResp);
 
-        val wechatAppParamResp = proxy.wechatAppParam("default", "testParam", jsonOf("a", "b"));
+        val wechatAppParamResp = proxyApp.wechatAppParam("default", "testParam", jsonOf("a", "b"));
         assertEquals("defaultWechatAppParamResp", wechatAppParamResp);
 
-        val wechatCorpResp = proxy.wechatCorp("default", "b");
+        val wechatCorpResp = proxyCorp.wechatCorp("default", "b");
         assertEquals("defaultWechatCorpResp", wechatCorpResp);
 
-        val wechatCorpParamResp = proxy.wechatCorpParam("default", "testParam", "b");
+        val wechatCorpParamResp = proxyCorp.wechatCorpParam("default", "testParam", "b");
         assertEquals("defaultWechatCorpParamResp", wechatCorpParamResp);
 
         mockWebServer.shutdown();
+    }
+
+    @Test
+    public void testProxyError() {
+        assertThrows(IllegalArgumentException.class, () ->
+                getClient(ProxyError.class).proxyError("test"));
     }
 }
