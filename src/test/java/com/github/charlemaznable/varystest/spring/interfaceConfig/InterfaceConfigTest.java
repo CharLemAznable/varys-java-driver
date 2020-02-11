@@ -1,10 +1,10 @@
 package com.github.charlemaznable.varystest.spring.interfaceConfig;
 
-import com.github.charlemaznable.varys.spring.Query;
 import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.CorpTokenResp;
+import com.github.charlemaznable.varys.spring.Query;
 import com.github.charlemaznable.varystest.spring.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.spring.proxy.ProxyCorpDemo;
 import lombok.SneakyThrows;

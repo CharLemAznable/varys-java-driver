@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varys.spring;
 
-import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.core.net.common.Mapping;
+import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.varys.spring.provider.VarysProxyCorpUrlProvider;
 
 import java.lang.annotation.Documented;

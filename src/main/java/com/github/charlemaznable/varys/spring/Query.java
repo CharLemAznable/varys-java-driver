@@ -1,15 +1,15 @@
 package com.github.charlemaznable.varys.spring;
 
-import com.github.charlemaznable.core.net.ohclient.OhClient;
-import com.github.charlemaznable.core.net.common.Mapping;
 import com.github.charlemaznable.core.net.common.FixedPathVar;
+import com.github.charlemaznable.core.net.common.Mapping;
 import com.github.charlemaznable.core.net.common.PathVar;
-import com.github.charlemaznable.varys.spring.provider.VarysPathProvider;
-import com.github.charlemaznable.varys.spring.provider.VarysQueryUrlProvider;
+import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.CorpTokenResp;
+import com.github.charlemaznable.varys.spring.provider.VarysPathProvider;
+import com.github.charlemaznable.varys.spring.provider.VarysQueryUrlProvider;
 
 @OhClient
 @Mapping(urlProvider = VarysQueryUrlProvider.class)
