@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-@ExtendWith({SpringExtension.class})
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DefaultConfiguration.class)
 public class DefaultConfigTest {
 
