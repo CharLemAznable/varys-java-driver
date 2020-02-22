@@ -20,8 +20,7 @@ public final class VarysPathProvider implements FixedValueProvider {
 
     @Autowired(required = false)
     public VarysPathProvider(VarysConfig varysConfig) {
-        checkNotNull(varysConfig);
-        this.varysConfig = varysConfig;
+        this.varysConfig = checkNotNull(varysConfig);
     }
 
     @Override

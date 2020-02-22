@@ -20,8 +20,7 @@ public final class VarysQueryUrlProvider implements UrlProvider {
 
     @Autowired(required = false)
     public VarysQueryUrlProvider(VarysConfig varysConfig) {
-        checkNotNull(varysConfig);
-        this.varysConfig = varysConfig;
+        this.varysConfig = checkNotNull(varysConfig);
     }
 
     @Override

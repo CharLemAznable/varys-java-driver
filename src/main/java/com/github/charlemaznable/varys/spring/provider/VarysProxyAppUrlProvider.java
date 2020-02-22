@@ -23,8 +23,7 @@ public final class VarysProxyAppUrlProvider implements UrlProvider {
 
     @Autowired(required = false)
     public VarysProxyAppUrlProvider(VarysConfig varysConfig) {
-        checkNotNull(varysConfig);
-        this.varysConfig = varysConfig;
+        this.varysConfig = checkNotNull(varysConfig);
     }
 
     @Override
