@@ -4,33 +4,26 @@ import com.github.charlemaznable.core.miner.MinerInjector;
 import com.github.charlemaznable.core.net.ohclient.OhInjector;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
-import com.google.common.collect.Iterables;
 import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Providers;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static com.github.charlemaznable.core.lang.Listt.newArrayList;
+import static com.google.common.collect.Iterables.concat;
 
-public final class VarysInjector {
+public class VarysInjector extends OhInjector {
 
-    private OhInjector ohInjector;
-
-    public VarysInjector(Module... otherModules) {
-        this(Arrays.asList(otherModules));
+    public VarysInjector(Module... modules) {
+        super(modules);
     }
 
-    public VarysInjector(Iterable<? extends Module> otherModules) {
-        this(new MinerInjector().createModule(), otherModules);
+    public VarysInjector(Iterable<? extends Module> modules) {
+        super(modules);
     }
 
     public VarysInjector(Class<? extends VarysConfig> configClass,
                          Module... otherModules) {
-        this(configClass, Arrays.asList(otherModules));
+        this(configClass, newArrayList(otherModules));
     }
 
     public VarysInjector(Class<? extends VarysConfig> configClass,
@@ -40,7 +33,7 @@ public final class VarysInjector {
 
     public VarysInjector(VarysConfig configImpl,
                          Module... otherModules) {
-        this(configImpl, Arrays.asList(otherModules));
+        this(configImpl, newArrayList(otherModules));
     }
 
     public VarysInjector(VarysConfig configImpl,
@@ -55,30 +48,16 @@ public final class VarysInjector {
 
     public VarysInjector(Module configModule,
                          Iterable<? extends Module> otherModules) {
-        List<Module> baseModules = newArrayList(configModule);
-        Iterables.addAll(baseModules, otherModules);
-        this.ohInjector = new OhInjector(baseModules);
+        this(concat(newArrayList(configModule), otherModules));
     }
 
+    @Override
     public Module createModule(Class... otherClientClasses) {
-        return createModule(Arrays.asList(otherClientClasses));
+        return this.createModule(newArrayList(otherClientClasses));
     }
 
+    @Override
     public Module createModule(Iterable<Class> otherClientClasses) {
-        List<Class> clientClasses = newArrayList(Query.class);
-        Iterables.addAll(clientClasses, otherClientClasses);
-        return this.ohInjector.createModule(clientClasses);
-    }
-
-    public Injector createInjector(Class... classes) {
-        return createInjector(Arrays.asList(classes));
-    }
-
-    public Injector createInjector(Iterable<Class> classes) {
-        return Guice.createInjector(createModule(classes));
-    }
-
-    public <T> T getClient(Class<T> ohClass) {
-        return this.ohInjector.getClient(ohClass);
+        return super.createModule(concat(newArrayList(Query.class), otherClientClasses));
     }
 }
