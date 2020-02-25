@@ -89,12 +89,14 @@ public class DefaultConfigTest {
 
     @Test
     public void testProxyError() {
+        val proxyErrorInstance = injector.getInstance(ProxyError.class);
         try {
-            injector.getInstance(ProxyError.class).proxyError("test");
+            proxyErrorInstance.proxyError("test");
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
         }
-        assertThrows(IllegalArgumentException.class, () ->
-                varysInjector.getClient(ProxyError.class).proxyError("test"));
+        val proxyErrorClient = varysInjector.getClient(ProxyError.class);
+        assertThrows(IllegalArgumentException.class,
+                () -> proxyErrorClient.proxyError("test"));
     }
 }
