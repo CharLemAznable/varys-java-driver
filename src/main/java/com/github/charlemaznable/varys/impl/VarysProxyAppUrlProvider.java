@@ -20,13 +20,12 @@ public final class VarysProxyAppUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
 
-    @Autowired(required = false)
     public VarysProxyAppUrlProvider() {
         this(null);
     }
 
     @Inject
-    @Autowired(required = false)
+    @Autowired
     public VarysProxyAppUrlProvider(@Nullable VarysConfig varysConfig) {
         this.varysConfig = nullThen(varysConfig, () -> getMiner(VarysConfig.class));
     }

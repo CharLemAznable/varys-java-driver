@@ -16,13 +16,12 @@ public final class VarysPathProvider implements FixedValueProvider {
 
     private final VarysConfig varysConfig;
 
-    @Autowired(required = false)
     public VarysPathProvider() {
         this(null);
     }
 
     @Inject
-    @Autowired(required = false)
+    @Autowired
     public VarysPathProvider(@Nullable VarysConfig varysConfig) {
         this.varysConfig = nullThen(varysConfig, () -> getMiner(VarysConfig.class));
     }

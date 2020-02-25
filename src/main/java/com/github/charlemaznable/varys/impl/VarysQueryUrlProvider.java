@@ -17,13 +17,12 @@ public final class VarysQueryUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
 
-    @Autowired(required = false)
     public VarysQueryUrlProvider() {
         this(null);
     }
 
     @Inject
-    @Autowired(required = false)
+    @Autowired
     public VarysQueryUrlProvider(@Nullable VarysConfig varysConfig) {
         this.varysConfig = nullThen(varysConfig, () -> getMiner(VarysConfig.class));
     }
