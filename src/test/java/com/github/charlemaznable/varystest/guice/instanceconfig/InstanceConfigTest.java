@@ -18,11 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InstanceConfigTest {
 
+    private static VarysInjector varysInjector;
     private static Injector injector;
 
     @BeforeAll
     public static void beforeAll() {
-        injector = new VarysInjector(new InstanceConfig()).createInjector(
+        varysInjector = new VarysInjector(new InstanceConfig());
+        injector = varysInjector.createInjector(
                 ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class);
     }
 
@@ -30,7 +32,7 @@ public class InstanceConfigTest {
     @Test
     public void testInstanceConfigQuery() {
         queryInstanceConfig(() -> {
-            val query = injector.getInstance(Query.class);
+            val query = varysInjector.getClient(Query.class);
 
             val appTokenResp = query.appToken("instance");
             assertEquals("1000", appTokenResp.getAppId());

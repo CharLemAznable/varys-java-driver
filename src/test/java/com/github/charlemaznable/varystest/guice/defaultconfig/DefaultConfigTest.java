@@ -44,7 +44,7 @@ public class DefaultConfigTest {
     @Test
     public void testDefaultConfigQuery() {
         queryDefaultConfig(() -> {
-            val query = injector.getInstance(Query.class);
+            val query = varysInjector.getClient(Query.class);
 
             val appTokenResp = query.appToken("default");
             assertEquals("1000", appTokenResp.getAppId());
@@ -89,14 +89,12 @@ public class DefaultConfigTest {
 
     @Test
     public void testProxyError() {
-        val proxyErrorInstance = injector.getInstance(ProxyError.class);
         try {
-            proxyErrorInstance.proxyError("test");
+            injector.getInstance(ProxyError.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
         }
-        val proxyErrorClient = varysInjector.getClient(ProxyError.class);
-        assertThrows(IllegalArgumentException.class,
-                () -> proxyErrorClient.proxyError("test"));
+        assertThrows(IllegalArgumentException.class, () ->
+                varysInjector.getClient(ProxyError.class));
     }
 }

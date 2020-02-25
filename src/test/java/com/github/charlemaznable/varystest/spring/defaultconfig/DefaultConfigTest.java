@@ -78,11 +78,11 @@ public class DefaultConfigTest {
     @Test
     public void testProxyError() {
         try {
-            SpringContext.getBean(ProxyError.class).proxyError("test");
+            SpringContext.getBean(ProxyError.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
         }
-        assertThrows(IllegalArgumentException.class, () ->
-                getClient(ProxyError.class).proxyError("test"));
+        assertThrows(IllegalArgumentException.class,
+                () -> getClient(ProxyError.class));
     }
 }

@@ -20,11 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InterfaceConfigTest {
 
+    private static VarysInjector varysInjector;
     private static Injector injector;
 
     @BeforeAll
     public static void beforeAll() {
-        injector = new VarysInjector(InterfaceConfig.class).createInjector(
+        varysInjector = new VarysInjector(InterfaceConfig.class);
+        injector = varysInjector.createInjector(
                 ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class);
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "test",
@@ -40,7 +42,7 @@ public class InterfaceConfigTest {
     @Test
     public void testInterfaceConfigQuery() {
         queryInterfaceConfig(() -> {
-            val query = injector.getInstance(Query.class);
+            val query = varysInjector.getClient(Query.class);
 
             val appTokenResp = query.appToken("interface");
             assertEquals("1000", appTokenResp.getAppId());
