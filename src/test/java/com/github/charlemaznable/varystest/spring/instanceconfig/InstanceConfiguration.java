@@ -2,7 +2,7 @@ package com.github.charlemaznable.varystest.spring.instanceconfig;
 
 import com.github.charlemaznable.core.net.ohclient.OhScan;
 import com.github.charlemaznable.varys.spring.VarysImport;
-import com.github.charlemaznable.varystest.proxy.TestSpringScanAnchor;
+import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +13,7 @@ import static org.joor.Reflect.on;
 
 @ComponentScan
 @VarysImport
-@OhScan(basePackageClasses = TestSpringScanAnchor.class)
+@OhScan(basePackageClasses = TestVarysScanAnchor.class)
 public class InstanceConfiguration {
 
     @PostConstruct

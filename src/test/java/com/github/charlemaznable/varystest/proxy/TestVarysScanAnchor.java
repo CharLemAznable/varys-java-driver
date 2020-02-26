@@ -1,4 +1,4 @@
 package com.github.charlemaznable.varystest.proxy;
 
-public interface TestSpringScanAnchor {
+public interface TestVarysScanAnchor {
 }
