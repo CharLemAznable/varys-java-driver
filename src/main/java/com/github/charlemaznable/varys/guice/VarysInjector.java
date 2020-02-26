@@ -18,12 +18,7 @@ public final class VarysInjector {
     private OhInjector ohInjector;
 
     public VarysInjector() {
-        this(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(VarysConfig.class).toProvider(Providers.of(null));
-            }
-        });
+        this((VarysConfig) null);
     }
 
     public VarysInjector(Class<? extends VarysConfig> configClass) {
