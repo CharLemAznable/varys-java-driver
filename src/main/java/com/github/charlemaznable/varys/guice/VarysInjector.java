@@ -8,7 +8,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.google.inject.util.Modules;
 import com.google.inject.util.Providers;
 
 import static com.github.charlemaznable.core.lang.Listt.newArrayList;
@@ -19,7 +18,12 @@ public final class VarysInjector {
     private OhInjector ohInjector;
 
     public VarysInjector() {
-        this(Modules.EMPTY_MODULE);
+        this(new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(VarysConfig.class).toProvider(Providers.of(null));
+            }
+        });
     }
 
     public VarysInjector(Class<? extends VarysConfig> configClass) {

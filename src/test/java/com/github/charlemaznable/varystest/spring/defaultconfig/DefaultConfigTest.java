@@ -1,7 +1,12 @@
 package com.github.charlemaznable.varystest.spring.defaultconfig;
 
 import com.github.charlemaznable.core.spring.SpringContext;
+import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
+import com.github.charlemaznable.varys.impl.VarysPathProvider;
+import com.github.charlemaznable.varys.impl.VarysProxyAppUrlProvider;
+import com.github.charlemaznable.varys.impl.VarysProxyCorpUrlProvider;
+import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
@@ -18,6 +23,8 @@ import static com.github.charlemaznable.core.net.ohclient.OhFactory.getClient;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.proxyDefaultConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDefaultConfig;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -84,5 +91,34 @@ public class DefaultConfigTest {
         }
         assertThrows(IllegalArgumentException.class,
                 () -> getClient(ProxyError.class));
+    }
+
+    @Test
+    public void testContext() {
+        assertNull(SpringContext.getBean(VarysConfig.class));
+
+        val varysPathProvider = SpringContext
+                .getBean(VarysPathProvider.class);
+        assertNotNull(varysPathProvider);
+        assertEquals(new VarysPathProvider().value(Query.class, "queryWechatAppToken"),
+                varysPathProvider.value(Query.class, "queryWechatAppToken"));
+
+        val varysProxyAppUrlProvider = SpringContext
+                .getBean(VarysProxyAppUrlProvider.class);
+        assertNotNull(varysProxyAppUrlProvider);
+        assertEquals(new VarysProxyAppUrlProvider().url(Query.class),
+                varysProxyAppUrlProvider.url(Query.class));
+
+        val varysProxyCorpUrlProvider = SpringContext
+                .getBean(VarysProxyCorpUrlProvider.class);
+        assertNotNull(varysProxyCorpUrlProvider);
+        assertEquals(new VarysProxyCorpUrlProvider().url(Query.class),
+                varysProxyCorpUrlProvider.url(Query.class));
+
+        val varysQueryUrlProvider = SpringContext
+                .getBean(VarysQueryUrlProvider.class);
+        assertNotNull(varysQueryUrlProvider);
+        assertEquals(new VarysQueryUrlProvider().url(Query.class),
+                varysQueryUrlProvider.url(Query.class));
     }
 }
