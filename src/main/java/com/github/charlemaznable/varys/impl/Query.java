@@ -4,6 +4,7 @@ import com.github.charlemaznable.core.net.common.FixedPathVar;
 import com.github.charlemaznable.core.net.common.Mapping;
 import com.github.charlemaznable.core.net.common.PathVar;
 import com.github.charlemaznable.core.net.ohclient.OhClient;
+import com.github.charlemaznable.core.net.ohclient.annotation.ClientTimeout;
 import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
@@ -15,6 +16,12 @@ import com.github.charlemaznable.varys.resp.CorpTokenResp;
 @FixedPathVar(name = "queryWechatAppAuthorizerToken", valueProvider = VarysPathProvider.class)
 @FixedPathVar(name = "queryWechatCorpToken", valueProvider = VarysPathProvider.class)
 @FixedPathVar(name = "queryWechatCorpAuthorizerToken", valueProvider = VarysPathProvider.class)
+@ClientTimeout(
+        callTimeoutProvider = VarysCallTimeoutProvider.class,
+        connectTimeoutProvider = VarysConnectTimeoutProvider.class,
+        readTimeoutProvider = VarysReadTimeoutProvider.class,
+        writeTimeoutProvider = VarysWriteTimeoutProvider.class
+)
 public interface Query {
 
     @Mapping("/{queryWechatAppToken}/{codeName}")

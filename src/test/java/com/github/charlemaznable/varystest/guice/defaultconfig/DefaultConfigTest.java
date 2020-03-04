@@ -3,10 +3,14 @@ package com.github.charlemaznable.varystest.guice.defaultconfig;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.guice.VarysInjector;
 import com.github.charlemaznable.varys.impl.Query;
+import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
+import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysPathProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyAppUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyCorpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
+import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
+import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
@@ -134,5 +138,29 @@ public class DefaultConfigTest {
         assertNotNull(varysQueryUrlProvider);
         assertEquals(new VarysQueryUrlProvider().url(Query.class),
                 varysQueryUrlProvider.url(Query.class));
+
+        val varysCallTimeoutProvider = injector
+                .getInstance(VarysCallTimeoutProvider.class);
+        assertNotNull(varysCallTimeoutProvider);
+        assertEquals(new VarysCallTimeoutProvider().timeout(Query.class),
+                varysCallTimeoutProvider.timeout(Query.class));
+
+        val varysConnectTimeoutProvider = injector
+                .getInstance(VarysConnectTimeoutProvider.class);
+        assertNotNull(varysConnectTimeoutProvider);
+        assertEquals(new VarysConnectTimeoutProvider().timeout(Query.class),
+                varysConnectTimeoutProvider.timeout(Query.class));
+
+        val varysReadTimeoutProvider = injector
+                .getInstance(VarysReadTimeoutProvider.class);
+        assertNotNull(varysReadTimeoutProvider);
+        assertEquals(new VarysReadTimeoutProvider().timeout(Query.class),
+                varysReadTimeoutProvider.timeout(Query.class));
+
+        val varysWriteTimeoutProvider = injector
+                .getInstance(VarysWriteTimeoutProvider.class);
+        assertNotNull(varysWriteTimeoutProvider);
+        assertEquals(new VarysWriteTimeoutProvider().timeout(Query.class),
+                varysWriteTimeoutProvider.timeout(Query.class));
     }
 }

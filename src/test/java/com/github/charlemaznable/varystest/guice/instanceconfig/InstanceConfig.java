@@ -38,4 +38,24 @@ public class InstanceConfig implements VarysConfig {
     public String proxyWechatCorpPath() {
         return "proxy-wechat-corp";
     }
+
+    @Override
+    public long callTimeout() {
+        return 0;
+    }
+
+    @Override
+    public long connectTimeout() {
+        return 10_000;
+    }
+
+    @Override
+    public long readTimeout() {
+        return 10_000;
+    }
+
+    @Override
+    public long writeTimeout() {
+        return 10_000;
+    }
 }

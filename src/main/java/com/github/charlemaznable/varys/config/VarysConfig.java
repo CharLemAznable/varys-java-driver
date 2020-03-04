@@ -24,4 +24,16 @@ public interface VarysConfig {
 
     @MinerConfig(defaultValue = "proxy-wechat-corp")
     String proxyWechatCorpPath();
+
+    @MinerConfig(defaultValue = "0")
+    long callTimeout();
+
+    @MinerConfig(defaultValue = "10000")
+    long connectTimeout();
+
+    @MinerConfig(defaultValue = "10000")
+    long readTimeout();
+
+    @MinerConfig(defaultValue = "10000")
+    long writeTimeout();
 }
