@@ -1,10 +1,11 @@
 package com.github.charlemaznable.varystest.guice.instanceconfig;
 
-import com.github.charlemaznable.varys.guice.VarysInjector;
+import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -18,21 +19,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InstanceConfigTest {
 
-    private static VarysInjector varysInjector;
+    private static VarysModular varysModular;
     private static Injector injector;
 
     @BeforeAll
     public static void beforeAll() {
-        varysInjector = new VarysInjector(new InstanceConfig());
-        injector = varysInjector.createInjector(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class);
+        varysModular = new VarysModular(new InstanceConfig());
+        injector = Guice.createInjector(varysModular.createModule(
+                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
     }
 
     @SneakyThrows
     @Test
     public void testInstanceConfigQuery() {
         queryInstanceConfig(() -> {
-            val query = varysInjector.getClient(Query.class);
+            val query = varysModular.getClient(Query.class);
 
             val appTokenResp = query.appToken("instance");
             assertEquals("1000", appTokenResp.getAppId());

@@ -1,10 +1,11 @@
 package com.github.charlemaznable.varystest.guice.interfaceconfig;
 
-import com.github.charlemaznable.varys.guice.VarysInjector;
+import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -20,14 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InterfaceConfigTest {
 
-    private static VarysInjector varysInjector;
+    private static VarysModular varysModular;
     private static Injector injector;
 
     @BeforeAll
     public static void beforeAll() {
-        varysInjector = new VarysInjector(InterfaceConfig.class);
-        injector = varysInjector.createInjector(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class);
+        varysModular = new VarysModular(InterfaceConfig.class);
+        injector = Guice.createInjector(varysModular.createModule(
+                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "test",
                 "InterfaceAddress=http://127.0.0.1:4236/varys\n");
@@ -42,7 +43,7 @@ public class InterfaceConfigTest {
     @Test
     public void testInterfaceConfigQuery() {
         queryInterfaceConfig(() -> {
-            val query = varysInjector.getClient(Query.class);
+            val query = varysModular.getClient(Query.class);
 
             val appTokenResp = query.appToken("interface");
             assertEquals("1000", appTokenResp.getAppId());

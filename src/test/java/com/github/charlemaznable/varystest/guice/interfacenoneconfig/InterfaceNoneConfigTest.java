@@ -1,6 +1,6 @@
 package com.github.charlemaznable.varystest.guice.interfacenoneconfig;
 
-import com.github.charlemaznable.varys.guice.VarysInjector;
+import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InterfaceNoneConfigTest {
 
-    private static VarysInjector varysInjector;
+    private static VarysModular varysModular;
     private static Injector injector;
 
     @BeforeAll
     public static void beforeAll() {
-        varysInjector = new VarysInjector(InterfaceNoneConfig.class);
-        injector = Guice.createInjector(varysInjector.createModule(
+        varysModular = new VarysModular(InterfaceNoneConfig.class);
+        injector = Guice.createInjector(varysModular.createModule(
                 ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
         MockDiamondServer.setUpMockServer();
     }
@@ -41,7 +41,7 @@ public class InterfaceNoneConfigTest {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
         assertThrows(NullPointerException.class, () ->
-                varysInjector.getClient(Query.class));
+                varysModular.getClient(Query.class));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class InterfaceNoneConfigTest {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
         assertThrows(NullPointerException.class, () ->
-                varysInjector.getClient(ProxyAppDemo.class));
+                varysModular.getClient(ProxyAppDemo.class));
 
         try {
             injector.getInstance(ProxyCorpDemo.class);
@@ -60,6 +60,6 @@ public class InterfaceNoneConfigTest {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
         assertThrows(NullPointerException.class, () ->
-                varysInjector.getClient(ProxyCorpDemo.class));
+                varysModular.getClient(ProxyCorpDemo.class));
     }
 }

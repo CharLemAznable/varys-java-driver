@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varystest.guice.defaultconfig;
 
 import com.github.charlemaznable.varys.config.VarysConfig;
-import com.github.charlemaznable.varys.guice.VarysInjector;
+import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
@@ -14,6 +14,7 @@ import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -33,14 +34,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DefaultConfigTest {
 
-    private static VarysInjector varysInjector;
+    private static VarysModular varysModular;
     private static Injector injector;
 
     @BeforeAll
     public static void beforeAll() {
-        varysInjector = new VarysInjector();
-        injector = varysInjector.createInjector(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class);
+        varysModular = new VarysModular();
+        injector = Guice.createInjector(varysModular.createModule(
+                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "default",
                 "address=http://127.0.0.1:4236/varys\n");
@@ -55,7 +56,7 @@ public class DefaultConfigTest {
     @Test
     public void testDefaultConfigQuery() {
         queryDefaultConfig(() -> {
-            val query = varysInjector.getClient(Query.class);
+            val query = varysModular.getClient(Query.class);
 
             val appTokenResp = query.appToken("default");
             assertEquals("1000", appTokenResp.getAppId());
@@ -108,7 +109,7 @@ public class DefaultConfigTest {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
         }
         assertThrows(IllegalArgumentException.class, () ->
-                varysInjector.getClient(ProxyError.class));
+                varysModular.getClient(ProxyError.class));
     }
 
     @Test
