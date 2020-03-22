@@ -40,8 +40,8 @@ public class DefaultConfigTest {
     @BeforeAll
     public static void beforeAll() {
         varysModular = new VarysModular();
-        injector = Guice.createInjector(varysModular.createModule(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
+        injector = Guice.createInjector(varysModular.bindOtherClients(
+                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class).createModule());
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "default",
                 "address=http://127.0.0.1:4236/varys\n");

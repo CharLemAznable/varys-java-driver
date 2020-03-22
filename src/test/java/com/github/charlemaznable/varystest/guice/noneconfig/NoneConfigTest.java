@@ -23,8 +23,8 @@ public class NoneConfigTest {
     @BeforeAll
     public static void beforeAll() {
         varysModular = new VarysModular();
-        injector = Guice.createInjector(varysModular.createModule(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
+        injector = Guice.createInjector(varysModular.bindOtherClients(
+                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class).createModule());
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "default", "");
     }

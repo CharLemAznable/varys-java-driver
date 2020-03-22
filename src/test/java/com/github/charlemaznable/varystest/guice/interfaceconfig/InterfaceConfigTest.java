@@ -4,7 +4,7 @@ import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import lombok.SneakyThrows;
@@ -27,8 +27,8 @@ public class InterfaceConfigTest {
     @BeforeAll
     public static void beforeAll() {
         varysModular = new VarysModular(InterfaceConfig.class);
-        injector = Guice.createInjector(varysModular.createModule(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
+        injector = Guice.createInjector(varysModular.scanOtherClientPackageClasses(
+                TestVarysScanAnchor.class).createModule());
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "test",
                 "InterfaceAddress=http://127.0.0.1:4236/varys\n");

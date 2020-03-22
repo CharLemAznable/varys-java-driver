@@ -4,13 +4,14 @@ import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.ClassUtils;
 
 import static com.github.charlemaznable.core.codec.Json.jsonOf;
 import static com.github.charlemaznable.varystest.mock.InstanceConfigMock.proxyInstanceConfig;
@@ -25,8 +26,8 @@ public class InstanceConfigTest {
     @BeforeAll
     public static void beforeAll() {
         varysModular = new VarysModular(new InstanceConfig());
-        injector = Guice.createInjector(varysModular.createModule(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class));
+        injector = Guice.createInjector(varysModular.scanOtherClientPackages(
+                ClassUtils.getPackageName(TestVarysScanAnchor.class)).createModule());
     }
 
     @SneakyThrows
