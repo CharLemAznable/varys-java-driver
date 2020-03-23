@@ -1,32 +1,18 @@
 package com.github.charlemaznable.varys.guice;
 
 import com.github.charlemaznable.core.miner.MinerModular;
-import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.core.net.ohclient.OhModular;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.google.inject.util.Providers;
-import lombok.val;
-import org.springframework.util.ClassUtils;
-
-import java.util.Set;
-import java.util.function.Predicate;
 
 import static com.github.charlemaznable.core.lang.Listt.newArrayList;
-import static com.github.charlemaznable.core.spring.ClzResolver.getClasses;
-import static com.google.common.collect.Iterables.concat;
-import static com.google.common.collect.Sets.newHashSet;
-import static java.util.Objects.nonNull;
-import static org.springframework.core.annotation.AnnotationUtils.getAnnotation;
 
 public final class VarysModular {
 
     private OhModular ohModular;
-    private final Set<Class<?>> otherClientClasses = newHashSet();
-    private final Predicate<Class<?>> resolverPredicate =
-            clazz -> nonNull(getAnnotation(clazz, OhClient.class));
 
     public VarysModular() {
         this((VarysConfig) null);
@@ -46,7 +32,7 @@ public final class VarysModular {
     }
 
     public VarysModular(Module configModule) {
-        this.ohModular = new OhModular(configModule);
+        this.ohModular = new OhModular(configModule).bindClasses(Query.class);
     }
 
     public VarysModular bindOtherClients(Class<?>... otherClientClasses) {
@@ -54,7 +40,7 @@ public final class VarysModular {
     }
 
     public VarysModular bindOtherClients(Iterable<Class<?>> otherClientClasses) {
-        this.otherClientClasses.addAll(newArrayList(otherClientClasses));
+        this.ohModular.bindClasses(otherClientClasses);
         return this;
     }
 
@@ -63,9 +49,7 @@ public final class VarysModular {
     }
 
     public VarysModular scanOtherClientPackages(Iterable<String> basePackages) {
-        for (val basePackage : basePackages) {
-            bindOtherClients(getClasses(basePackage, resolverPredicate));
-        }
+        this.ohModular.scanPackages(basePackages);
         return this;
     }
 
@@ -74,16 +58,12 @@ public final class VarysModular {
     }
 
     public VarysModular scanOtherClientPackageClasses(Iterable<Class<?>> basePackageClasses) {
-        for (val basePackageClass : basePackageClasses) {
-            val basePackage = ClassUtils.getPackageName(basePackageClass);
-            bindOtherClients(getClasses(basePackage, resolverPredicate));
-        }
+        this.ohModular.scanPackageClasses(basePackageClasses);
         return this;
     }
 
     public Module createModule() {
-        return this.ohModular.bindClasses(concat(newArrayList(
-                Query.class), otherClientClasses)).createModule();
+        return this.ohModular.createModule();
     }
 
     public <T> T getClient(Class<T> ohClass) {
