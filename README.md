@@ -40,7 +40,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.8.2-SNAPSHOT</version>
+  <version>0.8.3-SNAPSHOT</version>
 </dependency>
 ```
 
