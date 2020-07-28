@@ -6,6 +6,6 @@ addons:
   sonarcloud:
     organization: "charlemaznable"
 script:
-  - mvn clean test
+  - mvn clean verify sonar:sonar -Dsonar.projectKey=CharLemAznable_varys-java-driver
 after_success:
   - bash <(curl -s https://codecov.io/bash)
