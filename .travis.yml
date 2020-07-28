@@ -1,11 +1,11 @@
-dist: xenial
+dist: trusty
 language: java
 jdk:
-  - openjdk8
+  - oraclejdk8
 addons:
   sonarcloud:
     organization: "charlemaznable"
 script:
-  - mvn clean verify sonar:sonar -Dsonar.projectKey=CharLemAznable_varys-java-driver
+  - mvn clean test
 after_success:
   - bash <(curl -s https://codecov.io/bash)
