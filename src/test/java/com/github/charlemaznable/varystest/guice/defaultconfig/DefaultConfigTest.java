@@ -8,12 +8,14 @@ import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysPathProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyAppUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyCorpUrlProvider;
+import com.github.charlemaznable.varys.impl.VarysProxyMpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import lombok.SneakyThrows;
@@ -41,7 +43,8 @@ public class DefaultConfigTest {
     public static void beforeAll() {
         varysModular = new VarysModular();
         injector = Guice.createInjector(varysModular.bindOtherClients(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class).createModule());
+                ProxyAppDemo.class, ProxyMpDemo.class, ProxyCorpDemo.class,
+                ProxyError.class).createModule());
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "default",
                 "address=http://127.0.0.1:4236/varys\n");
@@ -83,6 +86,7 @@ public class DefaultConfigTest {
     public void testDefaultConfigProxy() {
         proxyDefaultConfig(() -> {
             val proxyApp = injector.getInstance(ProxyAppDemo.class);
+            val proxyMp = injector.getInstance(ProxyMpDemo.class);
             val proxyCorp = injector.getInstance(ProxyCorpDemo.class);
 
             val wechatAppResp = proxyApp.wechatApp("default", "b");
@@ -90,6 +94,12 @@ public class DefaultConfigTest {
 
             val wechatAppParamResp = proxyApp.wechatAppParam("default", "testParam", jsonOf("a", "b"));
             assertEquals("defaultWechatAppParamResp", wechatAppParamResp);
+
+            val wechatMpResp = proxyMp.wechatMp("default", "b");
+            assertEquals("defaultWechatMpResp", wechatMpResp);
+
+            val wechatMpParamResp = proxyMp.wechatMpParam("default", "testParam", jsonOf("a", "b"));
+            assertEquals("defaultWechatMpParamResp", wechatMpParamResp);
 
             val wechatCorpResp = proxyCorp.wechatCorp("default", "b");
             assertEquals("defaultWechatCorpResp", wechatCorpResp);
@@ -127,6 +137,12 @@ public class DefaultConfigTest {
         assertNotNull(varysProxyAppUrlProvider);
         assertEquals(new VarysProxyAppUrlProvider().url(Query.class),
                 varysProxyAppUrlProvider.url(Query.class));
+
+        val varysProxyMpUrlProvider = injector
+                .getInstance(VarysProxyMpUrlProvider.class);
+        assertNotNull(varysProxyMpUrlProvider);
+        assertEquals(new VarysProxyMpUrlProvider().url(Query.class),
+                varysProxyMpUrlProvider.url(Query.class));
 
         val varysProxyCorpUrlProvider = injector
                 .getInstance(VarysProxyCorpUrlProvider.class);

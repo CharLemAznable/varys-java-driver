@@ -78,6 +78,14 @@ public class DefaultConfigMock {
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("defaultWechatAppParamResp");
 
+                        case "/varys/proxy-wechat-mp/default/wechatMp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("defaultWechatMpResp");
+
+                        case "/varys/proxy-wechat-mp/default/wechatMpParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("defaultWechatMpParamResp");
+
                         case "/varys/proxy-wechat-corp/default/wechatCorp?a=b":
                             return new MockResponse().setBody("defaultWechatCorpResp");
 

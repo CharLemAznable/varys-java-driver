@@ -37,6 +37,11 @@ public class InstanceConfig implements VarysConfig {
     }
 
     @Override
+    public String proxyWechatMpPath() {
+        return "proxy-wechat-mp";
+    }
+
+    @Override
     public String proxyWechatCorpPath() {
         return "proxy-wechat-corp";
     }

@@ -4,6 +4,7 @@ import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -70,6 +71,7 @@ public class InterfaceConfigTest {
     public void testInterfaceConfigProxy() {
         proxyInterfaceConfig(() -> {
             val proxyApp = injector.getInstance(ProxyAppDemo.class);
+            val proxyMp = injector.getInstance(ProxyMpDemo.class);
             val proxyCorp = injector.getInstance(ProxyCorpDemo.class);
 
             val wechatAppResp = proxyApp.wechatApp("interface", "b");
@@ -77,6 +79,12 @@ public class InterfaceConfigTest {
 
             val wechatAppParamResp = proxyApp.wechatAppParam("interface", "testParam", jsonOf("a", "b"));
             assertEquals("interfaceWechatAppParamResp", wechatAppParamResp);
+
+            val wechatMpResp = proxyMp.wechatMp("interface", "b");
+            assertEquals("interfaceWechatMpResp", wechatMpResp);
+
+            val wechatMpParamResp = proxyMp.wechatMpParam("interface", "testParam", jsonOf("a", "b"));
+            assertEquals("interfaceWechatMpParamResp", wechatMpParamResp);
 
             val wechatCorpResp = proxyCorp.wechatCorp("interface", "b");
             assertEquals("interfaceWechatCorpResp", wechatCorpResp);

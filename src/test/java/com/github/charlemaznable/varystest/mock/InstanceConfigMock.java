@@ -78,6 +78,14 @@ public class InstanceConfigMock {
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("instanceWechatAppParamResp");
 
+                        case "/varys/proxy-wechat-mp/instance/wechatMp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("instanceWechatMpResp");
+
+                        case "/varys/proxy-wechat-mp/instance/wechatMpParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("instanceWechatMpParamResp");
+
                         case "/varys/proxy-wechat-corp/instance/wechatCorp?a=b":
                             return new MockResponse().setBody("instanceWechatCorpResp");
 

@@ -8,12 +8,14 @@ import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysPathProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyAppUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyCorpUrlProvider;
+import com.github.charlemaznable.varys.impl.VarysProxyMpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -41,6 +43,8 @@ public class DefaultConfigTest {
     private Query query;
     @Autowired
     private ProxyAppDemo proxyApp;
+    @Autowired
+    private ProxyMpDemo proxyMp;
     @Autowired
     private ProxyCorpDemo proxyCorp;
 
@@ -78,6 +82,12 @@ public class DefaultConfigTest {
             val wechatAppParamResp = proxyApp.wechatAppParam("default", "testParam", jsonOf("a", "b"));
             assertEquals("defaultWechatAppParamResp", wechatAppParamResp);
 
+            val wechatMpResp = proxyMp.wechatMp("default", "b");
+            assertEquals("defaultWechatMpResp", wechatMpResp);
+
+            val wechatMpParamResp = proxyMp.wechatMpParam("default", "testParam", jsonOf("a", "b"));
+            assertEquals("defaultWechatMpParamResp", wechatMpParamResp);
+
             val wechatCorpResp = proxyCorp.wechatCorp("default", "b");
             assertEquals("defaultWechatCorpResp", wechatCorpResp);
 
@@ -112,6 +122,12 @@ public class DefaultConfigTest {
         assertNotNull(varysProxyAppUrlProvider);
         assertEquals(new VarysProxyAppUrlProvider().url(Query.class),
                 varysProxyAppUrlProvider.url(Query.class));
+
+        val varysProxyMpUrlProvider = SpringContext
+                .getBean(VarysProxyMpUrlProvider.class);
+        assertNotNull(varysProxyMpUrlProvider);
+        assertEquals(new VarysProxyMpUrlProvider().url(Query.class),
+                varysProxyMpUrlProvider.url(Query.class));
 
         val varysProxyCorpUrlProvider = SpringContext
                 .getBean(VarysProxyCorpUrlProvider.class);

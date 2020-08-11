@@ -3,6 +3,7 @@ package com.github.charlemaznable.varystest.spring.instanceconfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ public class InstanceConfigTest {
     private Query query;
     @Autowired
     private ProxyAppDemo proxyApp;
+    @Autowired
+    private ProxyMpDemo proxyMp;
     @Autowired
     private ProxyCorpDemo proxyCorp;
 
@@ -61,6 +64,12 @@ public class InstanceConfigTest {
 
             val wechatAppParamResp = proxyApp.wechatAppParam("instance", "testParam", jsonOf("a", "b"));
             assertEquals("instanceWechatAppParamResp", wechatAppParamResp);
+
+            val wechatMpResp = proxyMp.wechatMp("instance", "b");
+            assertEquals("instanceWechatMpResp", wechatMpResp);
+
+            val wechatMpParamResp = proxyMp.wechatMpParam("instance", "testParam", jsonOf("a", "b"));
+            assertEquals("instanceWechatMpParamResp", wechatMpParamResp);
 
             val wechatCorpResp = proxyCorp.wechatCorp("instance", "b");
             assertEquals("instanceWechatCorpResp", wechatCorpResp);

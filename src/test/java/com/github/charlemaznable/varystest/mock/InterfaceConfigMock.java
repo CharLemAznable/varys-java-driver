@@ -78,6 +78,14 @@ public class InterfaceConfigMock {
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("interfaceWechatAppParamResp");
 
+                        case "/varys/proxy-wechat-mp/interface/wechatMp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("interfaceWechatMpResp");
+
+                        case "/varys/proxy-wechat-mp/interface/wechatMpParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("interfaceWechatMpParamResp");
+
                         case "/varys/proxy-wechat-corp/interface/wechatCorp?a=b":
                             return new MockResponse().setBody("interfaceWechatCorpResp");
 

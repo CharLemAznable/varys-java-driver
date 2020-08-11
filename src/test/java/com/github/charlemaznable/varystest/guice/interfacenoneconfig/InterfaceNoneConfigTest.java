@@ -5,6 +5,7 @@ import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyError;
+import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.jupiter.api.AfterAll;
@@ -24,7 +25,8 @@ public class InterfaceNoneConfigTest {
     public static void beforeAll() {
         varysModular = new VarysModular(InterfaceNoneConfig.class);
         injector = Guice.createInjector(varysModular.bindOtherClients(
-                ProxyAppDemo.class, ProxyCorpDemo.class, ProxyError.class).createModule());
+                ProxyAppDemo.class, ProxyMpDemo.class, ProxyCorpDemo.class,
+                ProxyError.class).createModule());
         MockDiamondServer.setUpMockServer();
     }
 
@@ -44,6 +46,7 @@ public class InterfaceNoneConfigTest {
                 varysModular.getClient(Query.class));
     }
 
+    @SuppressWarnings("Duplicates")
     @Test
     public void testNoneConfigProxy() {
         try {
@@ -53,6 +56,14 @@ public class InterfaceNoneConfigTest {
         }
         assertThrows(NullPointerException.class, () ->
                 varysModular.getClient(ProxyAppDemo.class));
+
+        try {
+            injector.getInstance(ProxyMpDemo.class);
+        } catch (Exception e) {
+            assertTrue(e.getCause() instanceof NullPointerException);
+        }
+        assertThrows(NullPointerException.class, () ->
+                varysModular.getClient(ProxyMpDemo.class));
 
         try {
             injector.getInstance(ProxyCorpDemo.class);
