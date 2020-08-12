@@ -37,6 +37,8 @@ public final class VarysPathProvider implements FixedValueProvider {
                 return varysConfig.corpTokenCachePath();
             case "queryWechatCorpAuthorizerToken":
                 return varysConfig.corpAuthorizerTokenCachePath();
+            case "queryToutiaoAppToken":
+                return varysConfig.toutiaoAppTokenCachePath();
             default:
                 throw new IllegalArgumentException("Illegal Fixed Value Name: " + name);
         }

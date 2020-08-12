@@ -19,6 +19,9 @@ public interface VarysConfig {
     @MinerConfig(defaultValue = "query-wechat-corp-authorizer-token")
     String corpAuthorizerTokenCachePath();
 
+    @MinerConfig(defaultValue = "query-toutiao-app-token")
+    String toutiaoAppTokenCachePath();
+
     @MinerConfig(defaultValue = "proxy-wechat-app")
     String proxyWechatAppPath();
 

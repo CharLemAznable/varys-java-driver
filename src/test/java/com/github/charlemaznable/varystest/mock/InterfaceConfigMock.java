@@ -51,6 +51,12 @@ public class InterfaceConfigMock {
                             resp4.setSuiteId("xyz");
                             resp4.setToken("interfaceToken");
                             return new MockResponse().setBody(json(resp4));
+
+                        case "/varys/query-toutiao-app-token/interface":
+                            val resp5 = new AppTokenResp();
+                            resp5.setAppId("2000");
+                            resp5.setToken("interfaceToken");
+                            return new MockResponse().setBody(json(resp5));
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())

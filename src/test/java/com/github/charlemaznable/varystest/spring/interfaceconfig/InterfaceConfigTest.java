@@ -52,6 +52,10 @@ public class InterfaceConfigTest {
             assertEquals("10000", corpAuthorizerTokenResp.getCorpId());
             assertEquals("xyz", corpAuthorizerTokenResp.getSuiteId());
             assertEquals("interfaceToken", corpAuthorizerTokenResp.getToken());
+
+            val toutiaoAppTokenResp = query.toutiaoAppToken("interface");
+            assertEquals("2000", toutiaoAppTokenResp.getAppId());
+            assertEquals("interfaceToken", toutiaoAppTokenResp.getToken());
         });
     }
 

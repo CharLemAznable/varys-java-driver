@@ -51,6 +51,12 @@ public class DefaultConfigMock {
                             resp4.setSuiteId("xyz");
                             resp4.setToken("defaultToken");
                             return new MockResponse().setBody(json(resp4));
+
+                        case "/varys/query-toutiao-app-token/default":
+                            val resp5 = new AppTokenResp();
+                            resp5.setAppId("2000");
+                            resp5.setToken("defaultToken");
+                            return new MockResponse().setBody(json(resp5));
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())

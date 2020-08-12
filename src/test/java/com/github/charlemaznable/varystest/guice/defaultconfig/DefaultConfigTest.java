@@ -78,6 +78,10 @@ public class DefaultConfigTest {
             assertEquals("10000", corpAuthorizerTokenResp.getCorpId());
             assertEquals("xyz", corpAuthorizerTokenResp.getSuiteId());
             assertEquals("defaultToken", corpAuthorizerTokenResp.getToken());
+
+            val toutiaoAppTokenResp = query.toutiaoAppToken("default");
+            assertEquals("2000", toutiaoAppTokenResp.getAppId());
+            assertEquals("defaultToken", toutiaoAppTokenResp.getToken());
         });
     }
 

@@ -16,6 +16,7 @@ import com.github.charlemaznable.varys.resp.CorpTokenResp;
 @FixedPathVar(name = "queryWechatAppAuthorizerToken", valueProvider = VarysPathProvider.class)
 @FixedPathVar(name = "queryWechatCorpToken", valueProvider = VarysPathProvider.class)
 @FixedPathVar(name = "queryWechatCorpAuthorizerToken", valueProvider = VarysPathProvider.class)
+@FixedPathVar(name = "queryToutiaoAppToken", valueProvider = VarysPathProvider.class)
 @ClientTimeout(
         callTimeoutProvider = VarysCallTimeoutProvider.class,
         connectTimeoutProvider = VarysConnectTimeoutProvider.class,
@@ -37,4 +38,7 @@ public interface Query {
     @Mapping("/{queryWechatCorpAuthorizerToken}/{codeName}/{corpId}")
     CorpAuthorizerTokenResp corpAuthorizerToken(@PathVar("codeName") String codeName,
                                                 @PathVar("corpId") String corpId);
+
+    @Mapping("/{queryToutiaoAppToken}/{codeName}")
+    AppTokenResp toutiaoAppToken(@PathVar("codeName") String codeName);
 }

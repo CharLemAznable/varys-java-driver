@@ -54,6 +54,10 @@ public class InstanceConfigTest {
             assertEquals("10000", corpAuthorizerTokenResp.getCorpId());
             assertEquals("xyz", corpAuthorizerTokenResp.getSuiteId());
             assertEquals("instanceToken", corpAuthorizerTokenResp.getToken());
+
+            val toutiaoAppTokenResp = query.toutiaoAppToken("instance");
+            assertEquals("2000", toutiaoAppTokenResp.getAppId());
+            assertEquals("instanceToken", toutiaoAppTokenResp.getToken());
         });
     }
 

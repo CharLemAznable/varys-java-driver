@@ -32,6 +32,11 @@ public class InstanceConfig implements VarysConfig {
     }
 
     @Override
+    public String toutiaoAppTokenCachePath() {
+        return "query-toutiao-app-token";
+    }
+
+    @Override
     public String proxyWechatAppPath() {
         return "proxy-wechat-app";
     }
