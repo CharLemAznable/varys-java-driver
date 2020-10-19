@@ -56,6 +56,13 @@ public class InterfaceConfigTest {
             val toutiaoAppTokenResp = query.toutiaoAppToken("interface");
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
             assertEquals("interfaceToken", toutiaoAppTokenResp.getToken());
+
+            val wechatMpLoginResp = query.wechatMpLogin("interface", "JSCODE");
+            assertEquals("openid", wechatMpLoginResp.getOpenId());
+            assertEquals("session_key", wechatMpLoginResp.getSessionKey());
+            assertEquals("unionid", wechatMpLoginResp.getUnionId());
+            assertEquals(0, wechatMpLoginResp.getErrcode());
+            assertEquals("OK", wechatMpLoginResp.getErrmsg());
         });
     }
 

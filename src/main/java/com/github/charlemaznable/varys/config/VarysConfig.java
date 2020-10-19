@@ -28,6 +28,9 @@ public interface VarysConfig {
     @MinerConfig(defaultValue = "proxy-wechat-mp")
     String proxyWechatMpPath();
 
+    @MinerConfig(defaultValue = "proxy-wechat-mp-login")
+    String proxyWechatMpLoginPath();
+
     @MinerConfig(defaultValue = "proxy-wechat-corp")
     String proxyWechatCorpPath();
 

@@ -2,6 +2,7 @@ package com.github.charlemaznable.varys.impl;
 
 import com.github.charlemaznable.core.net.common.FixedPathVar;
 import com.github.charlemaznable.core.net.common.Mapping;
+import com.github.charlemaznable.core.net.common.Parameter;
 import com.github.charlemaznable.core.net.common.PathVar;
 import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.core.net.ohclient.annotation.ClientTimeout;
@@ -9,6 +10,7 @@ import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.CorpTokenResp;
+import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
 
 @OhClient
 @Mapping(urlProvider = VarysQueryUrlProvider.class)
@@ -17,6 +19,7 @@ import com.github.charlemaznable.varys.resp.CorpTokenResp;
 @FixedPathVar(name = "queryWechatCorpToken", valueProvider = VarysPathProvider.class)
 @FixedPathVar(name = "queryWechatCorpAuthorizerToken", valueProvider = VarysPathProvider.class)
 @FixedPathVar(name = "queryToutiaoAppToken", valueProvider = VarysPathProvider.class)
+@FixedPathVar(name = "proxyWechatMpLogin", valueProvider = VarysPathProvider.class)
 @ClientTimeout(
         callTimeoutProvider = VarysCallTimeoutProvider.class,
         connectTimeoutProvider = VarysConnectTimeoutProvider.class,
@@ -41,4 +44,8 @@ public interface Query {
 
     @Mapping("/{queryToutiaoAppToken}/{codeName}")
     AppTokenResp toutiaoAppToken(@PathVar("codeName") String codeName);
+
+    @Mapping("/{proxyWechatMpLogin}/{codeName}")
+    WechatMpLoginResp wechatMpLogin(@PathVar("codeName") String codeName,
+                                    @Parameter("js_code") String jsCode);
 }

@@ -73,6 +73,13 @@ public class DefaultConfigTest {
             val toutiaoAppTokenResp = query.toutiaoAppToken("default");
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
             assertEquals("defaultToken", toutiaoAppTokenResp.getToken());
+
+            val wechatMpLoginResp = query.wechatMpLogin("default", "JSCODE");
+            assertEquals("openid", wechatMpLoginResp.getOpenId());
+            assertEquals("session_key", wechatMpLoginResp.getSessionKey());
+            assertEquals("unionid", wechatMpLoginResp.getUnionId());
+            assertEquals(0, wechatMpLoginResp.getErrcode());
+            assertEquals("OK", wechatMpLoginResp.getErrmsg());
         });
     }
 

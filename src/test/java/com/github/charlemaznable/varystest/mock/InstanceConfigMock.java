@@ -4,6 +4,7 @@ import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.AppTokenResp;
 import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
 import com.github.charlemaznable.varys.resp.CorpTokenResp;
+import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
 import lombok.SneakyThrows;
 import lombok.val;
 import okhttp3.mockwebserver.Dispatcher;
@@ -57,6 +58,15 @@ public class InstanceConfigMock {
                             resp5.setAppId("2000");
                             resp5.setToken("instanceToken");
                             return new MockResponse().setBody(json(resp5));
+
+                        case "/varys/proxy-wechat-mp-login/instance?js_code=JSCODE":
+                            val resp6 = new WechatMpLoginResp();
+                            resp6.setOpenId("openid");
+                            resp6.setSessionKey("session_key");
+                            resp6.setUnionId("unionid");
+                            resp6.setErrcode(0);
+                            resp6.setErrmsg("OK");
+                            return new MockResponse().setBody(json(resp6));
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())

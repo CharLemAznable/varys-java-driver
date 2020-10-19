@@ -56,6 +56,13 @@ public class InstanceConfigTest {
             val toutiaoAppTokenResp = query.toutiaoAppToken("instance");
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
             assertEquals("instanceToken", toutiaoAppTokenResp.getToken());
+
+            val wechatMpLoginResp = query.wechatMpLogin("instance", "JSCODE");
+            assertEquals("openid", wechatMpLoginResp.getOpenId());
+            assertEquals("session_key", wechatMpLoginResp.getSessionKey());
+            assertEquals("unionid", wechatMpLoginResp.getUnionId());
+            assertEquals(0, wechatMpLoginResp.getErrcode());
+            assertEquals("OK", wechatMpLoginResp.getErrmsg());
         });
     }
 
