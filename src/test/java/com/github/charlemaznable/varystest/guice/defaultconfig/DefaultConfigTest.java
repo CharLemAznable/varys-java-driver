@@ -5,7 +5,6 @@ import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysPathProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyAppUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyCorpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyMpUrlProvider;
@@ -14,7 +13,6 @@ import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyError;
 import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -31,8 +29,6 @@ import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDe
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DefaultConfigTest {
 
@@ -43,8 +39,7 @@ public class DefaultConfigTest {
     public static void beforeAll() {
         varysModular = new VarysModular();
         injector = Guice.createInjector(varysModular.bindOtherClients(
-                ProxyAppDemo.class, ProxyMpDemo.class, ProxyCorpDemo.class,
-                ProxyError.class).createModule());
+                ProxyAppDemo.class, ProxyMpDemo.class, ProxyCorpDemo.class).createModule());
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "default",
                 "address=http://127.0.0.1:4236/varys\n");
@@ -124,24 +119,11 @@ public class DefaultConfigTest {
     public void testProxyError() {
         assertNull(injector.getInstance(VarysConfig.class));
         assertNotNull(injector.getInstance(VarysQueryUrlProvider.class));
-        try {
-            injector.getInstance(ProxyError.class);
-        } catch (Exception e) {
-            assertTrue(e.getCause() instanceof IllegalArgumentException);
-        }
-        assertThrows(IllegalArgumentException.class, () ->
-                varysModular.getClient(ProxyError.class));
     }
 
     @Test
     public void testContext() {
         assertNull(injector.getInstance(VarysConfig.class));
-
-        val varysPathProvider = injector
-                .getInstance(VarysPathProvider.class);
-        assertNotNull(varysPathProvider);
-        assertEquals(new VarysPathProvider().value(Query.class, "queryWechatAppToken"),
-                varysPathProvider.value(Query.class, "queryWechatAppToken"));
 
         val varysProxyAppUrlProvider = injector
                 .getInstance(VarysProxyAppUrlProvider.class);

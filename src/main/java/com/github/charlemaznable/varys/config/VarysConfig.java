@@ -7,33 +7,6 @@ public interface VarysConfig {
 
     String address();
 
-    @MinerConfig(defaultValue = "query-wechat-app-token")
-    String appTokenCachePath();
-
-    @MinerConfig(defaultValue = "query-wechat-app-authorizer-token")
-    String appAuthorizerTokenCachePath();
-
-    @MinerConfig(defaultValue = "query-wechat-corp-token")
-    String corpTokenCachePath();
-
-    @MinerConfig(defaultValue = "query-wechat-corp-authorizer-token")
-    String corpAuthorizerTokenCachePath();
-
-    @MinerConfig(defaultValue = "query-toutiao-app-token")
-    String toutiaoAppTokenCachePath();
-
-    @MinerConfig(defaultValue = "proxy-wechat-app")
-    String proxyWechatAppPath();
-
-    @MinerConfig(defaultValue = "proxy-wechat-mp")
-    String proxyWechatMpPath();
-
-    @MinerConfig(defaultValue = "proxy-wechat-mp-login")
-    String proxyWechatMpLoginPath();
-
-    @MinerConfig(defaultValue = "proxy-wechat-corp")
-    String proxyWechatCorpPath();
-
     @MinerConfig(defaultValue = "0")
     long callTimeout();
 

@@ -1,6 +1,5 @@
 package com.github.charlemaznable.varys.impl;
 
-import com.github.charlemaznable.core.net.common.FixedPathVar;
 import com.github.charlemaznable.core.net.common.Mapping;
 import com.github.charlemaznable.core.net.common.Parameter;
 import com.github.charlemaznable.core.net.common.PathVar;
@@ -14,12 +13,6 @@ import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
 
 @OhClient
 @Mapping(urlProvider = VarysQueryUrlProvider.class)
-@FixedPathVar(name = "queryWechatAppToken", valueProvider = VarysPathProvider.class)
-@FixedPathVar(name = "queryWechatAppAuthorizerToken", valueProvider = VarysPathProvider.class)
-@FixedPathVar(name = "queryWechatCorpToken", valueProvider = VarysPathProvider.class)
-@FixedPathVar(name = "queryWechatCorpAuthorizerToken", valueProvider = VarysPathProvider.class)
-@FixedPathVar(name = "queryToutiaoAppToken", valueProvider = VarysPathProvider.class)
-@FixedPathVar(name = "proxyWechatMpLogin", valueProvider = VarysPathProvider.class)
 @ClientTimeout(
         callTimeoutProvider = VarysCallTimeoutProvider.class,
         connectTimeoutProvider = VarysConnectTimeoutProvider.class,
@@ -28,24 +21,24 @@ import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
 )
 public interface Query {
 
-    @Mapping("/{queryWechatAppToken}/{codeName}")
+    @Mapping("/query-wechat-app-token/{codeName}")
     AppTokenResp appToken(@PathVar("codeName") String codeName);
 
-    @Mapping("/{queryWechatAppAuthorizerToken}/{codeName}/{authorizerAppId}")
+    @Mapping("/query-wechat-app-authorizer-token/{codeName}/{authorizerAppId}")
     AppAuthorizerTokenResp appAuthorizerToken(@PathVar("codeName") String codeName,
                                               @PathVar("authorizerAppId") String authorizerAppId);
 
-    @Mapping("/{queryWechatCorpToken}/{codeName}")
+    @Mapping("/query-wechat-corp-token/{codeName}")
     CorpTokenResp corpToken(@PathVar("codeName") String codeName);
 
-    @Mapping("/{queryWechatCorpAuthorizerToken}/{codeName}/{corpId}")
+    @Mapping("/query-wechat-corp-authorizer-token/{codeName}/{corpId}")
     CorpAuthorizerTokenResp corpAuthorizerToken(@PathVar("codeName") String codeName,
                                                 @PathVar("corpId") String corpId);
 
-    @Mapping("/{queryToutiaoAppToken}/{codeName}")
+    @Mapping("/query-toutiao-app-token/{codeName}")
     AppTokenResp toutiaoAppToken(@PathVar("codeName") String codeName);
 
-    @Mapping("/{proxyWechatMpLogin}/{codeName}")
+    @Mapping("/proxy-wechat-mp-login/{codeName}")
     WechatMpLoginResp wechatMpLogin(@PathVar("codeName") String codeName,
                                     @Parameter("js_code") String jsCode);
 }

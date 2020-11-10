@@ -5,7 +5,6 @@ import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysPathProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyAppUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyCorpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyMpUrlProvider;
@@ -14,7 +13,6 @@ import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyError;
 import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -25,14 +23,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.github.charlemaznable.core.codec.Json.jsonOf;
-import static com.github.charlemaznable.core.net.ohclient.OhFactory.getClient;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.proxyDefaultConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDefaultConfig;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @ExtendWith(SpringExtension.class)
@@ -108,25 +103,8 @@ public class DefaultConfigTest {
     }
 
     @Test
-    public void testProxyError() {
-        try {
-            SpringContext.getBean(ProxyError.class);
-        } catch (Exception e) {
-            assertTrue(e.getCause() instanceof IllegalArgumentException);
-        }
-        assertThrows(IllegalArgumentException.class,
-                () -> getClient(ProxyError.class));
-    }
-
-    @Test
     public void testContext() {
         assertNull(SpringContext.getBean(VarysConfig.class));
-
-        val varysPathProvider = SpringContext
-                .getBean(VarysPathProvider.class);
-        assertNotNull(varysPathProvider);
-        assertEquals(new VarysPathProvider().value(Query.class, "queryWechatAppToken"),
-                varysPathProvider.value(Query.class, "queryWechatAppToken"));
 
         val varysProxyAppUrlProvider = SpringContext
                 .getBean(VarysProxyAppUrlProvider.class);

@@ -4,7 +4,6 @@ import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyError;
 import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -25,8 +24,7 @@ public class NoneConfigTest {
     public static void beforeAll() {
         varysModular = new VarysModular();
         injector = Guice.createInjector(varysModular.bindOtherClients(
-                ProxyAppDemo.class, ProxyMpDemo.class, ProxyCorpDemo.class,
-                ProxyError.class).createModule());
+                ProxyAppDemo.class, ProxyMpDemo.class, ProxyCorpDemo.class).createModule());
         MockDiamondServer.setUpMockServer();
         MockDiamondServer.setConfigInfo("Varys", "default", "");
     }
