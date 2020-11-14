@@ -5,10 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public final class AppAuthorizerTokenResp {
+public class WechatTpTokenResp {
 
-    private String token;
     private String error;
     private String appId;
-    private String authorizerAppId;
+    private String token;
 }

@@ -1,10 +1,12 @@
 package com.github.charlemaznable.varystest.mock;
 
-import com.github.charlemaznable.varys.resp.AppAuthorizerTokenResp;
-import com.github.charlemaznable.varys.resp.AppTokenResp;
-import com.github.charlemaznable.varys.resp.CorpAuthorizerTokenResp;
-import com.github.charlemaznable.varys.resp.CorpTokenResp;
+import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
+import com.github.charlemaznable.varys.resp.WechatAppTokenResp;
+import com.github.charlemaznable.varys.resp.WechatCorpTokenResp;
+import com.github.charlemaznable.varys.resp.WechatCorpTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
+import com.github.charlemaznable.varys.resp.WechatTpAuthTokenResp;
+import com.github.charlemaznable.varys.resp.WechatTpTokenResp;
 import lombok.SneakyThrows;
 import lombok.val;
 import okhttp3.mockwebserver.Dispatcher;
@@ -28,45 +30,51 @@ public class InstanceConfigMock {
                 public MockResponse dispatch(RecordedRequest request) {
                     switch (request.getPath()) {
                         case "/varys/query-wechat-app-token/instance":
-                            val resp1 = new AppTokenResp();
+                            val resp1 = new WechatAppTokenResp();
                             resp1.setAppId("1000");
                             resp1.setToken("instanceToken");
                             return new MockResponse().setBody(json(resp1));
 
-                        case "/varys/query-wechat-app-authorizer-token/instance/abcd":
-                            val resp2 = new AppAuthorizerTokenResp();
+                        case "/varys/query-wechat-tp-token/instance":
+                            val resp2 = new WechatTpTokenResp();
                             resp2.setAppId("1000");
-                            resp2.setAuthorizerAppId("abcd");
                             resp2.setToken("instanceToken");
                             return new MockResponse().setBody(json(resp2));
 
-                        case "/varys/query-wechat-corp-token/instance":
-                            val resp3 = new CorpTokenResp();
-                            resp3.setCorpId("10000");
+                        case "/varys/query-wechat-tp-auth-token/instance/abcd":
+                            val resp3 = new WechatTpAuthTokenResp();
+                            resp3.setAppId("1000");
+                            resp3.setAuthorizerAppId("abcd");
                             resp3.setToken("instanceToken");
                             return new MockResponse().setBody(json(resp3));
 
-                        case "/varys/query-wechat-corp-authorizer-token/instance/xyz":
-                            val resp4 = new CorpAuthorizerTokenResp();
+                        case "/varys/query-wechat-corp-token/instance":
+                            val resp4 = new WechatCorpTokenResp();
                             resp4.setCorpId("10000");
-                            resp4.setSuiteId("xyz");
                             resp4.setToken("instanceToken");
                             return new MockResponse().setBody(json(resp4));
 
-                        case "/varys/query-toutiao-app-token/instance":
-                            val resp5 = new AppTokenResp();
-                            resp5.setAppId("2000");
+                        case "/varys/query-wechat-corp-tp-auth-token/instance/xyz":
+                            val resp5 = new WechatCorpTpAuthTokenResp();
+                            resp5.setCorpId("10000");
+                            resp5.setSuiteId("xyz");
                             resp5.setToken("instanceToken");
                             return new MockResponse().setBody(json(resp5));
 
-                        case "/varys/proxy-wechat-mp-login/instance?js_code=JSCODE":
-                            val resp6 = new WechatMpLoginResp();
-                            resp6.setOpenId("openid");
-                            resp6.setSessionKey("session_key");
-                            resp6.setUnionId("unionid");
-                            resp6.setErrcode(0);
-                            resp6.setErrmsg("OK");
+                        case "/varys/query-toutiao-app-token/instance":
+                            val resp6 = new ToutiaoAppTokenResp();
+                            resp6.setAppId("2000");
+                            resp6.setToken("instanceToken");
                             return new MockResponse().setBody(json(resp6));
+
+                        case "/varys/proxy-wechat-mp-login/instance?js_code=JSCODE":
+                            val resp7 = new WechatMpLoginResp();
+                            resp7.setOpenId("openid");
+                            resp7.setSessionKey("session_key");
+                            resp7.setUnionId("unionid");
+                            resp7.setErrcode(0);
+                            resp7.setErrmsg("OK");
+                            return new MockResponse().setBody(json(resp7));
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())
@@ -101,6 +109,14 @@ public class InstanceConfigMock {
                         case "/varys/proxy-wechat-mp/instance/wechatMpParam/testParam":
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("instanceWechatMpParamResp");
+
+                        case "/varys/proxy-wechat-tp/instance/wechatTp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("instanceWechatTpResp");
+
+                        case "/varys/proxy-wechat-tp/instance/wechatTpParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("instanceWechatTpParamResp");
 
                         case "/varys/proxy-wechat-corp/instance/wechatCorp?a=b":
                             return new MockResponse().setBody("instanceWechatCorpResp");

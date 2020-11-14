@@ -15,23 +15,23 @@ import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 import static org.apache.commons.lang3.StringUtils.appendIfMissing;
 
 @Component
-public final class VarysProxyAppUrlProvider implements UrlProvider {
+public final class VarysProxyWechatCorpUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
 
-    public VarysProxyAppUrlProvider() {
+    public VarysProxyWechatCorpUrlProvider() {
         this(null);
     }
 
     @Inject
     @Autowired
-    public VarysProxyAppUrlProvider(@Nullable VarysConfig varysConfig) {
+    public VarysProxyWechatCorpUrlProvider(@Nullable VarysConfig varysConfig) {
         this.varysConfig = nullThen(varysConfig, () -> getMiner(VarysConfig.class));
     }
 
     @Override
     public String url(Class<?> clazz) {
         val address = checkNotNull(varysConfig.address());
-        return appendIfMissing(address, "/") + "proxy-wechat-app";
+        return appendIfMissing(address, "/") + "proxy-wechat-corp";
     }
 }

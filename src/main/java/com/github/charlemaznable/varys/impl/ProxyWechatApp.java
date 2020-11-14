@@ -16,12 +16,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @OhClient
-@Mapping(urlProvider = VarysProxyMpUrlProvider.class)
+@Mapping(urlProvider = VarysProxyWechatAppUrlProvider.class)
 @ClientTimeout(
         callTimeoutProvider = VarysCallTimeoutProvider.class,
         connectTimeoutProvider = VarysConnectTimeoutProvider.class,
         readTimeoutProvider = VarysReadTimeoutProvider.class,
         writeTimeoutProvider = VarysWriteTimeoutProvider.class
 )
-public @interface ProxyMp {
+public @interface ProxyWechatApp {
 }

@@ -2,9 +2,10 @@ package com.github.charlemaznable.varystest.spring.interfacenoneconfig;
 
 import com.github.charlemaznable.core.spring.SpringContext;
 import com.github.charlemaznable.varys.impl.Query;
-import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,24 +33,31 @@ public class InterfaceNoneConfigTest {
     @Test
     public void testNoneConfigProxy() {
         try {
-            SpringContext.getBean(ProxyAppDemo.class);
+            SpringContext.getBean(ProxyWechatAppDemo.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
-        assertThrows(NullPointerException.class, () -> getClient(ProxyAppDemo.class));
+        assertThrows(NullPointerException.class, () -> getClient(ProxyWechatAppDemo.class));
 
         try {
-            SpringContext.getBean(ProxyMpDemo.class);
+            SpringContext.getBean(ProxyWechatMpDemo.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
-        assertThrows(NullPointerException.class, () -> getClient(ProxyMpDemo.class));
+        assertThrows(NullPointerException.class, () -> getClient(ProxyWechatMpDemo.class));
 
         try {
-            SpringContext.getBean(ProxyCorpDemo.class);
+            SpringContext.getBean(ProxyWechatTpDemo.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
-        assertThrows(NullPointerException.class, () -> getClient(ProxyCorpDemo.class));
+        assertThrows(NullPointerException.class, () -> getClient(ProxyWechatTpDemo.class));
+
+        try {
+            SpringContext.getBean(ProxyWechatCorpDemo.class);
+        } catch (Exception e) {
+            assertTrue(e.getCause() instanceof NullPointerException);
+        }
+        assertThrows(NullPointerException.class, () -> getClient(ProxyWechatCorpDemo.class));
     }
 }

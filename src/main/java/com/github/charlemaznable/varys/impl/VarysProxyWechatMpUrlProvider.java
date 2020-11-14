@@ -15,17 +15,17 @@ import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 import static org.apache.commons.lang3.StringUtils.appendIfMissing;
 
 @Component
-public final class VarysProxyMpUrlProvider implements UrlProvider {
+public final class VarysProxyWechatMpUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
 
-    public VarysProxyMpUrlProvider() {
+    public VarysProxyWechatMpUrlProvider() {
         this(null);
     }
 
     @Inject
     @Autowired
-    public VarysProxyMpUrlProvider(@Nullable VarysConfig varysConfig) {
+    public VarysProxyWechatMpUrlProvider(@Nullable VarysConfig varysConfig) {
         this.varysConfig = nullThen(varysConfig, () -> getMiner(VarysConfig.class));
     }
 

@@ -4,12 +4,12 @@ import com.github.charlemaznable.core.net.common.Mapping;
 import com.github.charlemaznable.core.net.common.Parameter;
 import com.github.charlemaznable.core.net.common.PathVar;
 import com.github.charlemaznable.core.net.common.RequestMethod;
-import com.github.charlemaznable.varys.impl.ProxyCorp;
+import com.github.charlemaznable.varys.impl.ProxyWechatCorp;
 
 import static com.github.charlemaznable.core.net.common.HttpMethod.POST;
 
-@ProxyCorp
-public interface ProxyCorpDemo {
+@ProxyWechatCorp
+public interface ProxyWechatCorpDemo {
 
     @Mapping("/{codeName}/wechatCorp")
     String wechatCorp(@PathVar("codeName") String codeName,

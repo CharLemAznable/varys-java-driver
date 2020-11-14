@@ -2,9 +2,10 @@ package com.github.charlemaznable.varystest.guice.interfacenoneconfig;
 
 import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
-import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.jupiter.api.AfterAll;
@@ -24,7 +25,8 @@ public class InterfaceNoneConfigTest {
     public static void beforeAll() {
         varysModular = new VarysModular(InterfaceNoneConfig.class);
         injector = Guice.createInjector(varysModular.bindOtherClients(
-                ProxyAppDemo.class, ProxyMpDemo.class, ProxyCorpDemo.class).createModule());
+                ProxyWechatAppDemo.class, ProxyWechatMpDemo.class,
+                ProxyWechatTpDemo.class, ProxyWechatCorpDemo.class).createModule());
         MockDiamondServer.setUpMockServer();
     }
 
@@ -48,27 +50,35 @@ public class InterfaceNoneConfigTest {
     @Test
     public void testNoneConfigProxy() {
         try {
-            injector.getInstance(ProxyAppDemo.class);
+            injector.getInstance(ProxyWechatAppDemo.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
         assertThrows(NullPointerException.class, () ->
-                varysModular.getClient(ProxyAppDemo.class));
+                varysModular.getClient(ProxyWechatAppDemo.class));
 
         try {
-            injector.getInstance(ProxyMpDemo.class);
+            injector.getInstance(ProxyWechatMpDemo.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
         assertThrows(NullPointerException.class, () ->
-                varysModular.getClient(ProxyMpDemo.class));
+                varysModular.getClient(ProxyWechatMpDemo.class));
 
         try {
-            injector.getInstance(ProxyCorpDemo.class);
+            injector.getInstance(ProxyWechatTpDemo.class);
         } catch (Exception e) {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
         assertThrows(NullPointerException.class, () ->
-                varysModular.getClient(ProxyCorpDemo.class));
+                varysModular.getClient(ProxyWechatTpDemo.class));
+
+        try {
+            injector.getInstance(ProxyWechatCorpDemo.class);
+        } catch (Exception e) {
+            assertTrue(e.getCause() instanceof NullPointerException);
+        }
+        assertThrows(NullPointerException.class, () ->
+                varysModular.getClient(ProxyWechatCorpDemo.class));
     }
 }

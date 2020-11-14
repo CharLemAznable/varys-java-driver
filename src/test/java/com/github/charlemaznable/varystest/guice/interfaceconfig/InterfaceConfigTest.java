@@ -2,9 +2,10 @@ package com.github.charlemaznable.varystest.guice.interfaceconfig;
 
 import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
-import com.github.charlemaznable.varystest.proxy.ProxyAppDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -46,23 +47,27 @@ public class InterfaceConfigTest {
         queryInterfaceConfig(() -> {
             val query = varysModular.getClient(Query.class);
 
-            val appTokenResp = query.appToken("interface");
-            assertEquals("1000", appTokenResp.getAppId());
-            assertEquals("interfaceToken", appTokenResp.getToken());
+            val wechatAppTokenResp = query.wechatAppToken("interface");
+            assertEquals("1000", wechatAppTokenResp.getAppId());
+            assertEquals("interfaceToken", wechatAppTokenResp.getToken());
 
-            val appAuthorizerTokenResp = query.appAuthorizerToken("interface", "abcd");
-            assertEquals("1000", appAuthorizerTokenResp.getAppId());
-            assertEquals("abcd", appAuthorizerTokenResp.getAuthorizerAppId());
-            assertEquals("interfaceToken", appAuthorizerTokenResp.getToken());
+            val wechatTpTokenResp = query.wechatTpToken("interface");
+            assertEquals("1000", wechatTpTokenResp.getAppId());
+            assertEquals("interfaceToken", wechatTpTokenResp.getToken());
 
-            val corpTokenResp = query.corpToken("interface");
-            assertEquals("10000", corpTokenResp.getCorpId());
-            assertEquals("interfaceToken", corpTokenResp.getToken());
+            val wechatTpAuthTokenResp = query.wechatTpAuthToken("interface", "abcd");
+            assertEquals("1000", wechatTpAuthTokenResp.getAppId());
+            assertEquals("abcd", wechatTpAuthTokenResp.getAuthorizerAppId());
+            assertEquals("interfaceToken", wechatTpAuthTokenResp.getToken());
 
-            val corpAuthorizerTokenResp = query.corpAuthorizerToken("interface", "xyz");
-            assertEquals("10000", corpAuthorizerTokenResp.getCorpId());
-            assertEquals("xyz", corpAuthorizerTokenResp.getSuiteId());
-            assertEquals("interfaceToken", corpAuthorizerTokenResp.getToken());
+            val wechatCorpTokenResp = query.wechatCorpToken("interface");
+            assertEquals("10000", wechatCorpTokenResp.getCorpId());
+            assertEquals("interfaceToken", wechatCorpTokenResp.getToken());
+
+            val wechatCorpTpAuthTokenResp = query.wechatCorpTpAuthToken("interface", "xyz");
+            assertEquals("10000", wechatCorpTpAuthTokenResp.getCorpId());
+            assertEquals("xyz", wechatCorpTpAuthTokenResp.getSuiteId());
+            assertEquals("interfaceToken", wechatCorpTpAuthTokenResp.getToken());
 
             val toutiaoAppTokenResp = query.toutiaoAppToken("interface");
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
@@ -81,26 +86,33 @@ public class InterfaceConfigTest {
     @Test
     public void testInterfaceConfigProxy() {
         proxyInterfaceConfig(() -> {
-            val proxyApp = injector.getInstance(ProxyAppDemo.class);
-            val proxyMp = injector.getInstance(ProxyMpDemo.class);
-            val proxyCorp = injector.getInstance(ProxyCorpDemo.class);
+            val proxyWechatApp = injector.getInstance(ProxyWechatAppDemo.class);
+            val proxyWechatMp = injector.getInstance(ProxyWechatMpDemo.class);
+            val proxyWechatTp = injector.getInstance(ProxyWechatTpDemo.class);
+            val proxyWechatCorp = injector.getInstance(ProxyWechatCorpDemo.class);
 
-            val wechatAppResp = proxyApp.wechatApp("interface", "b");
+            val wechatAppResp = proxyWechatApp.wechatApp("interface", "b");
             assertEquals("interfaceWechatAppResp", wechatAppResp);
 
-            val wechatAppParamResp = proxyApp.wechatAppParam("interface", "testParam", jsonOf("a", "b"));
+            val wechatAppParamResp = proxyWechatApp.wechatAppParam("interface", "testParam", jsonOf("a", "b"));
             assertEquals("interfaceWechatAppParamResp", wechatAppParamResp);
 
-            val wechatMpResp = proxyMp.wechatMp("interface", "b");
+            val wechatMpResp = proxyWechatMp.wechatMp("interface", "b");
             assertEquals("interfaceWechatMpResp", wechatMpResp);
 
-            val wechatMpParamResp = proxyMp.wechatMpParam("interface", "testParam", jsonOf("a", "b"));
+            val wechatMpParamResp = proxyWechatMp.wechatMpParam("interface", "testParam", jsonOf("a", "b"));
             assertEquals("interfaceWechatMpParamResp", wechatMpParamResp);
 
-            val wechatCorpResp = proxyCorp.wechatCorp("interface", "b");
+            val wechatTpResp = proxyWechatTp.wechatTp("interface", "b");
+            assertEquals("interfaceWechatTpResp", wechatTpResp);
+
+            val wechatTpParamResp = proxyWechatTp.wechatTpParam("interface", "testParam", jsonOf("a", "b"));
+            assertEquals("interfaceWechatTpParamResp", wechatTpParamResp);
+
+            val wechatCorpResp = proxyWechatCorp.wechatCorp("interface", "b");
             assertEquals("interfaceWechatCorpResp", wechatCorpResp);
 
-            val wechatCorpParamResp = proxyCorp.wechatCorpParam("interface", "testParam", "b");
+            val wechatCorpParamResp = proxyWechatCorp.wechatCorpParam("interface", "testParam", "b");
             assertEquals("interfaceWechatCorpParamResp", wechatCorpParamResp);
         });
     }

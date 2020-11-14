@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public final class CorpTokenResp {
+public final class WechatCorpTokenResp {
 
-    private String token;
     private String error;
     private String corpId;
+    private String token;
 }
