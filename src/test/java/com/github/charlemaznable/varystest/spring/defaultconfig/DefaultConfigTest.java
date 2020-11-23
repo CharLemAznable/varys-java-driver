@@ -5,16 +5,20 @@ import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
+import com.github.charlemaznable.varys.impl.VarysProxyFengniaoAppUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyWechatAppUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyWechatCorpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyWechatMpUrlProvider;
+import com.github.charlemaznable.varys.impl.VarysProxyWechatTpAuthUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysProxyWechatTpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
+import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -45,7 +49,11 @@ public class DefaultConfigTest {
     @Autowired
     private ProxyWechatTpDemo proxyWechatTp;
     @Autowired
+    private ProxyWechatTpAuthDemo proxyWechatTpAuth;
+    @Autowired
     private ProxyWechatCorpDemo proxyWechatCorp;
+    @Autowired
+    private ProxyFengniaoAppDemo proxyFengniaoApp;
 
     @SneakyThrows
     @Test
@@ -54,6 +62,20 @@ public class DefaultConfigTest {
             val wechatAppTokenResp = query.wechatAppToken("default");
             assertEquals("1000", wechatAppTokenResp.getAppId());
             assertEquals("defaultToken", wechatAppTokenResp.getToken());
+            assertEquals("defaultTicket", wechatAppTokenResp.getTicket());
+
+            val wechatMpLoginResp = query.wechatMpLogin("default", "JSCODE");
+            assertEquals("openid", wechatMpLoginResp.getOpenId());
+            assertEquals("session_key", wechatMpLoginResp.getSessionKey());
+            assertEquals("unionid", wechatMpLoginResp.getUnionId());
+            assertEquals(0, wechatMpLoginResp.getErrcode());
+            assertEquals("OK", wechatMpLoginResp.getErrmsg());
+
+            val wechatAppJsConfigResp = query.wechatAppJsConfig("default", "URL");
+            assertEquals("1000", wechatAppJsConfigResp.getAppId());
+            assertEquals("nonceStr", wechatAppJsConfigResp.getNonceStr());
+            assertEquals(1000, wechatAppJsConfigResp.getTimestamp());
+            assertEquals("signature", wechatAppJsConfigResp.getSignature());
 
             val wechatTpTokenResp = query.wechatTpToken("default");
             assertEquals("1000", wechatTpTokenResp.getAppId());
@@ -63,6 +85,7 @@ public class DefaultConfigTest {
             assertEquals("1000", wechatTpAuthTokenResp.getAppId());
             assertEquals("abcd", wechatTpAuthTokenResp.getAuthorizerAppId());
             assertEquals("defaultToken", wechatTpAuthTokenResp.getToken());
+            assertEquals("defaultTicket", wechatTpAuthTokenResp.getTicket());
 
             val wechatCorpTokenResp = query.wechatCorpToken("default");
             assertEquals("10000", wechatCorpTokenResp.getCorpId());
@@ -77,12 +100,9 @@ public class DefaultConfigTest {
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
             assertEquals("defaultToken", toutiaoAppTokenResp.getToken());
 
-            val wechatMpLoginResp = query.wechatMpLogin("default", "JSCODE");
-            assertEquals("openid", wechatMpLoginResp.getOpenId());
-            assertEquals("session_key", wechatMpLoginResp.getSessionKey());
-            assertEquals("unionid", wechatMpLoginResp.getUnionId());
-            assertEquals(0, wechatMpLoginResp.getErrcode());
-            assertEquals("OK", wechatMpLoginResp.getErrmsg());
+            val fengniaoAppTokenResp = query.fengniaoAppToken("default");
+            assertEquals("3000", fengniaoAppTokenResp.getAppId());
+            assertEquals("defaultToken", fengniaoAppTokenResp.getToken());
         });
     }
 
@@ -108,11 +128,23 @@ public class DefaultConfigTest {
             val wechatTpParamResp = proxyWechatTp.wechatTpParam("default", "testParam", jsonOf("a", "b"));
             assertEquals("defaultWechatTpParamResp", wechatTpParamResp);
 
+            val wechatTpAuthResp = proxyWechatTpAuth.wechatTpAuth("default", "abcd", "b");
+            assertEquals("defaultWechatTpAuthResp", wechatTpAuthResp);
+
+            val wechatTpAuthParamResp = proxyWechatTpAuth.wechatTpAuthParam("default", "abcd", "testParam", jsonOf("a", "b"));
+            assertEquals("defaultWechatTpAuthParamResp", wechatTpAuthParamResp);
+
             val wechatCorpResp = proxyWechatCorp.wechatCorp("default", "b");
             assertEquals("defaultWechatCorpResp", wechatCorpResp);
 
             val wechatCorpParamResp = proxyWechatCorp.wechatCorpParam("default", "testParam", "b");
             assertEquals("defaultWechatCorpParamResp", wechatCorpParamResp);
+
+            val fengniaoAppResp = proxyFengniaoApp.fengniaoApp("default", "b");
+            assertEquals("defaultFengniaoAppResp", fengniaoAppResp);
+
+            val fengniaoAppParamResp = proxyFengniaoApp.fengniaoAppParam("default", "testParam", jsonOf("a", "b"));
+            assertEquals("defaultFengniaoAppParamResp", fengniaoAppParamResp);
         });
     }
 
@@ -138,11 +170,23 @@ public class DefaultConfigTest {
         assertEquals(new VarysProxyWechatTpUrlProvider().url(Query.class),
                 varysProxyTpUrlProvider.url(Query.class));
 
+        val varysProxyTpAuthUrlProvider = SpringContext
+                .getBean(VarysProxyWechatTpAuthUrlProvider.class);
+        assertNotNull(varysProxyTpAuthUrlProvider);
+        assertEquals(new VarysProxyWechatTpAuthUrlProvider().url(Query.class),
+                varysProxyTpAuthUrlProvider.url(Query.class));
+
         val varysProxyCorpUrlProvider = SpringContext
                 .getBean(VarysProxyWechatCorpUrlProvider.class);
         assertNotNull(varysProxyCorpUrlProvider);
         assertEquals(new VarysProxyWechatCorpUrlProvider().url(Query.class),
                 varysProxyCorpUrlProvider.url(Query.class));
+
+        val varysProxyFengniaoAppUrlProvider = SpringContext
+                .getBean(VarysProxyFengniaoAppUrlProvider.class);
+        assertNotNull(varysProxyFengniaoAppUrlProvider);
+        assertEquals(new VarysProxyFengniaoAppUrlProvider().url(Query.class),
+                varysProxyFengniaoAppUrlProvider.url(Query.class));
 
         val varysQueryUrlProvider = SpringContext
                 .getBean(VarysQueryUrlProvider.class);

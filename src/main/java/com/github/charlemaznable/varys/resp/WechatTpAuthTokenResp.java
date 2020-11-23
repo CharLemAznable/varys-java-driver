@@ -11,4 +11,5 @@ public final class WechatTpAuthTokenResp {
     private String appId;
     private String authorizerAppId;
     private String token;
+    private String ticket;
 }

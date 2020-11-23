@@ -5,9 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public final class ToutiaoAppTokenResp {
+public final class WechatJsConfigResp {
 
-    private String error;
     private String appId;
-    private String token;
+    private String nonceStr;
+    private long timestamp;
+    private String signature;
 }

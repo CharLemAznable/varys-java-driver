@@ -12,7 +12,7 @@ import static com.github.charlemaznable.core.lang.Condition.nullThen;
 import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 
 @Component
-public class VarysReadTimeoutProvider implements TimeoutProvider {
+public final class VarysReadTimeoutProvider implements TimeoutProvider {
 
     private final VarysConfig varysConfig;
 

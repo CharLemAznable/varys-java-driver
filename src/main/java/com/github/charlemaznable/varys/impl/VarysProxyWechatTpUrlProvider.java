@@ -15,7 +15,7 @@ import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
 import static org.apache.commons.lang3.StringUtils.appendIfMissing;
 
 @Component
-public class VarysProxyWechatTpUrlProvider implements UrlProvider {
+public final class VarysProxyWechatTpUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
 

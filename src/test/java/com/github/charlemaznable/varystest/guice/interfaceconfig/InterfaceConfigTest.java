@@ -2,9 +2,11 @@ package com.github.charlemaznable.varystest.guice.interfaceconfig;
 
 import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
+import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatMpDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
 import com.google.inject.Guice;
@@ -50,6 +52,20 @@ public class InterfaceConfigTest {
             val wechatAppTokenResp = query.wechatAppToken("interface");
             assertEquals("1000", wechatAppTokenResp.getAppId());
             assertEquals("interfaceToken", wechatAppTokenResp.getToken());
+            assertEquals("interfaceTicket", wechatAppTokenResp.getTicket());
+
+            val wechatMpLoginResp = query.wechatMpLogin("interface", "JSCODE");
+            assertEquals("openid", wechatMpLoginResp.getOpenId());
+            assertEquals("session_key", wechatMpLoginResp.getSessionKey());
+            assertEquals("unionid", wechatMpLoginResp.getUnionId());
+            assertEquals(0, wechatMpLoginResp.getErrcode());
+            assertEquals("OK", wechatMpLoginResp.getErrmsg());
+
+            val wechatAppJsConfigResp = query.wechatAppJsConfig("interface", "URL");
+            assertEquals("1000", wechatAppJsConfigResp.getAppId());
+            assertEquals("nonceStr", wechatAppJsConfigResp.getNonceStr());
+            assertEquals(1000, wechatAppJsConfigResp.getTimestamp());
+            assertEquals("signature", wechatAppJsConfigResp.getSignature());
 
             val wechatTpTokenResp = query.wechatTpToken("interface");
             assertEquals("1000", wechatTpTokenResp.getAppId());
@@ -59,6 +75,7 @@ public class InterfaceConfigTest {
             assertEquals("1000", wechatTpAuthTokenResp.getAppId());
             assertEquals("abcd", wechatTpAuthTokenResp.getAuthorizerAppId());
             assertEquals("interfaceToken", wechatTpAuthTokenResp.getToken());
+            assertEquals("interfaceTicket", wechatTpAuthTokenResp.getTicket());
 
             val wechatCorpTokenResp = query.wechatCorpToken("interface");
             assertEquals("10000", wechatCorpTokenResp.getCorpId());
@@ -73,12 +90,9 @@ public class InterfaceConfigTest {
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
             assertEquals("interfaceToken", toutiaoAppTokenResp.getToken());
 
-            val wechatMpLoginResp = query.wechatMpLogin("interface", "JSCODE");
-            assertEquals("openid", wechatMpLoginResp.getOpenId());
-            assertEquals("session_key", wechatMpLoginResp.getSessionKey());
-            assertEquals("unionid", wechatMpLoginResp.getUnionId());
-            assertEquals(0, wechatMpLoginResp.getErrcode());
-            assertEquals("OK", wechatMpLoginResp.getErrmsg());
+            val fengniaoAppTokenResp = query.fengniaoAppToken("interface");
+            assertEquals("3000", fengniaoAppTokenResp.getAppId());
+            assertEquals("interfaceToken", fengniaoAppTokenResp.getToken());
         });
     }
 
@@ -89,7 +103,9 @@ public class InterfaceConfigTest {
             val proxyWechatApp = injector.getInstance(ProxyWechatAppDemo.class);
             val proxyWechatMp = injector.getInstance(ProxyWechatMpDemo.class);
             val proxyWechatTp = injector.getInstance(ProxyWechatTpDemo.class);
+            val proxyWechatTpAuth = injector.getInstance(ProxyWechatTpAuthDemo.class);
             val proxyWechatCorp = injector.getInstance(ProxyWechatCorpDemo.class);
+            val proxyFengniaoApp = injector.getInstance(ProxyFengniaoAppDemo.class);
 
             val wechatAppResp = proxyWechatApp.wechatApp("interface", "b");
             assertEquals("interfaceWechatAppResp", wechatAppResp);
@@ -109,11 +125,23 @@ public class InterfaceConfigTest {
             val wechatTpParamResp = proxyWechatTp.wechatTpParam("interface", "testParam", jsonOf("a", "b"));
             assertEquals("interfaceWechatTpParamResp", wechatTpParamResp);
 
+            val wechatTpAuthResp = proxyWechatTpAuth.wechatTpAuth("interface", "abcd", "b");
+            assertEquals("interfaceWechatTpAuthResp", wechatTpAuthResp);
+
+            val wechatTpAuthParamResp = proxyWechatTpAuth.wechatTpAuthParam("interface", "abcd", "testParam", jsonOf("a", "b"));
+            assertEquals("interfaceWechatTpAuthParamResp", wechatTpAuthParamResp);
+
             val wechatCorpResp = proxyWechatCorp.wechatCorp("interface", "b");
             assertEquals("interfaceWechatCorpResp", wechatCorpResp);
 
             val wechatCorpParamResp = proxyWechatCorp.wechatCorpParam("interface", "testParam", "b");
             assertEquals("interfaceWechatCorpParamResp", wechatCorpParamResp);
+
+            val fengniaoAppResp = proxyFengniaoApp.fengniaoApp("interface", "b");
+            assertEquals("interfaceFengniaoAppResp", fengniaoAppResp);
+
+            val fengniaoAppParamResp = proxyFengniaoApp.fengniaoAppParam("interface", "testParam", jsonOf("a", "b"));
+            assertEquals("interfaceFengniaoAppParamResp", fengniaoAppParamResp);
         });
     }
 }

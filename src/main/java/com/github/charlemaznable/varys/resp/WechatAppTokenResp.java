@@ -10,4 +10,5 @@ public final class WechatAppTokenResp {
     private String error;
     private String appId;
     private String token;
+    private String ticket;
 }

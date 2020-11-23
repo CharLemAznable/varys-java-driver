@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WechatMpLoginResp {
+public final class WechatMpLoginResp {
 
     @JSONField(name = "openid")
     private String openId;

@@ -1,9 +1,11 @@
 package com.github.charlemaznable.varystest.mock;
 
+import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.WechatAppTokenResp;
 import com.github.charlemaznable.varys.resp.WechatCorpTokenResp;
 import com.github.charlemaznable.varys.resp.WechatCorpTpAuthTokenResp;
+import com.github.charlemaznable.varys.resp.WechatJsConfigResp;
 import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatTpTokenResp;
@@ -30,51 +32,75 @@ public class DefaultConfigMock {
                 public MockResponse dispatch(RecordedRequest request) {
                     switch (request.getPath()) {
                         case "/varys/query-wechat-app-token/default":
-                            val resp1 = new WechatAppTokenResp();
-                            resp1.setAppId("1000");
-                            resp1.setToken("defaultToken");
-                            return new MockResponse().setBody(json(resp1));
-
-                        case "/varys/query-wechat-tp-token/default":
-                            val resp2 = new WechatTpTokenResp();
-                            resp2.setAppId("1000");
-                            resp2.setToken("defaultToken");
-                            return new MockResponse().setBody(json(resp2));
-
-                        case "/varys/query-wechat-tp-auth-token/default/abcd":
-                            val resp3 = new WechatTpAuthTokenResp();
-                            resp3.setAppId("1000");
-                            resp3.setAuthorizerAppId("abcd");
-                            resp3.setToken("defaultToken");
-                            return new MockResponse().setBody(json(resp3));
-
-                        case "/varys/query-wechat-corp-token/default":
-                            val resp4 = new WechatCorpTokenResp();
-                            resp4.setCorpId("10000");
-                            resp4.setToken("defaultToken");
-                            return new MockResponse().setBody(json(resp4));
-
-                        case "/varys/query-wechat-corp-tp-auth-token/default/xyz":
-                            val resp5 = new WechatCorpTpAuthTokenResp();
-                            resp5.setCorpId("10000");
-                            resp5.setSuiteId("xyz");
-                            resp5.setToken("defaultToken");
-                            return new MockResponse().setBody(json(resp5));
-
-                        case "/varys/query-toutiao-app-token/default":
-                            val resp6 = new ToutiaoAppTokenResp();
-                            resp6.setAppId("2000");
-                            resp6.setToken("defaultToken");
-                            return new MockResponse().setBody(json(resp6));
+                            val wechatAppTokenResp = new WechatAppTokenResp();
+                            wechatAppTokenResp.setAppId("1000");
+                            wechatAppTokenResp.setToken("defaultToken");
+                            wechatAppTokenResp.setTicket("defaultTicket");
+                            return new MockResponse().setBody(json(wechatAppTokenResp));
 
                         case "/varys/proxy-wechat-mp-login/default?js_code=JSCODE":
-                            val resp7 = new WechatMpLoginResp();
-                            resp7.setOpenId("openid");
-                            resp7.setSessionKey("session_key");
-                            resp7.setUnionId("unionid");
-                            resp7.setErrcode(0);
-                            resp7.setErrmsg("OK");
-                            return new MockResponse().setBody(json(resp7));
+                            val wechatMpLoginResp = new WechatMpLoginResp();
+                            wechatMpLoginResp.setOpenId("openid");
+                            wechatMpLoginResp.setSessionKey("session_key");
+                            wechatMpLoginResp.setUnionId("unionid");
+                            wechatMpLoginResp.setErrcode(0);
+                            wechatMpLoginResp.setErrmsg("OK");
+                            return new MockResponse().setBody(json(wechatMpLoginResp));
+
+                        case "/varys/query-wechat-app-js-config/default?url=URL":
+                            val wechatAppJsConfigResp = new WechatJsConfigResp();
+                            wechatAppJsConfigResp.setAppId("1000");
+                            wechatAppJsConfigResp.setNonceStr("nonceStr");
+                            wechatAppJsConfigResp.setTimestamp(1000);
+                            wechatAppJsConfigResp.setSignature("signature");
+                            return new MockResponse().setBody(json(wechatAppJsConfigResp));
+
+                        case "/varys/query-wechat-tp-token/default":
+                            val wechatTpTokenResp = new WechatTpTokenResp();
+                            wechatTpTokenResp.setAppId("1000");
+                            wechatTpTokenResp.setToken("defaultToken");
+                            return new MockResponse().setBody(json(wechatTpTokenResp));
+
+                        case "/varys/query-wechat-tp-auth-token/default/abcd":
+                            val wechatTpAuthTokenResp = new WechatTpAuthTokenResp();
+                            wechatTpAuthTokenResp.setAppId("1000");
+                            wechatTpAuthTokenResp.setAuthorizerAppId("abcd");
+                            wechatTpAuthTokenResp.setToken("defaultToken");
+                            wechatTpAuthTokenResp.setTicket("defaultTicket");
+                            return new MockResponse().setBody(json(wechatTpAuthTokenResp));
+
+                        case "/varys/query-wechat-tp-auth-js-config/default?url=URL":
+                            val wechatTpAuthJsConfigResp = new WechatJsConfigResp();
+                            wechatTpAuthJsConfigResp.setAppId("abcd");
+                            wechatTpAuthJsConfigResp.setNonceStr("nonceStr");
+                            wechatTpAuthJsConfigResp.setTimestamp(1000);
+                            wechatTpAuthJsConfigResp.setSignature("signature");
+                            return new MockResponse().setBody(json(wechatTpAuthJsConfigResp));
+
+                        case "/varys/query-wechat-corp-token/default":
+                            val wechatCorpTokenResp = new WechatCorpTokenResp();
+                            wechatCorpTokenResp.setCorpId("10000");
+                            wechatCorpTokenResp.setToken("defaultToken");
+                            return new MockResponse().setBody(json(wechatCorpTokenResp));
+
+                        case "/varys/query-wechat-corp-tp-auth-token/default/xyz":
+                            val wechatCorpTpAuthTokenResp = new WechatCorpTpAuthTokenResp();
+                            wechatCorpTpAuthTokenResp.setCorpId("10000");
+                            wechatCorpTpAuthTokenResp.setSuiteId("xyz");
+                            wechatCorpTpAuthTokenResp.setToken("defaultToken");
+                            return new MockResponse().setBody(json(wechatCorpTpAuthTokenResp));
+
+                        case "/varys/query-toutiao-app-token/default":
+                            val toutiaoAppTokenResp = new ToutiaoAppTokenResp();
+                            toutiaoAppTokenResp.setAppId("2000");
+                            toutiaoAppTokenResp.setToken("defaultToken");
+                            return new MockResponse().setBody(json(toutiaoAppTokenResp));
+
+                        case "/varys/query-fengniao-app-token/default":
+                            val fengniaoAppTokenResp = new FengniaoAppTokenResp();
+                            fengniaoAppTokenResp.setAppId("3000");
+                            fengniaoAppTokenResp.setToken("defaultToken");
+                            return new MockResponse().setBody(json(fengniaoAppTokenResp));
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())
@@ -118,12 +144,28 @@ public class DefaultConfigMock {
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("defaultWechatTpParamResp");
 
+                        case "/varys/proxy-wechat-tp-auth/default/abcd/wechatTpAuth":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("defaultWechatTpAuthResp");
+
+                        case "/varys/proxy-wechat-tp-auth/default/abcd/wechatTpAuthParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("defaultWechatTpAuthParamResp");
+
                         case "/varys/proxy-wechat-corp/default/wechatCorp?a=b":
                             return new MockResponse().setBody("defaultWechatCorpResp");
 
                         case "/varys/proxy-wechat-corp/default/wechatCorpParam/testParam":
                             assertEquals("a=b", request.getBody().readUtf8());
                             return new MockResponse().setBody("defaultWechatCorpParamResp");
+
+                        case "/varys/proxy-fengniao-app/default/fengniaoApp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("defaultFengniaoAppResp");
+
+                        case "/varys/proxy-fengniao-app/default/fengniaoAppParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("defaultFengniaoAppParamResp");
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())
