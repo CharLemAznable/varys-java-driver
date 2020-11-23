@@ -27,9 +27,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.n3r.diamond.client.impl.MockDiamondServer;
 
-import static com.github.charlemaznable.core.codec.Json.jsonOf;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.proxyDefaultConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDefaultConfig;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -58,108 +58,18 @@ public class DefaultConfigTest {
     @SneakyThrows
     @Test
     public void testDefaultConfigQuery() {
-        queryDefaultConfig(() -> {
-            val query = varysModular.getClient(Query.class);
-
-            val wechatAppTokenResp = query.wechatAppToken("default");
-            assertEquals("1000", wechatAppTokenResp.getAppId());
-            assertEquals("defaultToken", wechatAppTokenResp.getToken());
-            assertEquals("defaultTicket", wechatAppTokenResp.getTicket());
-
-            val wechatAppMpLoginResp = query.wechatAppMpLogin("default", "JSCODE");
-            assertEquals("openid", wechatAppMpLoginResp.getOpenId());
-            assertEquals("session_key", wechatAppMpLoginResp.getSessionKey());
-            assertEquals("unionid", wechatAppMpLoginResp.getUnionId());
-            assertEquals(0, wechatAppMpLoginResp.getErrcode());
-            assertEquals("OK", wechatAppMpLoginResp.getErrmsg());
-
-            val wechatAppJsConfigResp = query.wechatAppJsConfig("default", "URL");
-            assertEquals("1000", wechatAppJsConfigResp.getAppId());
-            assertEquals("nonceStr", wechatAppJsConfigResp.getNonceStr());
-            assertEquals(1000, wechatAppJsConfigResp.getTimestamp());
-            assertEquals("signature", wechatAppJsConfigResp.getSignature());
-
-            val wechatTpTokenResp = query.wechatTpToken("default");
-            assertEquals("1000", wechatTpTokenResp.getAppId());
-            assertEquals("defaultToken", wechatTpTokenResp.getToken());
-
-            val wechatTpAuthTokenResp = query.wechatTpAuthToken("default", "abcd");
-            assertEquals("1000", wechatTpAuthTokenResp.getAppId());
-            assertEquals("abcd", wechatTpAuthTokenResp.getAuthorizerAppId());
-            assertEquals("defaultToken", wechatTpAuthTokenResp.getToken());
-            assertEquals("defaultTicket", wechatTpAuthTokenResp.getTicket());
-
-            val wechatTpAuthMpLoginResp = query.wechatTpAuthMpLogin("default", "abcd", "JSCODE");
-            assertEquals("openid", wechatTpAuthMpLoginResp.getOpenId());
-            assertEquals("session_key", wechatTpAuthMpLoginResp.getSessionKey());
-            assertEquals(0, wechatTpAuthMpLoginResp.getErrcode());
-            assertEquals("OK", wechatTpAuthMpLoginResp.getErrmsg());
-
-            val wechatTpAuthJsConfigResp = query.wechatTpAuthJsConfig("default", "abcd", "URL");
-            assertEquals("abcd", wechatTpAuthJsConfigResp.getAppId());
-            assertEquals("nonceStr", wechatTpAuthJsConfigResp.getNonceStr());
-            assertEquals(1000, wechatTpAuthJsConfigResp.getTimestamp());
-            assertEquals("signature", wechatTpAuthJsConfigResp.getSignature());
-
-            val wechatCorpTokenResp = query.wechatCorpToken("default");
-            assertEquals("10000", wechatCorpTokenResp.getCorpId());
-            assertEquals("defaultToken", wechatCorpTokenResp.getToken());
-
-            val wechatCorpTpAuthTokenResp = query.wechatCorpTpAuthToken("default", "xyz");
-            assertEquals("10000", wechatCorpTpAuthTokenResp.getCorpId());
-            assertEquals("xyz", wechatCorpTpAuthTokenResp.getSuiteId());
-            assertEquals("defaultToken", wechatCorpTpAuthTokenResp.getToken());
-
-            val toutiaoAppTokenResp = query.toutiaoAppToken("default");
-            assertEquals("2000", toutiaoAppTokenResp.getAppId());
-            assertEquals("defaultToken", toutiaoAppTokenResp.getToken());
-
-            val fengniaoAppTokenResp = query.fengniaoAppToken("default");
-            assertEquals("3000", fengniaoAppTokenResp.getAppId());
-            assertEquals("defaultToken", fengniaoAppTokenResp.getToken());
-        });
+        assertDoesNotThrow(() -> queryDefaultConfig(varysModular.getClient(Query.class)));
     }
 
     @SneakyThrows
     @Test
     public void testDefaultConfigProxy() {
-        proxyDefaultConfig(() -> {
-            val proxyWechatApp = injector.getInstance(ProxyWechatAppDemo.class);
-            val proxyWechatTp = injector.getInstance(ProxyWechatTpDemo.class);
-            val proxyWechatTpAuth = injector.getInstance(ProxyWechatTpAuthDemo.class);
-            val proxyWechatCorp = injector.getInstance(ProxyWechatCorpDemo.class);
-            val proxyFengniaoApp = injector.getInstance(ProxyFengniaoAppDemo.class);
-
-            val wechatAppResp = proxyWechatApp.wechatApp("default", "b");
-            assertEquals("defaultWechatAppResp", wechatAppResp);
-
-            val wechatAppParamResp = proxyWechatApp.wechatAppParam("default", "testParam", jsonOf("a", "b"));
-            assertEquals("defaultWechatAppParamResp", wechatAppParamResp);
-
-            val wechatTpResp = proxyWechatTp.wechatTp("default", "b");
-            assertEquals("defaultWechatTpResp", wechatTpResp);
-
-            val wechatTpParamResp = proxyWechatTp.wechatTpParam("default", "testParam", jsonOf("a", "b"));
-            assertEquals("defaultWechatTpParamResp", wechatTpParamResp);
-
-            val wechatTpAuthResp = proxyWechatTpAuth.wechatTpAuth("default", "abcd", "b");
-            assertEquals("defaultWechatTpAuthResp", wechatTpAuthResp);
-
-            val wechatTpAuthParamResp = proxyWechatTpAuth.wechatTpAuthParam("default", "abcd", "testParam", jsonOf("a", "b"));
-            assertEquals("defaultWechatTpAuthParamResp", wechatTpAuthParamResp);
-
-            val wechatCorpResp = proxyWechatCorp.wechatCorp("default", "b");
-            assertEquals("defaultWechatCorpResp", wechatCorpResp);
-
-            val wechatCorpParamResp = proxyWechatCorp.wechatCorpParam("default", "testParam", "b");
-            assertEquals("defaultWechatCorpParamResp", wechatCorpParamResp);
-
-            val fengniaoAppResp = proxyFengniaoApp.fengniaoApp("default", "b");
-            assertEquals("defaultFengniaoAppResp", fengniaoAppResp);
-
-            val fengniaoAppParamResp = proxyFengniaoApp.fengniaoAppParam("default", "testParam", jsonOf("a", "b"));
-            assertEquals("defaultFengniaoAppParamResp", fengniaoAppParamResp);
-        });
+        assertDoesNotThrow(() -> proxyDefaultConfig(
+                injector.getInstance(ProxyWechatAppDemo.class),
+                injector.getInstance(ProxyWechatTpDemo.class),
+                injector.getInstance(ProxyWechatTpAuthDemo.class),
+                injector.getInstance(ProxyWechatCorpDemo.class),
+                injector.getInstance(ProxyFengniaoAppDemo.class)));
     }
 
     @Test
