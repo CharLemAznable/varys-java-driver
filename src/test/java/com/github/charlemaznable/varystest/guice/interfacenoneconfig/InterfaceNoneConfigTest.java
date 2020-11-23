@@ -5,7 +5,6 @@ import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyWechatMpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import com.google.inject.Guice;
@@ -27,8 +26,7 @@ public class InterfaceNoneConfigTest {
     public static void beforeAll() {
         varysModular = new VarysModular(InterfaceNoneConfig.class);
         injector = Guice.createInjector(varysModular.bindOtherClients(
-                ProxyWechatAppDemo.class, ProxyWechatMpDemo.class,
-                ProxyWechatTpDemo.class, ProxyWechatTpAuthDemo.class,
+                ProxyWechatAppDemo.class, ProxyWechatTpDemo.class, ProxyWechatTpAuthDemo.class,
                 ProxyWechatCorpDemo.class, ProxyFengniaoAppDemo.class).createModule());
         MockDiamondServer.setUpMockServer();
     }
@@ -59,14 +57,6 @@ public class InterfaceNoneConfigTest {
         }
         assertThrows(NullPointerException.class, () ->
                 varysModular.getClient(ProxyWechatAppDemo.class));
-
-        try {
-            injector.getInstance(ProxyWechatMpDemo.class);
-        } catch (Exception e) {
-            assertTrue(e.getCause() instanceof NullPointerException);
-        }
-        assertThrows(NullPointerException.class, () ->
-                varysModular.getClient(ProxyWechatMpDemo.class));
 
         try {
             injector.getInstance(ProxyWechatTpDemo.class);

@@ -6,14 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public final class WechatMpLoginResp {
+public final class WechatTpAuthMpLoginResp {
 
     @JSONField(name = "openid")
     private String openId;
     @JSONField(name = "session_key")
     private String sessionKey;
-    @JSONField(name = "unionid")
-    private String unionId;
 
     private int errcode;
     private String errmsg;

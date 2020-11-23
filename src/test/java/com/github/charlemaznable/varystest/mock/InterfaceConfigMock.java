@@ -2,11 +2,12 @@ package com.github.charlemaznable.varystest.mock;
 
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
+import com.github.charlemaznable.varys.resp.WechatAppMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatAppTokenResp;
 import com.github.charlemaznable.varys.resp.WechatCorpTokenResp;
 import com.github.charlemaznable.varys.resp.WechatCorpTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatJsConfigResp;
-import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
+import com.github.charlemaznable.varys.resp.WechatTpAuthMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatTpTokenResp;
 import lombok.SneakyThrows;
@@ -38,14 +39,14 @@ public class InterfaceConfigMock {
                             wechatAppTokenResp.setTicket("interfaceTicket");
                             return new MockResponse().setBody(json(wechatAppTokenResp));
 
-                        case "/varys/proxy-wechat-mp-login/interface?js_code=JSCODE":
-                            val wechatMpLoginResp = new WechatMpLoginResp();
-                            wechatMpLoginResp.setOpenId("openid");
-                            wechatMpLoginResp.setSessionKey("session_key");
-                            wechatMpLoginResp.setUnionId("unionid");
-                            wechatMpLoginResp.setErrcode(0);
-                            wechatMpLoginResp.setErrmsg("OK");
-                            return new MockResponse().setBody(json(wechatMpLoginResp));
+                        case "/varys/proxy-wechat-app-mp-login/interface?js_code=JSCODE":
+                            val wechatAppMpLoginResp = new WechatAppMpLoginResp();
+                            wechatAppMpLoginResp.setOpenId("openid");
+                            wechatAppMpLoginResp.setSessionKey("session_key");
+                            wechatAppMpLoginResp.setUnionId("unionid");
+                            wechatAppMpLoginResp.setErrcode(0);
+                            wechatAppMpLoginResp.setErrmsg("OK");
+                            return new MockResponse().setBody(json(wechatAppMpLoginResp));
 
                         case "/varys/query-wechat-app-js-config/interface?url=URL":
                             val wechatAppJsConfigResp = new WechatJsConfigResp();
@@ -69,7 +70,15 @@ public class InterfaceConfigMock {
                             wechatTpAuthTokenResp.setTicket("interfaceTicket");
                             return new MockResponse().setBody(json(wechatTpAuthTokenResp));
 
-                        case "/varys/query-wechat-tp-auth-js-config/interface?url=URL":
+                        case "/varys/proxy-wechat-tp-auth-mp-login/interface/abcd?js_code=JSCODE":
+                            val wechatTpAuthMpLoginResp = new WechatTpAuthMpLoginResp();
+                            wechatTpAuthMpLoginResp.setOpenId("openid");
+                            wechatTpAuthMpLoginResp.setSessionKey("session_key");
+                            wechatTpAuthMpLoginResp.setErrcode(0);
+                            wechatTpAuthMpLoginResp.setErrmsg("OK");
+                            return new MockResponse().setBody(json(wechatTpAuthMpLoginResp));
+
+                        case "/varys/query-wechat-tp-auth-js-config/interface/abcd?url=URL":
                             val wechatTpAuthJsConfigResp = new WechatJsConfigResp();
                             wechatTpAuthJsConfigResp.setAppId("abcd");
                             wechatTpAuthJsConfigResp.setNonceStr("nonceStr");
@@ -127,14 +136,6 @@ public class InterfaceConfigMock {
                         case "/varys/proxy-wechat-app/interface/wechatAppParam/testParam":
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("interfaceWechatAppParamResp");
-
-                        case "/varys/proxy-wechat-mp/interface/wechatMp":
-                            assertEquals("b", request.getHeader("a"));
-                            return new MockResponse().setBody("interfaceWechatMpResp");
-
-                        case "/varys/proxy-wechat-mp/interface/wechatMpParam/testParam":
-                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
-                            return new MockResponse().setBody("interfaceWechatMpParamResp");
 
                         case "/varys/proxy-wechat-tp/interface/wechatTp":
                             assertEquals("b", request.getHeader("a"));

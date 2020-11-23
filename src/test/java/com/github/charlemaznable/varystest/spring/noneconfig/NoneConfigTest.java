@@ -5,7 +5,6 @@ import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
-import com.github.charlemaznable.varystest.proxy.ProxyWechatMpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import org.junit.jupiter.api.Test;
@@ -40,13 +39,6 @@ public class NoneConfigTest {
             assertTrue(e.getCause() instanceof NullPointerException);
         }
         assertThrows(NullPointerException.class, () -> getClient(ProxyWechatAppDemo.class));
-
-        try {
-            SpringContext.getBean(ProxyWechatMpDemo.class);
-        } catch (Exception e) {
-            assertTrue(e.getCause() instanceof NullPointerException);
-        }
-        assertThrows(NullPointerException.class, () -> getClient(ProxyWechatMpDemo.class));
 
         try {
             SpringContext.getBean(ProxyWechatTpDemo.class);

@@ -7,11 +7,12 @@ import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.core.net.ohclient.annotation.ClientTimeout;
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
+import com.github.charlemaznable.varys.resp.WechatAppMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatAppTokenResp;
 import com.github.charlemaznable.varys.resp.WechatCorpTokenResp;
 import com.github.charlemaznable.varys.resp.WechatCorpTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatJsConfigResp;
-import com.github.charlemaznable.varys.resp.WechatMpLoginResp;
+import com.github.charlemaznable.varys.resp.WechatTpAuthMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatTpTokenResp;
 
@@ -28,9 +29,9 @@ public interface Query {
     @Mapping("/query-wechat-app-token/{codeName}")
     WechatAppTokenResp wechatAppToken(@PathVar("codeName") String codeName);
 
-    @Mapping("/proxy-wechat-mp-login/{codeName}")
-    WechatMpLoginResp wechatMpLogin(@PathVar("codeName") String codeName,
-                                    @Parameter("js_code") String jsCode);
+    @Mapping("/proxy-wechat-app-mp-login/{codeName}")
+    WechatAppMpLoginResp wechatAppMpLogin(@PathVar("codeName") String codeName,
+                                          @Parameter("js_code") String jsCode);
 
     @Mapping("/query-wechat-app-js-config/{codeName}")
     WechatJsConfigResp wechatAppJsConfig(@PathVar("codeName") String codeName,
@@ -43,8 +44,14 @@ public interface Query {
     WechatTpAuthTokenResp wechatTpAuthToken(@PathVar("codeName") String codeName,
                                             @PathVar("authorizerAppId") String authorizerAppId);
 
-    @Mapping("/query-wechat-tp-auth-js-config/{codeName}")
+    @Mapping("/proxy-wechat-tp-auth-mp-login/{codeName}/{authorizerAppId}")
+    WechatTpAuthMpLoginResp wechatTpAuthMpLogin(@PathVar("codeName") String codeName,
+                                                @PathVar("authorizerAppId") String authorizerAppId,
+                                                @Parameter("js_code") String jsCode);
+
+    @Mapping("/query-wechat-tp-auth-js-config/{codeName}/{authorizerAppId}")
     WechatJsConfigResp wechatTpAuthJsConfig(@PathVar("codeName") String codeName,
+                                            @PathVar("authorizerAppId") String authorizerAppId,
                                             @Parameter("url") String url);
 
     @Mapping("/query-wechat-corp-token/{codeName}")
