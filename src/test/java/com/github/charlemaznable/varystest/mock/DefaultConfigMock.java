@@ -2,6 +2,7 @@ package com.github.charlemaznable.varystest.mock;
 
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
+import com.github.charlemaznable.varys.resp.ShansongAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.WechatAppMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatAppTokenResp;
@@ -12,6 +13,9 @@ import com.github.charlemaznable.varys.resp.WechatTpAuthMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatTpTokenResp;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppDeveloperDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppFileDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppMerchantDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
@@ -110,11 +114,19 @@ public class DefaultConfigMock {
                             toutiaoAppTokenResp.setToken("defaultToken");
                             return new MockResponse().setBody(json(toutiaoAppTokenResp));
 
-                        case "/varys/query-fengniao-app-token/default":
+                        case "/varys/query-fengniao-app-token/default/xyz":
                             val fengniaoAppTokenResp = new FengniaoAppTokenResp();
                             fengniaoAppTokenResp.setAppId("3000");
+                            fengniaoAppTokenResp.setMerchantId("xyz");
                             fengniaoAppTokenResp.setToken("defaultToken");
                             return new MockResponse().setBody(json(fengniaoAppTokenResp));
+
+                        case "/varys/query-shansong-app-token/default/xyz":
+                            val shansongAppTokenResp = new ShansongAppTokenResp();
+                            shansongAppTokenResp.setAppId("4000");
+                            shansongAppTokenResp.setMerchantCode("xyz");
+                            shansongAppTokenResp.setToken("defaultToken");
+                            return new MockResponse().setBody(json(shansongAppTokenResp));
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())
@@ -176,9 +188,15 @@ public class DefaultConfigMock {
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
             assertEquals("defaultToken", toutiaoAppTokenResp.getToken());
 
-            val fengniaoAppTokenResp = query.fengniaoAppToken("default");
+            val fengniaoAppTokenResp = query.fengniaoAppToken("default", "xyz");
             assertEquals("3000", fengniaoAppTokenResp.getAppId());
+            assertEquals("xyz", fengniaoAppTokenResp.getMerchantId());
             assertEquals("defaultToken", fengniaoAppTokenResp.getToken());
+
+            val shansongAppTokenResp = query.shansongAppToken("default", "xyz");
+            assertEquals("4000", shansongAppTokenResp.getAppId());
+            assertEquals("xyz", shansongAppTokenResp.getMerchantCode());
+            assertEquals("defaultToken", shansongAppTokenResp.getToken());
         }
     }
 
@@ -187,7 +205,10 @@ public class DefaultConfigMock {
                                           ProxyWechatTpDemo proxyWechatTp,
                                           ProxyWechatTpAuthDemo proxyWechatTpAuth,
                                           ProxyWechatCorpDemo proxyWechatCorp,
-                                          ProxyFengniaoAppDemo proxyFengniaoApp) {
+                                          ProxyFengniaoAppDemo proxyFengniaoApp,
+                                          ProxyShansongAppDeveloperDemo proxyShansongAppDeveloper,
+                                          ProxyShansongAppMerchantDemo proxyShansongAppMerchant,
+                                          ProxyShansongAppFileDemo proxyShansongAppFile) {
         try (val mockWebServer = new MockWebServer()) {
             mockWebServer.setDispatcher(new Dispatcher() {
                 @Override
@@ -224,13 +245,37 @@ public class DefaultConfigMock {
                             assertEquals("a=b", request.getBody().readUtf8());
                             return new MockResponse().setBody("defaultWechatCorpParamResp");
 
-                        case "/varys/proxy-fengniao-app/default/fengniaoApp":
+                        case "/varys/proxy-fengniao-app/default/xyz/fengniaoApp":
                             assertEquals("b", request.getHeader("a"));
                             return new MockResponse().setBody("defaultFengniaoAppResp");
 
-                        case "/varys/proxy-fengniao-app/default/fengniaoAppParam/testParam":
+                        case "/varys/proxy-fengniao-app/default/xyz/fengniaoAppParam/testParam":
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("defaultFengniaoAppParamResp");
+
+                        case "/varys/proxy-shansong-app-developer/default/xyz/shansongApp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("defaultShansongAppResp");
+
+                        case "/varys/proxy-shansong-app-developer/default/xyz/shansongAppParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("defaultShansongAppParamResp");
+
+                        case "/varys/proxy-shansong-app-merchant/default/shansongApp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("defaultShansongAppResp");
+
+                        case "/varys/proxy-shansong-app-merchant/default/shansongAppParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("defaultShansongAppParamResp");
+
+                        case "/varys/proxy-shansong-app-file/default/shansongApp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("defaultShansongAppResp");
+
+                        case "/varys/proxy-shansong-app-file/default/shansongAppParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("defaultShansongAppParamResp");
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())
@@ -263,11 +308,29 @@ public class DefaultConfigMock {
             val wechatCorpParamResp = proxyWechatCorp.wechatCorpParam("default", "testParam", "b");
             assertEquals("defaultWechatCorpParamResp", wechatCorpParamResp);
 
-            val fengniaoAppResp = proxyFengniaoApp.fengniaoApp("default", "b");
+            val fengniaoAppResp = proxyFengniaoApp.fengniaoApp("default", "xyz", "b");
             assertEquals("defaultFengniaoAppResp", fengniaoAppResp);
 
-            val fengniaoAppParamResp = proxyFengniaoApp.fengniaoAppParam("default", "testParam", jsonOf("a", "b"));
+            val fengniaoAppParamResp = proxyFengniaoApp.fengniaoAppParam("default", "xyz", "testParam", jsonOf("a", "b"));
             assertEquals("defaultFengniaoAppParamResp", fengniaoAppParamResp);
+
+            val shansongAppDeveloperResp = proxyShansongAppDeveloper.shansongApp("default", "xyz", "b");
+            assertEquals("defaultShansongAppResp", shansongAppDeveloperResp);
+
+            val shansongAppDeveloperParamResp = proxyShansongAppDeveloper.shansongAppParam("default", "xyz", "testParam", jsonOf("a", "b"));
+            assertEquals("defaultShansongAppParamResp", shansongAppDeveloperParamResp);
+
+            val shansongAppMerchantResp = proxyShansongAppMerchant.shansongApp("default", "b");
+            assertEquals("defaultShansongAppResp", shansongAppMerchantResp);
+
+            val shansongAppMerchantParamResp = proxyShansongAppMerchant.shansongAppParam("default", "testParam", jsonOf("a", "b"));
+            assertEquals("defaultShansongAppParamResp", shansongAppMerchantParamResp);
+
+            val shansongAppFileResp = proxyShansongAppFile.shansongApp("default", "b");
+            assertEquals("defaultShansongAppResp", shansongAppFileResp);
+
+            val shansongAppFileParamResp = proxyShansongAppFile.shansongAppParam("default", "testParam", jsonOf("a", "b"));
+            assertEquals("defaultShansongAppParamResp", shansongAppFileParamResp);
         }
     }
 }

@@ -2,6 +2,9 @@ package com.github.charlemaznable.varystest.spring.instanceconfig;
 
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppDeveloperDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppFileDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppMerchantDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
@@ -34,6 +37,12 @@ public class InstanceConfigTest {
     private ProxyWechatCorpDemo proxyWechatCorp;
     @Autowired
     private ProxyFengniaoAppDemo proxyFengniaoApp;
+    @Autowired
+    private ProxyShansongAppDeveloperDemo proxyShansongAppDeveloper;
+    @Autowired
+    private ProxyShansongAppMerchantDemo proxyShansongAppMerchant;
+    @Autowired
+    private ProxyShansongAppFileDemo proxyShansongAppFile;
 
     @SneakyThrows
     @Test
@@ -49,6 +58,9 @@ public class InstanceConfigTest {
                 proxyWechatTp,
                 proxyWechatTpAuth,
                 proxyWechatCorp,
-                proxyFengniaoApp));
+                proxyFengniaoApp,
+                proxyShansongAppDeveloper,
+                proxyShansongAppMerchant,
+                proxyShansongAppFile));
     }
 }

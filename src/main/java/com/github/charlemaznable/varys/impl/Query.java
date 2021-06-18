@@ -6,6 +6,7 @@ import com.github.charlemaznable.core.net.common.PathVar;
 import com.github.charlemaznable.core.net.ohclient.OhClient;
 import com.github.charlemaznable.core.net.ohclient.annotation.ClientTimeout;
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
+import com.github.charlemaznable.varys.resp.ShansongAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.WechatAppMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatAppTokenResp;
@@ -64,6 +65,11 @@ public interface Query {
     @Mapping("/query-toutiao-app-token/{codeName}")
     ToutiaoAppTokenResp toutiaoAppToken(@PathVar("codeName") String codeName);
 
-    @Mapping("/query-fengniao-app-token/{codeName}")
-    FengniaoAppTokenResp fengniaoAppToken(@PathVar("codeName") String codeName);
+    @Mapping("/query-fengniao-app-token/{codeName}/{merchantId}")
+    FengniaoAppTokenResp fengniaoAppToken(@PathVar("codeName") String codeName,
+                                          @PathVar("merchantId") String merchantId);
+
+    @Mapping("/query-shansong-app-token/{codeName}/{merchantCode}")
+    ShansongAppTokenResp shansongAppToken(@PathVar("codeName") String codeName,
+                                          @PathVar("merchantCode") String merchantCode);
 }

@@ -2,6 +2,7 @@ package com.github.charlemaznable.varystest.mock;
 
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
+import com.github.charlemaznable.varys.resp.ShansongAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.WechatAppMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatAppTokenResp;
@@ -12,6 +13,9 @@ import com.github.charlemaznable.varys.resp.WechatTpAuthMpLoginResp;
 import com.github.charlemaznable.varys.resp.WechatTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatTpTokenResp;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppDeveloperDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppFileDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppMerchantDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
@@ -110,11 +114,19 @@ public class InstanceConfigMock {
                             toutiaoAppTokenResp.setToken("instanceToken");
                             return new MockResponse().setBody(json(toutiaoAppTokenResp));
 
-                        case "/varys/query-fengniao-app-token/instance":
+                        case "/varys/query-fengniao-app-token/instance/xyz":
                             val fengniaoAppTokenResp = new FengniaoAppTokenResp();
                             fengniaoAppTokenResp.setAppId("3000");
+                            fengniaoAppTokenResp.setMerchantId("xyz");
                             fengniaoAppTokenResp.setToken("instanceToken");
                             return new MockResponse().setBody(json(fengniaoAppTokenResp));
+
+                        case "/varys/query-shansong-app-token/instance/xyz":
+                            val shansongAppTokenResp = new ShansongAppTokenResp();
+                            shansongAppTokenResp.setAppId("4000");
+                            shansongAppTokenResp.setMerchantCode("xyz");
+                            shansongAppTokenResp.setToken("instanceToken");
+                            return new MockResponse().setBody(json(shansongAppTokenResp));
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())
@@ -176,9 +188,15 @@ public class InstanceConfigMock {
             assertEquals("2000", toutiaoAppTokenResp.getAppId());
             assertEquals("instanceToken", toutiaoAppTokenResp.getToken());
 
-            val fengniaoAppTokenResp = query.fengniaoAppToken("instance");
+            val fengniaoAppTokenResp = query.fengniaoAppToken("instance", "xyz");
             assertEquals("3000", fengniaoAppTokenResp.getAppId());
+            assertEquals("xyz", fengniaoAppTokenResp.getMerchantId());
             assertEquals("instanceToken", fengniaoAppTokenResp.getToken());
+
+            val shansongAppTokenResp = query.shansongAppToken("instance", "xyz");
+            assertEquals("4000", shansongAppTokenResp.getAppId());
+            assertEquals("xyz", shansongAppTokenResp.getMerchantCode());
+            assertEquals("instanceToken", shansongAppTokenResp.getToken());
         }
     }
 
@@ -187,7 +205,10 @@ public class InstanceConfigMock {
                                            ProxyWechatTpDemo proxyWechatTp,
                                            ProxyWechatTpAuthDemo proxyWechatTpAuth,
                                            ProxyWechatCorpDemo proxyWechatCorp,
-                                           ProxyFengniaoAppDemo proxyFengniaoApp) {
+                                           ProxyFengniaoAppDemo proxyFengniaoApp,
+                                           ProxyShansongAppDeveloperDemo proxyShansongAppDeveloper,
+                                           ProxyShansongAppMerchantDemo proxyShansongAppMerchant,
+                                           ProxyShansongAppFileDemo proxyShansongAppFile) {
         try (val mockWebServer = new MockWebServer()) {
             mockWebServer.setDispatcher(new Dispatcher() {
                 @Override
@@ -224,13 +245,37 @@ public class InstanceConfigMock {
                             assertEquals("a=b", request.getBody().readUtf8());
                             return new MockResponse().setBody("instanceWechatCorpParamResp");
 
-                        case "/varys/proxy-fengniao-app/instance/fengniaoApp":
+                        case "/varys/proxy-fengniao-app/instance/xyz/fengniaoApp":
                             assertEquals("b", request.getHeader("a"));
                             return new MockResponse().setBody("instanceFengniaoAppResp");
 
-                        case "/varys/proxy-fengniao-app/instance/fengniaoAppParam/testParam":
+                        case "/varys/proxy-fengniao-app/instance/xyz/fengniaoAppParam/testParam":
                             assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
                             return new MockResponse().setBody("instanceFengniaoAppParamResp");
+
+                        case "/varys/proxy-shansong-app-developer/instance/xyz/shansongApp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("instanceShansongAppResp");
+
+                        case "/varys/proxy-shansong-app-developer/instance/xyz/shansongAppParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("instanceShansongAppParamResp");
+
+                        case "/varys/proxy-shansong-app-merchant/instance/shansongApp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("instanceShansongAppResp");
+
+                        case "/varys/proxy-shansong-app-merchant/instance/shansongAppParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("instanceShansongAppParamResp");
+
+                        case "/varys/proxy-shansong-app-file/instance/shansongApp":
+                            assertEquals("b", request.getHeader("a"));
+                            return new MockResponse().setBody("instanceShansongAppResp");
+
+                        case "/varys/proxy-shansong-app-file/instance/shansongAppParam/testParam":
+                            assertEquals(jsonOf("a", "b"), request.getBody().readUtf8());
+                            return new MockResponse().setBody("instanceShansongAppParamResp");
                     }
                     return new MockResponse()
                             .setResponseCode(HttpStatus.NOT_FOUND.value())
@@ -263,11 +308,29 @@ public class InstanceConfigMock {
             val wechatCorpParamResp = proxyWechatCorp.wechatCorpParam("instance", "testParam", "b");
             assertEquals("instanceWechatCorpParamResp", wechatCorpParamResp);
 
-            val fengniaoAppResp = proxyFengniaoApp.fengniaoApp("instance", "b");
+            val fengniaoAppResp = proxyFengniaoApp.fengniaoApp("instance", "xyz", "b");
             assertEquals("instanceFengniaoAppResp", fengniaoAppResp);
 
-            val fengniaoAppParamResp = proxyFengniaoApp.fengniaoAppParam("instance", "testParam", jsonOf("a", "b"));
+            val fengniaoAppParamResp = proxyFengniaoApp.fengniaoAppParam("instance", "xyz", "testParam", jsonOf("a", "b"));
             assertEquals("instanceFengniaoAppParamResp", fengniaoAppParamResp);
+
+            val shansongAppDeveloperResp = proxyShansongAppDeveloper.shansongApp("instance", "xyz", "b");
+            assertEquals("instanceShansongAppResp", shansongAppDeveloperResp);
+
+            val shansongAppDeveloperParamResp = proxyShansongAppDeveloper.shansongAppParam("instance", "xyz", "testParam", jsonOf("a", "b"));
+            assertEquals("instanceShansongAppParamResp", shansongAppDeveloperParamResp);
+
+            val shansongAppMerchantResp = proxyShansongAppMerchant.shansongApp("instance", "b");
+            assertEquals("instanceShansongAppResp", shansongAppMerchantResp);
+
+            val shansongAppMerchantParamResp = proxyShansongAppMerchant.shansongAppParam("instance", "testParam", jsonOf("a", "b"));
+            assertEquals("instanceShansongAppParamResp", shansongAppMerchantParamResp);
+
+            val shansongAppFileResp = proxyShansongAppFile.shansongApp("instance", "b");
+            assertEquals("instanceShansongAppResp", shansongAppFileResp);
+
+            val shansongAppFileParamResp = proxyShansongAppFile.shansongAppParam("instance", "testParam", jsonOf("a", "b"));
+            assertEquals("instanceShansongAppParamResp", shansongAppFileParamResp);
         }
     }
 }

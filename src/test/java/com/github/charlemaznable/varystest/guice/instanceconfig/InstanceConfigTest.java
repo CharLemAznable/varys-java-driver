@@ -3,6 +3,9 @@ package com.github.charlemaznable.varystest.guice.instanceconfig;
 import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppDeveloperDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppFileDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppMerchantDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
@@ -45,6 +48,9 @@ public class InstanceConfigTest {
                 injector.getInstance(ProxyWechatTpDemo.class),
                 injector.getInstance(ProxyWechatTpAuthDemo.class),
                 injector.getInstance(ProxyWechatCorpDemo.class),
-                injector.getInstance(ProxyFengniaoAppDemo.class)));
+                injector.getInstance(ProxyFengniaoAppDemo.class),
+                injector.getInstance(ProxyShansongAppDeveloperDemo.class),
+                injector.getInstance(ProxyShansongAppMerchantDemo.class),
+                injector.getInstance(ProxyShansongAppFileDemo.class)));
     }
 }

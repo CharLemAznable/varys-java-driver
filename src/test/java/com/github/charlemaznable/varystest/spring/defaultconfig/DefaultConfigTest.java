@@ -14,6 +14,9 @@ import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppDeveloperDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppFileDemo;
+import com.github.charlemaznable.varystest.proxy.ProxyShansongAppMerchantDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatCorpDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
@@ -50,6 +53,12 @@ public class DefaultConfigTest {
     private ProxyWechatCorpDemo proxyWechatCorp;
     @Autowired
     private ProxyFengniaoAppDemo proxyFengniaoApp;
+    @Autowired
+    private ProxyShansongAppDeveloperDemo proxyShansongAppDeveloper;
+    @Autowired
+    private ProxyShansongAppMerchantDemo proxyShansongAppMerchant;
+    @Autowired
+    private ProxyShansongAppFileDemo proxyShansongAppFile;
 
     @SneakyThrows
     @Test
@@ -65,7 +74,10 @@ public class DefaultConfigTest {
                 proxyWechatTp,
                 proxyWechatTpAuth,
                 proxyWechatCorp,
-                proxyFengniaoApp));
+                proxyFengniaoApp,
+                proxyShansongAppDeveloper,
+                proxyShansongAppMerchant,
+                proxyShansongAppFile));
     }
 
     @Test
