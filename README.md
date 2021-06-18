@@ -30,7 +30,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.9.1</version>
+  <version>0.9.2</version>
 </dependency>
 ```
 
@@ -40,7 +40,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>0.9.2-SNAPSHOT</version>
+  <version>0.9.3-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -48,6 +48,6 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 
 1. 在`{USER_HOME}/.diamond-client/config-data`下新建目录`VARYS`
 2. 在`VARYS`目录下建立文件`default.diamond`
-```properties
+```
 address=http://127.0.0.1:4236/varys
 ```
