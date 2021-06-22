@@ -1,5 +1,6 @@
 package com.github.charlemaznable.varystest.mock;
 
+import com.github.charlemaznable.core.lang.EverythingIsNonNull;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.ShansongAppTokenResp;
@@ -30,17 +31,19 @@ import org.springframework.http.HttpStatus;
 
 import static com.github.charlemaznable.core.codec.Json.json;
 import static com.github.charlemaznable.core.codec.Json.jsonOf;
+import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InterfaceConfigMock {
 
+    @EverythingIsNonNull
     @SneakyThrows
     public static void queryInterfaceConfig(Query query) {
         try (val mockWebServer = new MockWebServer()) {
             mockWebServer.setDispatcher(new Dispatcher() {
                 @Override
                 public MockResponse dispatch(RecordedRequest request) {
-                    switch (request.getPath()) {
+                    switch (checkNotNull(request.getPath())) {
                         case "/varys/query-wechat-app-token/interface":
                             val wechatAppTokenResp = new WechatAppTokenResp();
                             wechatAppTokenResp.setAppId("1000");
@@ -200,6 +203,7 @@ public class InterfaceConfigMock {
         }
     }
 
+    @EverythingIsNonNull
     @SneakyThrows
     public static void proxyInterfaceConfig(ProxyWechatAppDemo proxyWechatApp,
                                             ProxyWechatTpDemo proxyWechatTp,
@@ -213,7 +217,7 @@ public class InterfaceConfigMock {
             mockWebServer.setDispatcher(new Dispatcher() {
                 @Override
                 public MockResponse dispatch(RecordedRequest request) {
-                    switch (request.getPath()) {
+                    switch (checkNotNull(request.getPath())) {
                         case "/varys/proxy-wechat-app/interface/wechatApp":
                             assertEquals("b", request.getHeader("a"));
                             return new MockResponse().setBody("interfaceWechatAppResp");
