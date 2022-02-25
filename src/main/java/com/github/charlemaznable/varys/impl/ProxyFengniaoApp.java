@@ -1,8 +1,8 @@
 package com.github.charlemaznable.varys.impl;
 
-import com.github.charlemaznable.core.net.common.Mapping;
-import com.github.charlemaznable.core.net.ohclient.OhClient;
-import com.github.charlemaznable.core.net.ohclient.annotation.ClientTimeout;
+import com.github.charlemaznable.httpclient.common.Mapping;
+import com.github.charlemaznable.httpclient.ohclient.OhClient;
+import com.github.charlemaznable.httpclient.ohclient.annotation.ClientTimeout;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

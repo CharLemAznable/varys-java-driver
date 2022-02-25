@@ -1,10 +1,10 @@
 package com.github.charlemaznable.varys.impl;
 
-import com.github.charlemaznable.core.net.common.Mapping;
-import com.github.charlemaznable.core.net.common.Parameter;
-import com.github.charlemaznable.core.net.common.PathVar;
-import com.github.charlemaznable.core.net.ohclient.OhClient;
-import com.github.charlemaznable.core.net.ohclient.annotation.ClientTimeout;
+import com.github.charlemaznable.httpclient.common.Mapping;
+import com.github.charlemaznable.httpclient.common.Parameter;
+import com.github.charlemaznable.httpclient.common.PathVar;
+import com.github.charlemaznable.httpclient.ohclient.OhClient;
+import com.github.charlemaznable.httpclient.ohclient.annotation.ClientTimeout;
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.ShansongAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;

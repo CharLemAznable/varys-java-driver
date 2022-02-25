@@ -1,6 +1,6 @@
 package com.github.charlemaznable.varys.config;
 
-import com.github.charlemaznable.core.miner.MinerConfig;
+import com.github.charlemaznable.miner.MinerConfig;
 
 @MinerConfig(group = "Varys", dataId = "default")
 public interface VarysConfig {

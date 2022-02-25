@@ -1,6 +1,6 @@
 package com.github.charlemaznable.varys.impl;
 
-import com.github.charlemaznable.core.net.common.Mapping.UrlProvider;
+import com.github.charlemaznable.httpclient.common.Mapping.UrlProvider;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.google.inject.Inject;
 import lombok.val;
@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static com.github.charlemaznable.core.lang.Condition.nullThen;
-import static com.github.charlemaznable.core.miner.MinerFactory.getMiner;
+import static com.github.charlemaznable.miner.MinerFactory.getMiner;
 import static org.apache.commons.lang3.StringUtils.appendIfMissing;
 
 @Component

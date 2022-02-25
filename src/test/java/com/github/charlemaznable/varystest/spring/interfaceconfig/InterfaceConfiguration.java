@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varystest.spring.interfaceconfig;
 
-import com.github.charlemaznable.core.miner.MinerScan;
-import com.github.charlemaznable.core.net.ohclient.OhScan;
+import com.github.charlemaznable.httpclient.ohclient.OhScan;
+import com.github.charlemaznable.miner.MinerScan;
 import com.github.charlemaznable.varys.spring.VarysImport;
 import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
 import org.n3r.diamond.client.impl.MockDiamondServer;
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import static com.github.charlemaznable.core.miner.MinerFactory.springMinerLoader;
-import static com.github.charlemaznable.core.net.ohclient.OhFactory.springOhLoader;
+import static com.github.charlemaznable.httpclient.ohclient.OhFactory.springOhLoader;
+import static com.github.charlemaznable.miner.MinerFactory.springMinerLoader;
 import static org.joor.Reflect.on;
 
 @ComponentScan

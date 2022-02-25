@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varys.guice;
 
-import com.github.charlemaznable.core.miner.MinerModular;
-import com.github.charlemaznable.core.net.ohclient.OhModular;
+import com.github.charlemaznable.httpclient.ohclient.OhModular;
+import com.github.charlemaznable.miner.MinerModular;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.google.inject.AbstractModule;

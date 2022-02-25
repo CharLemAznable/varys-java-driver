@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static com.github.charlemaznable.core.net.ohclient.OhFactory.getClient;
+import static com.github.charlemaznable.httpclient.ohclient.OhFactory.getClient;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
