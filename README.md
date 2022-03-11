@@ -45,8 +45,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 
 ##### Configuration
 
-1. 在`{USER_HOME}/.diamond-client/config-data`下新建目录`VARYS`
-2. 在`VARYS`目录下建立文件`default.diamond`
-```
-address=http://127.0.0.1:4236/varys
-```
+使用Diamond: ```group:Varys dataId:default```
+使用Apollo: ```namespace:Varys propertyName:default```
+
+必填配置项: ```address=http://127.0.0.1:4236/varys```指定varys服务地址

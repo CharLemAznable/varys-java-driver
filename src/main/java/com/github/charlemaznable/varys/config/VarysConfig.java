@@ -1,21 +1,27 @@
 package com.github.charlemaznable.varys.config;
 
-import com.github.charlemaznable.miner.MinerConfig;
+import com.github.charlemaznable.configservice.apollo.ApolloConfig;
+import com.github.charlemaznable.configservice.diamond.DiamondConfig;
 
-@MinerConfig(group = "Varys", dataId = "default")
+@ApolloConfig(namespace = "Varys", propertyName = "${varys-config:-default}")
+@DiamondConfig(group = "Varys", dataId = "${varys-config:-default}")
 public interface VarysConfig {
 
     String address();
 
-    @MinerConfig(defaultValue = "0")
+    @ApolloConfig(defaultValue = "0")
+    @DiamondConfig(defaultValue = "0")
     long callTimeout();
 
-    @MinerConfig(defaultValue = "10000")
+    @ApolloConfig(defaultValue = "10000")
+    @DiamondConfig(defaultValue = "10000")
     long connectTimeout();
 
-    @MinerConfig(defaultValue = "10000")
+    @ApolloConfig(defaultValue = "10000")
+    @DiamondConfig(defaultValue = "10000")
     long readTimeout();
 
-    @MinerConfig(defaultValue = "10000")
+    @ApolloConfig(defaultValue = "10000")
+    @DiamondConfig(defaultValue = "10000")
     long writeTimeout();
 }

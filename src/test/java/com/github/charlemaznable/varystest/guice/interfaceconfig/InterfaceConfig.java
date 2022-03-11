@@ -1,11 +1,11 @@
 package com.github.charlemaznable.varystest.guice.interfaceconfig;
 
-import com.github.charlemaznable.miner.MinerConfig;
+import com.github.charlemaznable.configservice.diamond.DiamondConfig;
 import com.github.charlemaznable.varys.config.VarysConfig;
 
-@MinerConfig(group = "Varys", dataId = "test")
+@DiamondConfig(group = "Varys", dataId = "test")
 public interface InterfaceConfig extends VarysConfig {
 
-    @MinerConfig(dataId = "InterfaceAddress")
+    @DiamondConfig(dataId = "InterfaceAddress")
     String address();
 }

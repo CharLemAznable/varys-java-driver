@@ -1,7 +1,7 @@
 package com.github.charlemaznable.varys.guice;
 
+import com.github.charlemaznable.configservice.ConfigModular;
 import com.github.charlemaznable.httpclient.ohclient.OhModular;
-import com.github.charlemaznable.miner.MinerModular;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.google.inject.AbstractModule;
@@ -19,7 +19,7 @@ public final class VarysModular {
     }
 
     public VarysModular(Class<? extends VarysConfig> configClass) {
-        this(new MinerModular().bindClasses(configClass).createModule());
+        this(new ConfigModular().bindClasses(configClass).createModule());
     }
 
     public VarysModular(VarysConfig configImpl) {

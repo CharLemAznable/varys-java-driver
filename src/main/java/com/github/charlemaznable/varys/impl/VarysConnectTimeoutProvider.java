@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
 
+import static com.github.charlemaznable.configservice.ConfigFactory.getConfig;
 import static com.github.charlemaznable.core.lang.Condition.nullThen;
-import static com.github.charlemaznable.miner.MinerFactory.getMiner;
 
 @Component
 public final class VarysConnectTimeoutProvider implements TimeoutProvider {
@@ -23,7 +23,7 @@ public final class VarysConnectTimeoutProvider implements TimeoutProvider {
     @Inject
     @Autowired
     public VarysConnectTimeoutProvider(@Nullable VarysConfig varysConfig) {
-        this.varysConfig = nullThen(varysConfig, () -> getMiner(VarysConfig.class));
+        this.varysConfig = nullThen(varysConfig, () -> getConfig(VarysConfig.class));
     }
 
     @Override
