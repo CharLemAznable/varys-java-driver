@@ -12,7 +12,7 @@ import static com.github.charlemaznable.core.lang.Listt.newArrayList;
 
 public final class VarysModular {
 
-    private OhModular ohModular;
+    private final OhModular ohModular;
 
     public VarysModular() {
         this((VarysConfig) null);

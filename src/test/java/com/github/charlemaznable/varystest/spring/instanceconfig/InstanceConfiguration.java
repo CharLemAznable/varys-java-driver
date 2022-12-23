@@ -3,9 +3,8 @@ package com.github.charlemaznable.varystest.spring.instanceconfig;
 import com.github.charlemaznable.httpclient.ohclient.OhScan;
 import com.github.charlemaznable.varys.spring.VarysImport;
 import com.github.charlemaznable.varystest.proxy.TestVarysScanAnchor;
+import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.ComponentScan;
-
-import javax.annotation.PostConstruct;
 
 import static com.github.charlemaznable.configservice.diamond.DiamondFactory.diamondLoader;
 import static com.github.charlemaznable.core.spring.SpringFactory.springFactory;
