@@ -16,7 +16,7 @@ import static com.github.charlemaznable.httpclient.ohclient.OhFactory.getClient;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SuppressWarnings({"SpringJavaInjectionPointsAutowiringInspection", "Duplicates"})
+@SuppressWarnings({"Duplicates"})
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = InterfaceNoneConfiguration.class)
 public class InterfaceNoneConfigTest {
