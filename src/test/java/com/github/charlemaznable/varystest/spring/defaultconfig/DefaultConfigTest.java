@@ -24,10 +24,8 @@ import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.proxyDefaultConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDefaultConfig;
@@ -37,8 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = DefaultConfiguration.class)
+@SpringJUnitConfig(DefaultConfiguration.class)
 public class DefaultConfigTest {
 
     @Autowired
