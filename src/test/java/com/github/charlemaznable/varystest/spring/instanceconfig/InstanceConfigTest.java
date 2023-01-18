@@ -11,18 +11,15 @@ import com.github.charlemaznable.varystest.proxy.ProxyWechatTpAuthDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.github.charlemaznable.varystest.mock.InstanceConfigMock.proxyInstanceConfig;
 import static com.github.charlemaznable.varystest.mock.InstanceConfigMock.queryInstanceConfig;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = InstanceConfiguration.class)
+@SpringJUnitConfig(InstanceConfiguration.class)
 public class InstanceConfigTest {
 
     @Autowired

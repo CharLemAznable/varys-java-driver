@@ -15,7 +15,7 @@ public final class VarysModular {
     private final OhModular ohModular;
 
     public VarysModular() {
-        this((VarysConfig) null);
+        this(VarysConfig.class);
     }
 
     public VarysModular(Class<? extends VarysConfig> configClass) {

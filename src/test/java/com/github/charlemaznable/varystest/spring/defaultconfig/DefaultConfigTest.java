@@ -24,21 +24,17 @@ import com.github.charlemaznable.varystest.proxy.ProxyWechatTpDemo;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.proxyDefaultConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDefaultConfig;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = DefaultConfiguration.class)
+@SpringJUnitConfig(DefaultConfiguration.class)
 public class DefaultConfigTest {
 
     @Autowired
@@ -82,66 +78,67 @@ public class DefaultConfigTest {
 
     @Test
     public void testContext() {
-        assertNull(SpringContext.getBean(VarysConfig.class));
+        val varysConfig = SpringContext.getBean(VarysConfig.class);
+        assertNotNull(varysConfig);
 
         val varysProxyAppUrlProvider = SpringContext
                 .getBean(VarysProxyWechatAppUrlProvider.class);
         assertNotNull(varysProxyAppUrlProvider);
-        assertEquals(new VarysProxyWechatAppUrlProvider().url(Query.class),
+        assertEquals(new VarysProxyWechatAppUrlProvider(varysConfig).url(Query.class),
                 varysProxyAppUrlProvider.url(Query.class));
 
         val varysProxyTpUrlProvider = SpringContext
                 .getBean(VarysProxyWechatTpUrlProvider.class);
         assertNotNull(varysProxyTpUrlProvider);
-        assertEquals(new VarysProxyWechatTpUrlProvider().url(Query.class),
+        assertEquals(new VarysProxyWechatTpUrlProvider(varysConfig).url(Query.class),
                 varysProxyTpUrlProvider.url(Query.class));
 
         val varysProxyTpAuthUrlProvider = SpringContext
                 .getBean(VarysProxyWechatTpAuthUrlProvider.class);
         assertNotNull(varysProxyTpAuthUrlProvider);
-        assertEquals(new VarysProxyWechatTpAuthUrlProvider().url(Query.class),
+        assertEquals(new VarysProxyWechatTpAuthUrlProvider(varysConfig).url(Query.class),
                 varysProxyTpAuthUrlProvider.url(Query.class));
 
         val varysProxyCorpUrlProvider = SpringContext
                 .getBean(VarysProxyWechatCorpUrlProvider.class);
         assertNotNull(varysProxyCorpUrlProvider);
-        assertEquals(new VarysProxyWechatCorpUrlProvider().url(Query.class),
+        assertEquals(new VarysProxyWechatCorpUrlProvider(varysConfig).url(Query.class),
                 varysProxyCorpUrlProvider.url(Query.class));
 
         val varysProxyFengniaoAppUrlProvider = SpringContext
                 .getBean(VarysProxyFengniaoAppUrlProvider.class);
         assertNotNull(varysProxyFengniaoAppUrlProvider);
-        assertEquals(new VarysProxyFengniaoAppUrlProvider().url(Query.class),
+        assertEquals(new VarysProxyFengniaoAppUrlProvider(varysConfig).url(Query.class),
                 varysProxyFengniaoAppUrlProvider.url(Query.class));
 
         val varysQueryUrlProvider = SpringContext
                 .getBean(VarysQueryUrlProvider.class);
         assertNotNull(varysQueryUrlProvider);
-        assertEquals(new VarysQueryUrlProvider().url(Query.class),
+        assertEquals(new VarysQueryUrlProvider(varysConfig).url(Query.class),
                 varysQueryUrlProvider.url(Query.class));
 
         val varysCallTimeoutProvider = SpringContext
                 .getBean(VarysCallTimeoutProvider.class);
         assertNotNull(varysCallTimeoutProvider);
-        assertEquals(new VarysCallTimeoutProvider().timeout(Query.class),
+        assertEquals(new VarysCallTimeoutProvider(varysConfig).timeout(Query.class),
                 varysCallTimeoutProvider.timeout(Query.class));
 
         val varysConnectTimeoutProvider = SpringContext
                 .getBean(VarysConnectTimeoutProvider.class);
         assertNotNull(varysConnectTimeoutProvider);
-        assertEquals(new VarysConnectTimeoutProvider().timeout(Query.class),
+        assertEquals(new VarysConnectTimeoutProvider(varysConfig).timeout(Query.class),
                 varysConnectTimeoutProvider.timeout(Query.class));
 
         val varysReadTimeoutProvider = SpringContext
                 .getBean(VarysReadTimeoutProvider.class);
         assertNotNull(varysReadTimeoutProvider);
-        assertEquals(new VarysReadTimeoutProvider().timeout(Query.class),
+        assertEquals(new VarysReadTimeoutProvider(varysConfig).timeout(Query.class),
                 varysReadTimeoutProvider.timeout(Query.class));
 
         val varysWriteTimeoutProvider = SpringContext
                 .getBean(VarysWriteTimeoutProvider.class);
         assertNotNull(varysWriteTimeoutProvider);
-        assertEquals(new VarysWriteTimeoutProvider().timeout(Query.class),
+        assertEquals(new VarysWriteTimeoutProvider(varysConfig).timeout(Query.class),
                 varysWriteTimeoutProvider.timeout(Query.class));
     }
 }
