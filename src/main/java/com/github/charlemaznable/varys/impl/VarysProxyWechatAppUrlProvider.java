@@ -2,14 +2,13 @@ package com.github.charlemaznable.varys.impl;
 
 import com.github.charlemaznable.httpclient.common.Mapping.UrlProvider;
 import com.github.charlemaznable.varys.config.VarysConfig;
-import com.google.inject.Inject;
 import lombok.AllArgsConstructor;
 import lombok.val;
 
 import static com.github.charlemaznable.core.lang.Condition.checkNotNull;
 import static org.apache.commons.lang3.StringUtils.appendIfMissing;
 
-@AllArgsConstructor(onConstructor_={@Inject})
+@AllArgsConstructor
 public final class VarysProxyWechatAppUrlProvider implements UrlProvider {
 
     private final VarysConfig varysConfig;
