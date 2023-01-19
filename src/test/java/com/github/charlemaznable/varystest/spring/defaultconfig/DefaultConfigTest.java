@@ -83,6 +83,7 @@ public class DefaultConfigTest {
         assertNull(SpringContext.getBean(VarysConfig.class));
 
         val varysConfig = getConfig(VarysConfig.class);
+
         val varysProxyAppUrlProvider = SpringContext
                 .getBean(VarysProxyWechatAppUrlProvider.class);
         assertNotNull(varysProxyAppUrlProvider);

@@ -33,11 +33,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.n3r.diamond.client.impl.MockDiamondServer;
 
+import static com.github.charlemaznable.configservice.ConfigFactory.getConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.proxyDefaultConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDefaultConfig;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DefaultConfigTest {
 
@@ -88,14 +90,15 @@ public class DefaultConfigTest {
 
     @Test
     public void testProxyError() {
-        assertNotNull(injector.getInstance(VarysConfig.class));
+        assertNull(injector.getInstance(VarysConfig.class));
         assertNotNull(injector.getInstance(VarysQueryUrlProvider.class));
     }
 
     @Test
     public void testContext() {
-        val varysConfig = injector.getInstance(VarysConfig.class);
-        assertNotNull(varysConfig);
+        assertNull(injector.getInstance(VarysConfig.class));
+
+        val varysConfig = getConfig(VarysConfig.class);
 
         val varysProxyAppUrlProvider = injector
                 .getInstance(VarysProxyWechatAppUrlProvider.class);

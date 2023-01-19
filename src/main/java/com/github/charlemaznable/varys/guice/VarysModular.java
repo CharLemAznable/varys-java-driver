@@ -20,8 +20,15 @@ import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.google.inject.util.Providers;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+import javax.annotation.Nullable;
+
+import static com.github.charlemaznable.configservice.ConfigFactory.getConfig;
+import static com.github.charlemaznable.core.lang.Condition.nullThen;
 import static com.github.charlemaznable.core.lang.Listt.newArrayList;
 
 public final class VarysModular {
@@ -29,7 +36,7 @@ public final class VarysModular {
     private final OhModular ohModular;
 
     public VarysModular() {
-        this(VarysConfig.class);
+        this((VarysConfig) null);
     }
 
     public VarysModular(Class<? extends VarysConfig> configClass) {
@@ -47,57 +54,83 @@ public final class VarysModular {
 
     public VarysModular(Module configModule) {
         this.ohModular = new OhModular(configModule, new AbstractModule() {
-            @Provides
-            public VarysQueryUrlProvider varysQueryUrlProvider(VarysConfig varysConfig) {
-                return new VarysQueryUrlProvider(varysConfig);
+
+            @AllArgsConstructor
+            @Getter
+            static class VarysConfigSupplier {
+
+                private final VarysConfig varysConfig;
             }
+
             @Provides
-            public VarysCallTimeoutProvider varysCallTimeoutProvider(VarysConfig varysConfig) {
-                return new VarysCallTimeoutProvider(varysConfig);
+            @Singleton
+            public VarysConfigSupplier varysConfigSupplier(@Nullable VarysConfig varysConfig) {
+                return new VarysConfigSupplier(nullThen(varysConfig, () -> getConfig(VarysConfig.class)));
             }
+
             @Provides
-            public VarysConnectTimeoutProvider varysConnectTimeoutProvider(VarysConfig varysConfig) {
-                return new VarysConnectTimeoutProvider(varysConfig);
+            public VarysQueryUrlProvider varysQueryUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysQueryUrlProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysReadTimeoutProvider varysReadTimeoutProvider(VarysConfig varysConfig) {
-                return new VarysReadTimeoutProvider(varysConfig);
+            public VarysCallTimeoutProvider varysCallTimeoutProvider(VarysConfigSupplier supplier) {
+                return new VarysCallTimeoutProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysWriteTimeoutProvider varysWriteTimeoutProvider(VarysConfig varysConfig) {
-                return new VarysWriteTimeoutProvider(varysConfig);
+            public VarysConnectTimeoutProvider varysConnectTimeoutProvider(VarysConfigSupplier supplier) {
+                return new VarysConnectTimeoutProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyWechatAppUrlProvider varysProxyWechatAppUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyWechatAppUrlProvider(varysConfig);
+            public VarysReadTimeoutProvider varysReadTimeoutProvider(VarysConfigSupplier supplier) {
+                return new VarysReadTimeoutProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyWechatCorpUrlProvider varysProxyWechatCorpUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyWechatCorpUrlProvider(varysConfig);
+            public VarysWriteTimeoutProvider varysWriteTimeoutProvider(VarysConfigSupplier supplier) {
+                return new VarysWriteTimeoutProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyWechatTpUrlProvider varysProxyWechatTpUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyWechatTpUrlProvider(varysConfig);
+            public VarysProxyWechatAppUrlProvider varysProxyWechatAppUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyWechatAppUrlProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyWechatTpAuthUrlProvider varysProxyWechatTpAuthUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyWechatTpAuthUrlProvider(varysConfig);
+            public VarysProxyWechatCorpUrlProvider varysProxyWechatCorpUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyWechatCorpUrlProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyFengniaoAppUrlProvider varysProxyFengniaoAppUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyFengniaoAppUrlProvider(varysConfig);
+            public VarysProxyWechatTpUrlProvider varysProxyWechatTpUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyWechatTpUrlProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyShansongAppDeveloperUrlProvider varysProxyShansongAppDeveloperUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyShansongAppDeveloperUrlProvider(varysConfig);
+            public VarysProxyWechatTpAuthUrlProvider varysProxyWechatTpAuthUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyWechatTpAuthUrlProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyShansongAppFileUrlProvider varysProxyShansongAppFileUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyShansongAppFileUrlProvider(varysConfig);
+            public VarysProxyFengniaoAppUrlProvider varysProxyFengniaoAppUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyFengniaoAppUrlProvider(supplier.getVarysConfig());
             }
+
             @Provides
-            public VarysProxyShansongAppMerchantUrlProvider varysProxyShansongAppMerchantUrlProvider(VarysConfig varysConfig) {
-                return new VarysProxyShansongAppMerchantUrlProvider(varysConfig);
+            public VarysProxyShansongAppDeveloperUrlProvider varysProxyShansongAppDeveloperUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyShansongAppDeveloperUrlProvider(supplier.getVarysConfig());
+            }
+
+            @Provides
+            public VarysProxyShansongAppFileUrlProvider varysProxyShansongAppFileUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyShansongAppFileUrlProvider(supplier.getVarysConfig());
+            }
+
+            @Provides
+            public VarysProxyShansongAppMerchantUrlProvider varysProxyShansongAppMerchantUrlProvider(VarysConfigSupplier supplier) {
+                return new VarysProxyShansongAppMerchantUrlProvider(supplier.getVarysConfig());
             }
         }).bindClasses(Query.class);
     }
