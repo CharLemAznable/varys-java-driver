@@ -17,88 +17,77 @@ import com.github.charlemaznable.varys.impl.VarysProxyWechatTpUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
 import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
 import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
-
-import static com.github.charlemaznable.configservice.ConfigFactory.getConfig;
-import static com.github.charlemaznable.core.lang.Condition.nullThen;
 
 @Configuration
 @ElvesImport
 @OhScan(basePackageClasses = Query.class)
 public class VarysConfigurer {
 
-    private final VarysConfig varysConfig;
-
-    @Autowired
-    public VarysConfigurer(@Nullable VarysConfig varysConfig) {
-        this.varysConfig = nullThen(varysConfig, () -> getConfig(VarysConfig.class));
-    }
-
     @Bean("com.github.charlemaznable.varys.impl.VarysQueryUrlProvider")
-    public VarysQueryUrlProvider varysQueryUrlProvider() {
+    public VarysQueryUrlProvider varysQueryUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysQueryUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider")
-    public VarysCallTimeoutProvider varysCallTimeoutProvider() {
+    public VarysCallTimeoutProvider varysCallTimeoutProvider(@Nullable VarysConfig varysConfig) {
         return new VarysCallTimeoutProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider")
-    public VarysConnectTimeoutProvider varysConnectTimeoutProvider() {
+    public VarysConnectTimeoutProvider varysConnectTimeoutProvider(@Nullable VarysConfig varysConfig) {
         return new VarysConnectTimeoutProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider")
-    public VarysReadTimeoutProvider varysReadTimeoutProvider() {
+    public VarysReadTimeoutProvider varysReadTimeoutProvider(@Nullable VarysConfig varysConfig) {
         return new VarysReadTimeoutProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider")
-    public VarysWriteTimeoutProvider varysWriteTimeoutProvider() {
+    public VarysWriteTimeoutProvider varysWriteTimeoutProvider(@Nullable VarysConfig varysConfig) {
         return new VarysWriteTimeoutProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyWechatAppUrlProvider")
-    public VarysProxyWechatAppUrlProvider varysProxyWechatAppUrlProvider() {
+    public VarysProxyWechatAppUrlProvider varysProxyWechatAppUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyWechatAppUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyWechatCorpUrlProvider")
-    public VarysProxyWechatCorpUrlProvider varysProxyWechatCorpUrlProvider() {
+    public VarysProxyWechatCorpUrlProvider varysProxyWechatCorpUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyWechatCorpUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyWechatTpUrlProvider")
-    public VarysProxyWechatTpUrlProvider varysProxyWechatTpUrlProvider() {
+    public VarysProxyWechatTpUrlProvider varysProxyWechatTpUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyWechatTpUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyWechatTpAuthUrlProvider")
-    public VarysProxyWechatTpAuthUrlProvider varysProxyWechatTpAuthUrlProvider() {
+    public VarysProxyWechatTpAuthUrlProvider varysProxyWechatTpAuthUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyWechatTpAuthUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyFengniaoAppUrlProvider")
-    public VarysProxyFengniaoAppUrlProvider varysProxyFengniaoAppUrlProvider() {
+    public VarysProxyFengniaoAppUrlProvider varysProxyFengniaoAppUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyFengniaoAppUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyShansongAppDeveloperUrlProvider")
-    public VarysProxyShansongAppDeveloperUrlProvider varysProxyShansongAppDeveloperUrlProvider() {
+    public VarysProxyShansongAppDeveloperUrlProvider varysProxyShansongAppDeveloperUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyShansongAppDeveloperUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyShansongAppFileUrlProvider")
-    public VarysProxyShansongAppFileUrlProvider varysProxyShansongAppFileUrlProvider() {
+    public VarysProxyShansongAppFileUrlProvider varysProxyShansongAppFileUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyShansongAppFileUrlProvider(varysConfig);
     }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysProxyShansongAppMerchantUrlProvider")
-    public VarysProxyShansongAppMerchantUrlProvider varysProxyShansongAppMerchantUrlProvider() {
+    public VarysProxyShansongAppMerchantUrlProvider varysProxyShansongAppMerchantUrlProvider(@Nullable VarysConfig varysConfig) {
         return new VarysProxyShansongAppMerchantUrlProvider(varysConfig);
     }
 }
