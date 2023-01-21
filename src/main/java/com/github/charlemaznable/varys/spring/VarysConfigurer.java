@@ -1,6 +1,7 @@
 package com.github.charlemaznable.varys.spring;
 
 import com.github.charlemaznable.core.spring.ElvesImport;
+import com.github.charlemaznable.httpclient.ohclient.OhScan;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
@@ -20,16 +21,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 
-import static com.github.charlemaznable.httpclient.ohclient.OhFactory.springOhLoader;
-
 @Configuration
 @ElvesImport
+@OhScan(basePackageClasses = Query.class)
 public class VarysConfigurer {
-
-    @Bean("com.github.charlemaznable.varys.impl.Query")
-    public Query query() {
-        return springOhLoader().getClient(Query.class);
-    }
 
     @Bean("com.github.charlemaznable.varys.impl.VarysQueryUrlProvider")
     public VarysQueryUrlProvider varysQueryUrlProvider(@Nullable VarysConfig varysConfig) {
