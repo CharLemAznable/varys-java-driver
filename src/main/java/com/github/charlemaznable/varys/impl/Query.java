@@ -1,10 +1,11 @@
 package com.github.charlemaznable.varys.impl;
 
+import com.github.charlemaznable.httpclient.common.ConfigureWith;
 import com.github.charlemaznable.httpclient.common.Mapping;
 import com.github.charlemaznable.httpclient.common.Parameter;
 import com.github.charlemaznable.httpclient.common.PathVar;
 import com.github.charlemaznable.httpclient.ohclient.OhClient;
-import com.github.charlemaznable.httpclient.ohclient.annotation.ClientTimeout;
+import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.resp.FengniaoAppTokenResp;
 import com.github.charlemaznable.varys.resp.ShansongAppTokenResp;
 import com.github.charlemaznable.varys.resp.ToutiaoAppTokenResp;
@@ -18,13 +19,7 @@ import com.github.charlemaznable.varys.resp.WechatTpAuthTokenResp;
 import com.github.charlemaznable.varys.resp.WechatTpTokenResp;
 
 @OhClient
-@Mapping(urlProvider = VarysQueryUrlProvider.class)
-@ClientTimeout(
-        callTimeoutProvider = VarysCallTimeoutProvider.class,
-        connectTimeoutProvider = VarysConnectTimeoutProvider.class,
-        readTimeoutProvider = VarysReadTimeoutProvider.class,
-        writeTimeoutProvider = VarysWriteTimeoutProvider.class
-)
+@ConfigureWith(VarysConfig.class)
 public interface Query {
 
     @Mapping("/query-wechat-app-token/{codeName}")

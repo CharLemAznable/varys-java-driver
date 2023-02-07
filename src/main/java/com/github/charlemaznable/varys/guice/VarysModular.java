@@ -4,19 +4,6 @@ import com.github.charlemaznable.configservice.ConfigModular;
 import com.github.charlemaznable.httpclient.ohclient.OhModular;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
-import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyFengniaoAppUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyShansongAppDeveloperUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyShansongAppFileUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyShansongAppMerchantUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatAppUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatCorpUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatTpAuthUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatTpUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.google.inject.Provides;
@@ -51,68 +38,43 @@ public final class VarysModular {
         this.ohModular = new OhModular(configModule, new AbstractModule() {
 
             @Provides
-            public VarysQueryUrlProvider varysQueryUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysQueryUrlProvider(varysConfig);
+            public VarysConfig.ProxyWechatAppConfig proxyWechatAppConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatAppConfig(varysConfig);
             }
 
             @Provides
-            public VarysCallTimeoutProvider varysCallTimeoutProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysCallTimeoutProvider(varysConfig);
+            public VarysConfig.ProxyWechatCorpConfig proxyWechatCorpConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatCorpConfig(varysConfig);
             }
 
             @Provides
-            public VarysConnectTimeoutProvider varysConnectTimeoutProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysConnectTimeoutProvider(varysConfig);
+            public VarysConfig.ProxyWechatTpConfig proxyWechatTpConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatTpConfig(varysConfig);
             }
 
             @Provides
-            public VarysReadTimeoutProvider varysReadTimeoutProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysReadTimeoutProvider(varysConfig);
+            public VarysConfig.ProxyWechatTpAuthConfig proxyWechatTpAuthConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatTpAuthConfig(varysConfig);
             }
 
             @Provides
-            public VarysWriteTimeoutProvider varysWriteTimeoutProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysWriteTimeoutProvider(varysConfig);
+            public VarysConfig.ProxyFengniaoAppConfig proxyFengniaoAppConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyFengniaoAppConfig(varysConfig);
             }
 
             @Provides
-            public VarysProxyWechatAppUrlProvider varysProxyWechatAppUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyWechatAppUrlProvider(varysConfig);
+            public VarysConfig.ProxyShansongAppDeveloperConfig proxyShansongAppDeveloperConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyShansongAppDeveloperConfig(varysConfig);
             }
 
             @Provides
-            public VarysProxyWechatCorpUrlProvider varysProxyWechatCorpUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyWechatCorpUrlProvider(varysConfig);
+            public VarysConfig.ProxyShansongAppFileConfig proxyShansongAppFileConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyShansongAppFileConfig(varysConfig);
             }
 
             @Provides
-            public VarysProxyWechatTpUrlProvider varysProxyWechatTpUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyWechatTpUrlProvider(varysConfig);
-            }
-
-            @Provides
-            public VarysProxyWechatTpAuthUrlProvider varysProxyWechatTpAuthUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyWechatTpAuthUrlProvider(varysConfig);
-            }
-
-            @Provides
-            public VarysProxyFengniaoAppUrlProvider varysProxyFengniaoAppUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyFengniaoAppUrlProvider(varysConfig);
-            }
-
-            @Provides
-            public VarysProxyShansongAppDeveloperUrlProvider varysProxyShansongAppDeveloperUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyShansongAppDeveloperUrlProvider(varysConfig);
-            }
-
-            @Provides
-            public VarysProxyShansongAppFileUrlProvider varysProxyShansongAppFileUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyShansongAppFileUrlProvider(varysConfig);
-            }
-
-            @Provides
-            public VarysProxyShansongAppMerchantUrlProvider varysProxyShansongAppMerchantUrlProvider(@Nullable VarysConfig varysConfig) {
-                return new VarysProxyShansongAppMerchantUrlProvider(varysConfig);
+            public VarysConfig.ProxyShansongAppMerchantConfig proxyShansongAppMerchantConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyShansongAppMerchantConfig(varysConfig);
             }
         }).bindClasses(Query.class);
     }
