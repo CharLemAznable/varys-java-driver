@@ -12,22 +12,22 @@ public class InstanceConfig implements VarysConfig {
     }
 
     @Override
-    public long callTimeout() {
-        return 0;
+    public String callTimeoutString() {
+        return "0";
     }
 
     @Override
-    public long connectTimeout() {
-        return 10_000;
+    public String connectTimeoutString() {
+        return "10000";
     }
 
     @Override
-    public long readTimeout() {
-        return 10_000;
+    public String readTimeoutString() {
+        return "10000";
     }
 
     @Override
-    public long writeTimeout() {
-        return 10_000;
+    public String writeTimeoutString() {
+        return "10000";
     }
 }

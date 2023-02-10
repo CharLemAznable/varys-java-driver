@@ -3,19 +3,6 @@ package com.github.charlemaznable.varystest.guice.defaultconfig;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.guice.VarysModular;
 import com.github.charlemaznable.varys.impl.Query;
-import com.github.charlemaznable.varys.impl.VarysCallTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysConnectTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyFengniaoAppUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyShansongAppDeveloperUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyShansongAppFileUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyShansongAppMerchantUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatAppUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatCorpUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatTpAuthUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysProxyWechatTpUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysQueryUrlProvider;
-import com.github.charlemaznable.varys.impl.VarysReadTimeoutProvider;
-import com.github.charlemaznable.varys.impl.VarysWriteTimeoutProvider;
 import com.github.charlemaznable.varystest.proxy.ProxyFengniaoAppDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyShansongAppDeveloperDemo;
 import com.github.charlemaznable.varystest.proxy.ProxyShansongAppFileDemo;
@@ -33,6 +20,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.n3r.diamond.client.impl.MockDiamondServer;
 
+import static com.github.charlemaznable.configservice.ConfigFactory.getConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.proxyDefaultConfig;
 import static com.github.charlemaznable.varystest.mock.DefaultConfigMock.queryDefaultConfig;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -88,91 +76,57 @@ public class DefaultConfigTest {
     }
 
     @Test
-    public void testProxyError() {
-        assertNull(injector.getInstance(VarysConfig.class));
-        assertNotNull(injector.getInstance(VarysQueryUrlProvider.class));
-    }
-
-    @Test
     public void testContext() {
         assertNull(injector.getInstance(VarysConfig.class));
 
-        val varysProxyAppUrlProvider = injector
-                .getInstance(VarysProxyWechatAppUrlProvider.class);
-        assertNotNull(varysProxyAppUrlProvider);
-        assertEquals(new VarysProxyWechatAppUrlProvider().url(Query.class),
-                varysProxyAppUrlProvider.url(Query.class));
+        val varysConfig = getConfig(VarysConfig.class);
 
-        val varysProxyTpUrlProvider = injector
-                .getInstance(VarysProxyWechatTpUrlProvider.class);
-        assertNotNull(varysProxyTpUrlProvider);
-        assertEquals(new VarysProxyWechatTpUrlProvider().url(Query.class),
-                varysProxyTpUrlProvider.url(Query.class));
+        val proxyWechatAppConfig = injector
+                .getInstance(VarysConfig.ProxyWechatAppConfig.class);
+        assertNotNull(proxyWechatAppConfig);
+        assertEquals(new VarysConfig.ProxyWechatAppConfig(varysConfig).urlsString(),
+                proxyWechatAppConfig.urlsString());
 
-        val varysProxyTpAuthUrlProvider = injector
-                .getInstance(VarysProxyWechatTpAuthUrlProvider.class);
-        assertNotNull(varysProxyTpAuthUrlProvider);
-        assertEquals(new VarysProxyWechatTpAuthUrlProvider().url(Query.class),
-                varysProxyTpAuthUrlProvider.url(Query.class));
+        val proxyWechatTpConfig = injector
+                .getInstance(VarysConfig.ProxyWechatTpConfig.class);
+        assertNotNull(proxyWechatTpConfig);
+        assertEquals(new VarysConfig.ProxyWechatTpConfig(varysConfig).urlsString(),
+                proxyWechatTpConfig.urlsString());
 
-        val varysProxyCorpUrlProvider = injector
-                .getInstance(VarysProxyWechatCorpUrlProvider.class);
-        assertNotNull(varysProxyCorpUrlProvider);
-        assertEquals(new VarysProxyWechatCorpUrlProvider().url(Query.class),
-                varysProxyCorpUrlProvider.url(Query.class));
+        val proxyWechatTpAuthConfig = injector
+                .getInstance(VarysConfig.ProxyWechatTpAuthConfig.class);
+        assertNotNull(proxyWechatTpAuthConfig);
+        assertEquals(new VarysConfig.ProxyWechatTpAuthConfig(varysConfig).urlsString(),
+                proxyWechatTpAuthConfig.urlsString());
 
-        val varysProxyFengniaoAppUrlProvider = injector
-                .getInstance(VarysProxyFengniaoAppUrlProvider.class);
-        assertNotNull(varysProxyFengniaoAppUrlProvider);
-        assertEquals(new VarysProxyFengniaoAppUrlProvider().url(Query.class),
-                varysProxyFengniaoAppUrlProvider.url(Query.class));
+        val proxyWechatCorpConfig = injector
+                .getInstance(VarysConfig.ProxyWechatCorpConfig.class);
+        assertNotNull(proxyWechatCorpConfig);
+        assertEquals(new VarysConfig.ProxyWechatCorpConfig(varysConfig).urlsString(),
+                proxyWechatCorpConfig.urlsString());
 
-        val varysProxyShansongAppDeveloperUrlProvider = injector
-                .getInstance(VarysProxyShansongAppDeveloperUrlProvider.class);
-        assertNotNull(varysProxyShansongAppDeveloperUrlProvider);
-        assertEquals(new VarysProxyShansongAppDeveloperUrlProvider().url(Query.class),
-                varysProxyShansongAppDeveloperUrlProvider.url(Query.class));
+        val proxyFengniaoAppConfig = injector
+                .getInstance(VarysConfig.ProxyFengniaoAppConfig.class);
+        assertNotNull(proxyFengniaoAppConfig);
+        assertEquals(new VarysConfig.ProxyFengniaoAppConfig(varysConfig).urlsString(),
+                proxyFengniaoAppConfig.urlsString());
 
-        val varysProxyShansongAppMerchantUrlProvider = injector
-                .getInstance(VarysProxyShansongAppMerchantUrlProvider.class);
-        assertNotNull(varysProxyShansongAppMerchantUrlProvider);
-        assertEquals(new VarysProxyShansongAppMerchantUrlProvider().url(Query.class),
-                varysProxyShansongAppMerchantUrlProvider.url(Query.class));
+        val proxyShansongAppDeveloperConfig = injector
+                .getInstance(VarysConfig.ProxyShansongAppDeveloperConfig.class);
+        assertNotNull(proxyShansongAppDeveloperConfig);
+        assertEquals(new VarysConfig.ProxyShansongAppDeveloperConfig(varysConfig).urlsString(),
+                proxyShansongAppDeveloperConfig.urlsString());
 
-        val varysProxyShansongAppFileUrlProvider = injector
-                .getInstance(VarysProxyShansongAppFileUrlProvider.class);
-        assertNotNull(varysProxyShansongAppFileUrlProvider);
-        assertEquals(new VarysProxyShansongAppFileUrlProvider().url(Query.class),
-                varysProxyShansongAppFileUrlProvider.url(Query.class));
+        val proxyShansongAppMerchantConfig = injector
+                .getInstance(VarysConfig.ProxyShansongAppMerchantConfig.class);
+        assertNotNull(proxyShansongAppMerchantConfig);
+        assertEquals(new VarysConfig.ProxyShansongAppMerchantConfig(varysConfig).urlsString(),
+                proxyShansongAppMerchantConfig.urlsString());
 
-        val varysQueryUrlProvider = injector
-                .getInstance(VarysQueryUrlProvider.class);
-        assertNotNull(varysQueryUrlProvider);
-        assertEquals(new VarysQueryUrlProvider().url(Query.class),
-                varysQueryUrlProvider.url(Query.class));
-
-        val varysCallTimeoutProvider = injector
-                .getInstance(VarysCallTimeoutProvider.class);
-        assertNotNull(varysCallTimeoutProvider);
-        assertEquals(new VarysCallTimeoutProvider().timeout(Query.class),
-                varysCallTimeoutProvider.timeout(Query.class));
-
-        val varysConnectTimeoutProvider = injector
-                .getInstance(VarysConnectTimeoutProvider.class);
-        assertNotNull(varysConnectTimeoutProvider);
-        assertEquals(new VarysConnectTimeoutProvider().timeout(Query.class),
-                varysConnectTimeoutProvider.timeout(Query.class));
-
-        val varysReadTimeoutProvider = injector
-                .getInstance(VarysReadTimeoutProvider.class);
-        assertNotNull(varysReadTimeoutProvider);
-        assertEquals(new VarysReadTimeoutProvider().timeout(Query.class),
-                varysReadTimeoutProvider.timeout(Query.class));
-
-        val varysWriteTimeoutProvider = injector
-                .getInstance(VarysWriteTimeoutProvider.class);
-        assertNotNull(varysWriteTimeoutProvider);
-        assertEquals(new VarysWriteTimeoutProvider().timeout(Query.class),
-                varysWriteTimeoutProvider.timeout(Query.class));
+        val proxyShansongAppFileConfig = injector
+                .getInstance(VarysConfig.ProxyShansongAppFileConfig.class);
+        assertNotNull(proxyShansongAppFileConfig);
+        assertEquals(new VarysConfig.ProxyShansongAppFileConfig(varysConfig).urlsString(),
+                proxyShansongAppFileConfig.urlsString());
     }
 }

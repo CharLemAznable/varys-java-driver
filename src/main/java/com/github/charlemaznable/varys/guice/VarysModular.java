@@ -6,7 +6,10 @@ import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
+import com.google.inject.Provides;
 import com.google.inject.util.Providers;
+
+import javax.annotation.Nullable;
 
 import static com.github.charlemaznable.core.lang.Listt.newArrayList;
 
@@ -32,7 +35,48 @@ public final class VarysModular {
     }
 
     public VarysModular(Module configModule) {
-        this.ohModular = new OhModular(configModule).bindClasses(Query.class);
+        this.ohModular = new OhModular(configModule, new AbstractModule() {
+
+            @Provides
+            public VarysConfig.ProxyWechatAppConfig proxyWechatAppConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatAppConfig(varysConfig);
+            }
+
+            @Provides
+            public VarysConfig.ProxyWechatCorpConfig proxyWechatCorpConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatCorpConfig(varysConfig);
+            }
+
+            @Provides
+            public VarysConfig.ProxyWechatTpConfig proxyWechatTpConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatTpConfig(varysConfig);
+            }
+
+            @Provides
+            public VarysConfig.ProxyWechatTpAuthConfig proxyWechatTpAuthConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyWechatTpAuthConfig(varysConfig);
+            }
+
+            @Provides
+            public VarysConfig.ProxyFengniaoAppConfig proxyFengniaoAppConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyFengniaoAppConfig(varysConfig);
+            }
+
+            @Provides
+            public VarysConfig.ProxyShansongAppDeveloperConfig proxyShansongAppDeveloperConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyShansongAppDeveloperConfig(varysConfig);
+            }
+
+            @Provides
+            public VarysConfig.ProxyShansongAppFileConfig proxyShansongAppFileConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyShansongAppFileConfig(varysConfig);
+            }
+
+            @Provides
+            public VarysConfig.ProxyShansongAppMerchantConfig proxyShansongAppMerchantConfig(@Nullable VarysConfig varysConfig) {
+                return new VarysConfig.ProxyShansongAppMerchantConfig(varysConfig);
+            }
+        }).bindClasses(Query.class);
     }
 
     public VarysModular bindOtherClients(Class<?>... otherClientClasses) {
