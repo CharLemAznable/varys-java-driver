@@ -1,17 +1,27 @@
 package com.github.charlemaznable.varys.spring;
 
 import com.github.charlemaznable.core.spring.ElvesImport;
-import com.github.charlemaznable.httpclient.ohclient.OhScan;
+import com.github.charlemaznable.httpclient.ohclient.OhScannerRegistrar;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
+import lombok.val;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 
+import static com.github.charlemaznable.httpclient.ohclient.OhFactory.springOhLoader;
+
 @Configuration
 @ElvesImport
-@OhScan(basePackageClasses = Query.class)
 public class VarysConfigurer {
+
+    @Bean("com.github.charlemaznable.varys.impl.Query")
+    public OhScannerRegistrar.OhClientFactoryBean query() {
+        val factoryBean = new OhScannerRegistrar.OhClientFactoryBean();
+        factoryBean.setXyzInterface(Query.class);
+        factoryBean.setOhLoader(springOhLoader());
+        return factoryBean;
+    }
 
     @Bean("com.github.charlemaznable.varys.config.VarysConfig.ProxyWechatAppConfig")
     public VarysConfig.ProxyWechatAppConfig proxyWechatAppConfig(@Nullable VarysConfig varysConfig) {
