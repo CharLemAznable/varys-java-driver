@@ -5,12 +5,18 @@ import com.github.charlemaznable.httpclient.ohclient.OhScan;
 import com.github.charlemaznable.varys.config.VarysConfig;
 import com.github.charlemaznable.varys.impl.Query;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.lang.Nullable;
 
 @Configuration
 @ElvesImport
-@OhScan(basePackageClasses = Query.class)
+@OhScan(basePackageClasses = Query.class,
+        includeFilters = {@ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = {Query.class}
+        )})
 public class VarysConfigurer {
 
     @Bean("com.github.charlemaznable.varys.config.VarysConfig.ProxyWechatAppConfig")
