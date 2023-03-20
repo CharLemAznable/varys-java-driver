@@ -29,7 +29,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>2023.0.2</version>
+  <version>2023.0.3</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ Java client for [varys](https://github.com/CharLemAznable/varys)
 <dependency>
   <groupId>com.github.charlemaznable</groupId>
   <artifactId>varys-java-driver</artifactId>
-  <version>2023.0.3-SNAPSHOT</version>
+  <version>2023.0.4-SNAPSHOT</version>
 </dependency>
 ```
 
